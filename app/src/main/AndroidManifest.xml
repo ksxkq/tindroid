@@ -103,6 +103,23 @@
             </intent-filter>
         </activity>
         <activity
+            android:name=".NewLoginActivity"
+            android:launchMode="singleTask"
+            android:theme="@style/AppMaterialTheme"
+            android:exported="true">
+            <intent-filter android:autoVerify="true" >
+                <action android:name="android.intent.action.VIEW"/>
+
+                <category android:name="android.intent.category.DEFAULT"/>
+                <category android:name="android.intent.category.BROWSABLE"/>
+                <!--
+                This is a catch-all URL pattern.
+                Retarded Android is unable to parse URLs with fragments
+                -->
+                <data android:host="web.tinode.co" android:scheme="https"/>
+            </intent-filter>
+        </activity>
+        <activity
             android:name=".ChatsActivity"
             android:theme="@style/AppTheme"
             android:windowSoftInputMode="adjustResize">
