@@ -7,15 +7,32 @@ import android.content.Intent;
 import android.graphics.Bitmap;
 import android.os.Bundle;
 import android.text.TextUtils;
+import android.view.LayoutInflater;
 import android.view.Menu;
+import android.view.View;
+import android.view.ViewGroup;
+import android.widget.TextView;
 
+import java.util.ArrayList;
 import java.util.List;
 
+import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentActivity;
 import androidx.fragment.app.FragmentManager;
+import androidx.fragment.app.FragmentPagerAdapter;
 import androidx.fragment.app.FragmentTransaction;
+import androidx.viewpager.widget.ViewPager;
+import androidx.viewpager2.adapter.FragmentStateAdapter;
+import androidx.viewpager2.widget.ViewPager2;
+
+import com.flyco.tablayout.CommonTabLayout;
+import com.flyco.tablayout.SegmentTabLayout;
+import com.flyco.tablayout.listener.CustomTabEntity;
+import com.flyco.tablayout.listener.OnTabSelectListener;
+
 import co.tinode.tindroid.account.ContactsManager;
 import co.tinode.tindroid.account.Utils;
 import co.tinode.tindroid.media.VxCard;
@@ -56,6 +73,18 @@ public class ChatsActivity extends AppCompatActivity
 
     private Account mAccount;
 
+    private CommonTabLayout mSegmentTabLayout;
+    private ViewPager2 mViewPage;
+    private String[] mTitles = {"首页", "消息", "联系人", "更多"};
+    private int[] mIconUnselectIds = {
+            R.drawable.ic_block_gray, R.drawable.ic_block_gray,
+            R.drawable.ic_block_gray, R.drawable.ic_block_gray};
+    private int[] mIconSelectIds = {
+            R.drawable.ic_block_red, R.drawable.ic_block_red,
+            R.drawable.ic_block_red, R.drawable.ic_block_red};
+    private ArrayList<CustomTabEntity> mTabEntities = new ArrayList<>();
+    private ArrayList<Fragment> mFragments = new ArrayList<>();
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -64,15 +93,49 @@ public class ChatsActivity extends AppCompatActivity
 
         setSupportActionBar(findViewById(R.id.toolbar));
 
-        FragmentManager fm = getSupportFragmentManager();
+        mSegmentTabLayout = findViewById(R.id.bottomBar);
+        mViewPage = findViewById(R.id.viewPage);
 
-        if (fm.findFragmentByTag(FRAGMENT_CHATLIST) == null) {
-            Fragment fragment = new ChatsFragment();
-            fm.beginTransaction()
-                    .replace(R.id.contentFragment, fragment, FRAGMENT_CHATLIST)
-                    .setPrimaryNavigationFragment(fragment)
-                    .commit();
+        mFragments.add(TextFragment.newInstance(mTitles[0]));
+        mFragments.add(TextFragment.newInstance(mTitles[1]));
+        mFragments.add(TextFragment.newInstance(mTitles[2]));
+        mFragments.add(TextFragment.newInstance(mTitles[3]));
+
+        for (int i = 0; i < mTitles.length; i++) {
+            mTabEntities.add(new TabEntity(mTitles[i], mIconSelectIds[i], mIconUnselectIds[i]));
         }
+        mSegmentTabLayout.setTabData(mTabEntities);
+        mSegmentTabLayout.setOnTabSelectListener(new OnTabSelectListener() {
+            @Override
+            public void onTabSelect(int position) {
+                mViewPage.setCurrentItem(position, false);
+            }
+
+            @Override
+            public void onTabReselect(int position) {
+
+            }
+        });
+
+        mViewPage.setAdapter(new MyPagerAdapter(this));
+        mViewPage.registerOnPageChangeCallback(new ViewPager2.OnPageChangeCallback() {
+            @Override
+            public void onPageSelected(int position) {
+                mSegmentTabLayout.setCurrentTab(position);
+            }
+        });
+
+        mViewPage.setCurrentItem(0);
+
+//        FragmentManager fm = getSupportFragmentManager();
+
+//        if (fm.findFragmentByTag(FRAGMENT_CHATLIST) == null) {
+//            Fragment fragment = new ChatsFragment();
+//            fm.beginTransaction()
+//                    .replace(R.id.contentFragment, fragment, FRAGMENT_CHATLIST)
+//                    .setPrimaryNavigationFragment(fragment)
+//                    .commit();
+//        }
 
         mMeTopic = Cache.getTinode().getOrCreateMeTopic();
         mMeTopicListener = new MeListener();
@@ -342,4 +405,71 @@ public class ChatsActivity extends AppCompatActivity
             datasetChanged();
         }
     }
+
+    private class MyPagerAdapter extends FragmentStateAdapter {
+
+        public MyPagerAdapter(@NonNull FragmentActivity fragmentActivity) {
+            super(fragmentActivity);
+        }
+
+        @NonNull
+        @Override
+        public Fragment createFragment(int position) {
+            return mFragments.get(position);
+        }
+
+        @Override
+        public int getItemCount() {
+            return mFragments.size();
+        }
+    }
+
+    private class TabEntity implements CustomTabEntity {
+
+        private String title;
+        private int selectIcon;
+        private int unselectIcon;
+
+        public TabEntity(String title, int selectIcon, int unselectIcon) {
+            this.title = title;
+            this.selectIcon = selectIcon;
+            this.unselectIcon = unselectIcon;
+        }
+
+        @Override
+        public String getTabTitle() {
+            return title;
+        }
+
+        @Override
+        public int getTabSelectedIcon() {
+            return selectIcon;
+        }
+
+        @Override
+        public int getTabUnselectedIcon() {
+            return unselectIcon;
+        }
+    }
+
+    public static class TextFragment extends Fragment {
+
+        public static TextFragment newInstance(String text) {
+            Bundle args = new Bundle();
+            args.putString("txt", text);
+            TextFragment fragment = new TextFragment();
+            fragment.setArguments(args);
+            return fragment;
+        }
+
+        @Nullable
+        @Override
+        public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
+            TextView textView = new TextView(getActivity());
+            String txt = getArguments().getString("txt");
+            textView.setText(txt);
+            return textView;
+        }
+    }
+
 }
