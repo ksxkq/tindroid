@@ -1,5 +1,6 @@
 package co.tinode.tindroid;
 
+import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.text.TextUtils;
@@ -18,6 +19,7 @@ import androidx.appcompat.app.ActionBar;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.fragment.app.Fragment;
 import androidx.preference.PreferenceManager;
+
 import co.tinode.tindroid.account.Utils;
 import co.tinode.tinodesdk.PromisedReply;
 import co.tinode.tinodesdk.Tinode;
@@ -62,6 +64,7 @@ public class LoginFragment extends Fragment implements View.OnClickListener {
 
         fragment.findViewById(R.id.signIn).setOnClickListener(this);
         fragment.findViewById(R.id.forgotPassword).setOnClickListener(this);
+        fragment.findViewById(R.id.newLogin).setOnClickListener(this);
 
         return fragment;
     }
@@ -87,6 +90,11 @@ public class LoginFragment extends Fragment implements View.OnClickListener {
 
         if (v.getId() == R.id.forgotPassword) {
             parent.showFragment(LoginActivity.FRAGMENT_RESET, null);
+            return;
+        }
+        if (v.getId() == R.id.newLogin) {
+            startActivity(new Intent(getActivity(), NewLoginActivity.class));
+            getActivity().finish();
             return;
         }
 
