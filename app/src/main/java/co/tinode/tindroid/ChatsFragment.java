@@ -242,7 +242,7 @@ public class ChatsFragment extends Fragment implements ActionMode.Callback, UiUt
         }
         int id = item.getItemId();
         if (id == R.id.action_add) {
-            // todo
+            startActivity(new Intent(getActivity(), FindByIDActivity.class));
             return true;
         }
 //        if (id == R.id.action_show_archive) {

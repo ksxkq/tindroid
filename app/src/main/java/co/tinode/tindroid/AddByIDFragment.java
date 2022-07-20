@@ -1,5 +1,6 @@
 package co.tinode.tindroid;
 
+import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
 import android.text.TextUtils;
@@ -22,7 +23,7 @@ public class AddByIDFragment extends Fragment {
 
     @Override
     public void onViewCreated(@NonNull View view, Bundle savedInstanceState) {
-        final AppCompatActivity activity = (AppCompatActivity) getActivity();
+        final Activity activity = getActivity();
         if (activity == null) {
             return;
         }

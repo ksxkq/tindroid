@@ -177,6 +177,11 @@
         </activity>
 
         <activity
+            android:name=".FindByIDActivity"
+            android:launchMode="singleTask"
+            android:theme="@style/AppMaterialTheme" />
+
+        <activity
             android:name="com.google.android.gms.oss.licenses.OssLicensesMenuActivity"
             android:theme="@style/LicensesTheme" />
 
