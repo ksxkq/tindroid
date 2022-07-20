@@ -72,7 +72,7 @@ public class ChatsActivity extends AppCompatActivity
 
     private CommonTabLayout mSegmentTabLayout;
     private ViewPager mViewPage; // ViewPage2 has problem with scroll vertical and horizontal
-    private String[] mTitles = {"首页", "消息", "联系人", "更多"};
+    private String[] mTitles = {"消息", "通讯录", "发现", "我"};
     private int[] mIconUnselectIds = {
             R.drawable.ic_block_gray, R.drawable.ic_block_gray,
             R.drawable.ic_block_gray, R.drawable.ic_block_gray};
