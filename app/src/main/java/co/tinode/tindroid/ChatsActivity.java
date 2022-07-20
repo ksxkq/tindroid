@@ -22,14 +22,11 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentActivity;
 import androidx.fragment.app.FragmentManager;
-import androidx.fragment.app.FragmentPagerAdapter;
+import androidx.fragment.app.FragmentStatePagerAdapter;
 import androidx.fragment.app.FragmentTransaction;
 import androidx.viewpager.widget.ViewPager;
-import androidx.viewpager2.adapter.FragmentStateAdapter;
-import androidx.viewpager2.widget.ViewPager2;
 
 import com.flyco.tablayout.CommonTabLayout;
-import com.flyco.tablayout.SegmentTabLayout;
 import com.flyco.tablayout.listener.CustomTabEntity;
 import com.flyco.tablayout.listener.OnTabSelectListener;
 
@@ -74,7 +71,7 @@ public class ChatsActivity extends AppCompatActivity
     private Account mAccount;
 
     private CommonTabLayout mSegmentTabLayout;
-    private ViewPager2 mViewPage;
+    private ViewPager mViewPage; // ViewPage2 has problem with scroll vertical and horizontal
     private String[] mTitles = {"首页", "消息", "联系人", "更多"};
     private int[] mIconUnselectIds = {
             R.drawable.ic_block_gray, R.drawable.ic_block_gray,
@@ -117,11 +114,22 @@ public class ChatsActivity extends AppCompatActivity
             }
         });
 
-        mViewPage.setAdapter(new MyPagerAdapter(this));
-        mViewPage.registerOnPageChangeCallback(new ViewPager2.OnPageChangeCallback() {
+        mViewPage.setOffscreenPageLimit(4);
+        mViewPage.setAdapter(new MyPagerAdapter(getSupportFragmentManager()));
+        mViewPage.addOnPageChangeListener(new ViewPager.OnPageChangeListener() {
+            @Override
+            public void onPageScrolled(int position, float positionOffset, int positionOffsetPixels) {
+
+            }
+
             @Override
             public void onPageSelected(int position) {
                 mSegmentTabLayout.setCurrentTab(position);
+            }
+
+            @Override
+            public void onPageScrollStateChanged(int state) {
+
             }
         });
 
@@ -406,20 +414,20 @@ public class ChatsActivity extends AppCompatActivity
         }
     }
 
-    private class MyPagerAdapter extends FragmentStateAdapter {
+    private class MyPagerAdapter extends FragmentStatePagerAdapter {
 
-        public MyPagerAdapter(@NonNull FragmentActivity fragmentActivity) {
-            super(fragmentActivity);
+        public MyPagerAdapter(@NonNull FragmentManager fm) {
+            super(fm);
         }
 
         @NonNull
         @Override
-        public Fragment createFragment(int position) {
+        public Fragment getItem(int position) {
             return mFragments.get(position);
         }
 
         @Override
-        public int getItemCount() {
+        public int getCount() {
             return mFragments.size();
         }
     }
