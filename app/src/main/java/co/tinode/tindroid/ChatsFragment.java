@@ -28,6 +28,7 @@ import androidx.recyclerview.selection.SelectionTracker;
 import androidx.recyclerview.selection.StorageStrategy;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
+
 import co.tinode.tindroid.media.VxCard;
 import co.tinode.tindroid.widgets.CircleProgressView;
 import co.tinode.tindroid.widgets.HorizontalListDivider;
@@ -227,7 +228,7 @@ public class ChatsFragment extends Fragment implements ActionMode.Callback, UiUt
         menu.clear();
 
         inflater.inflate(R.menu.menu_chats, menu);
-        menu.setGroupVisible(R.id.not_archive, !mIsArchive);
+//        menu.setGroupVisible(R.id.not_archive, !mIsArchive);
     }
 
     /**
@@ -240,15 +241,19 @@ public class ChatsFragment extends Fragment implements ActionMode.Callback, UiUt
             return true;
         }
         int id = item.getItemId();
-        if (id == R.id.action_show_archive) {
-            activity.showFragment(ChatsActivity.FRAGMENT_ARCHIVE, null);
+        if (id == R.id.action_add) {
+            // todo
             return true;
-        } else if (id == R.id.action_settings) {
-            activity.showFragment(ChatsActivity.FRAGMENT_ACCOUNT_INFO, null);
-            return true;
-        } else if (id == R.id.action_offline) {
-            Cache.getTinode().reconnectNow(true, false, false);
         }
+//        if (id == R.id.action_show_archive) {
+//            activity.showFragment(ChatsActivity.FRAGMENT_ARCHIVE, null);
+//            return true;
+//        } else if (id == R.id.action_settings) {
+//            activity.showFragment(ChatsActivity.FRAGMENT_ACCOUNT_INFO, null);
+//            return true;
+//        } else if (id == R.id.action_offline) {
+//            Cache.getTinode().reconnectNow(true, false, false);
+//        }
         return false;
     }
 
