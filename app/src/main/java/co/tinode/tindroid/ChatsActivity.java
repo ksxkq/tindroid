@@ -97,7 +97,7 @@ public class ChatsActivity extends AppCompatActivity
         mViewPage = findViewById(R.id.viewPage);
 
         mFragments.add(new ChatsFragment());
-        mFragments.add(TextFragment.newInstance(mTitles[1]));
+        mFragments.add(WebViewFragment.newInstance("https://www.baidu.com/"));
         mFragments.add(TextFragment.newInstance(mTitles[2]));
         mFragments.add(TextFragment.newInstance(mTitles[3]));
 
