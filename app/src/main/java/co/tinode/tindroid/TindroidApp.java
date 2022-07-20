@@ -116,7 +116,7 @@ public class TindroidApp extends Application implements DefaultLifecycleObserver
     }
 
     // Detect if the code is running in an emulator.
-    // Used mostly for convenience to use correct server address i.e. 10.0.2.2:6060 vs sandbox.tinode.co and
+    // Used mostly for convenience to use correct server address i.e. 10.0.2.2:6060 vs web.tinode.co and
     // to enable/disable Crashlytics. It's OK if it's imprecise.
     public static boolean isEmulator() {
         return Build.FINGERPRINT.startsWith("sdk_gphone_x86")
