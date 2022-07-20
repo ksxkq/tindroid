@@ -96,7 +96,7 @@ public class ChatsActivity extends AppCompatActivity
         mSegmentTabLayout = findViewById(R.id.bottomBar);
         mViewPage = findViewById(R.id.viewPage);
 
-        mFragments.add(TextFragment.newInstance(mTitles[0]));
+        mFragments.add(new ChatsFragment());
         mFragments.add(TextFragment.newInstance(mTitles[1]));
         mFragments.add(TextFragment.newInstance(mTitles[2]));
         mFragments.add(TextFragment.newInstance(mTitles[3]));
