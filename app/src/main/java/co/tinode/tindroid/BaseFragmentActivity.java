@@ -36,7 +36,7 @@ public abstract class BaseFragmentActivity extends AppCompatActivity {
     protected void initToolbar(String title) {
         Toolbar mToolbarView = findViewById(R.id.toolbar);
         mToolbarView.setTitle(title);
-        mToolbarView.setBackgroundColor(getResources().getColor(R.color.white));
+        mToolbarView.setBackgroundColor(getResources().getColor(R.color.bg_toolbar));
         setSupportActionBar(mToolbarView);
         final ActionBar actionBar = getSupportActionBar();
         if (actionBar != null) {

@@ -77,6 +77,8 @@
 
     <color name="colorImagePlaceholder">#CCCCCC</color>
 
+    <color name="bg_toolbar">@color/white</color>
+
     <!-- Background colors for LetterTileDrawables. -->
     <array name="letter_tile_colors_light">
         <item>#ef9a9a</item>

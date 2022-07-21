@@ -163,6 +163,7 @@ public class UiUtils {
         if (toolbar == null) {
             return;
         }
+        toolbar.setBackgroundColor(activity.getResources().getColor(R.color.bg_toolbar));
 
         activity.runOnUiThread(() -> {
             if (!TextUtils.isEmpty(topicName)) {
