@@ -186,7 +186,6 @@ public class UiUtils {
                 }
                 constructToolbarLogo(activity, pub, topicName, showOnline, deleted);
             } else {
-                toolbar.setTitle(R.string.app_name);
                 toolbar.setSubtitle(null);
                 toolbar.setLogo(null);
             }

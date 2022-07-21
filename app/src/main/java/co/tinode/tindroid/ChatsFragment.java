@@ -89,7 +89,6 @@ public class ChatsFragment extends Fragment implements ActionMode.Callback, UiUt
         } else {
             if (bar != null) {
                 bar.setDisplayHomeAsUpEnabled(false);
-                bar.setTitle(R.string.app_name);
             }
             view.findViewById(R.id.startNewChat).setOnClickListener(view1 -> {
                 Intent intent = new Intent(activity, StartChatActivity.class);

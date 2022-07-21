@@ -19,6 +19,7 @@ import java.util.List;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.appcompat.widget.Toolbar;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentActivity;
 import androidx.fragment.app.FragmentManager;
@@ -70,9 +71,10 @@ public class ChatsActivity extends AppCompatActivity
 
     private Account mAccount;
 
+    private Toolbar mToolbar;
     private CommonTabLayout mSegmentTabLayout;
     private ViewPager mViewPage; // ViewPage2 has problem with scroll vertical and horizontal
-    private String[] mTitles = {"消息", "通讯录", "发现", "我"};
+    private int[] mTitles = {R.string.tab_message, R.string.tab_contact, R.string.tab_discover, R.string.tab_me};
     private int[] mIconUnselectIds = {
             R.drawable.ic_block_gray, R.drawable.ic_block_gray,
             R.drawable.ic_block_gray, R.drawable.ic_block_gray};
@@ -89,7 +91,8 @@ public class ChatsActivity extends AppCompatActivity
 
         setContentView(R.layout.activity_contacts);
 
-        setSupportActionBar(findViewById(R.id.toolbar));
+        mToolbar = findViewById(R.id.toolbar);
+        setSupportActionBar(mToolbar);
 
         mSegmentTabLayout = findViewById(R.id.bottomBar);
         mViewPage = findViewById(R.id.viewPage);
@@ -100,13 +103,14 @@ public class ChatsActivity extends AppCompatActivity
         mFragments.add(new AccountInfoFragment());
 
         for (int i = 0; i < mTitles.length; i++) {
-            mTabEntities.add(new TabEntity(mTitles[i], mIconSelectIds[i], mIconUnselectIds[i]));
+            mTabEntities.add(new TabEntity(getResources().getString(mTitles[i]), mIconSelectIds[i], mIconUnselectIds[i]));
         }
         mSegmentTabLayout.setTabData(mTabEntities);
         mSegmentTabLayout.setOnTabSelectListener(new OnTabSelectListener() {
             @Override
             public void onTabSelect(int position) {
                 mViewPage.setCurrentItem(position, false);
+                mToolbar.setTitle(mTitles[position]);
             }
 
             @Override
@@ -126,6 +130,7 @@ public class ChatsActivity extends AppCompatActivity
             @Override
             public void onPageSelected(int position) {
                 mSegmentTabLayout.setCurrentTab(position);
+                mToolbar.setTitle(mTitles[position]);
             }
 
             @Override
@@ -161,8 +166,6 @@ public class ChatsActivity extends AppCompatActivity
         mTinodeListener = new ContactsEventListener(tinode.isConnected());
         tinode.addListener(mTinodeListener);
 
-        UiUtils.setupToolbar(this, null, null, false, null, false);
-
         if (!mMeTopic.isAttached()) {
             toggleProgressIndicator(true);
         }
@@ -177,6 +180,9 @@ public class ChatsActivity extends AppCompatActivity
         if (!TextUtils.isEmpty(tag)) {
             showFragment(tag, null);
         }
+
+        // overwrite title
+        mToolbar.setTitle(mTitles[mSegmentTabLayout.getCurrentTab()]);
     }
 
     private void datasetChanged() {
