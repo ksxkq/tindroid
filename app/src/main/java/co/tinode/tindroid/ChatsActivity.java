@@ -85,6 +85,7 @@ public class ChatsActivity extends AppCompatActivity
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        UiUtils.initStatusBar(this);
 
         setContentView(R.layout.activity_contacts);
 

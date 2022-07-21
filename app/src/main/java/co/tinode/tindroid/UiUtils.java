@@ -4,6 +4,7 @@ import android.Manifest;
 import android.accounts.Account;
 import android.accounts.AccountManager;
 import android.annotation.SuppressLint;
+import android.annotation.TargetApi;
 import android.app.Activity;
 import android.content.ContentResolver;
 import android.content.ContentUris;
@@ -24,6 +25,7 @@ import android.graphics.drawable.ColorDrawable;
 import android.graphics.drawable.Drawable;
 import android.graphics.drawable.LayerDrawable;
 import android.net.Uri;
+import android.os.Build;
 import android.os.Bundle;
 import android.os.Environment;
 import android.os.Parcelable;
@@ -36,6 +38,8 @@ import android.util.Patterns;
 import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.View;
+import android.view.Window;
+import android.view.WindowManager;
 import android.webkit.MimeTypeMap;
 import android.widget.Button;
 import android.widget.CheckedTextView;
@@ -77,6 +81,7 @@ import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
 
 import androidx.localbroadcastmanager.content.LocalBroadcastManager;
+
 import co.tinode.tindroid.account.ContactsManager;
 import co.tinode.tindroid.account.Utils;
 import co.tinode.tindroid.db.BaseDb;
@@ -239,7 +244,7 @@ public class UiUtils {
                     (new RoundImageDrawable(res, bmp)) :
                     ResourcesCompat.getDrawable(res, R.drawable.disk, null);
             layers.setUrlByLayerId(res, LOGO_LAYER_AVATAR, Cache.getTinode().toAbsoluteURL(ref).toString(),
-                placeholder, R.drawable.ic_broken_image_round);
+                    placeholder, R.drawable.ic_broken_image_round);
         }
 
         if (online != null) {
@@ -379,7 +384,7 @@ public class UiUtils {
 
     static LinkedList<String> getMissingPermissions(Context context, String[] permissions) {
         LinkedList<String> missing = new LinkedList<>();
-        for (String permission: permissions) {
+        for (String permission : permissions) {
             if (ActivityCompat.checkSelfPermission(context, permission) != PackageManager.PERMISSION_GRANTED) {
                 missing.add(permission);
             }
@@ -523,7 +528,7 @@ public class UiUtils {
     }
 
     static Intent avatarSelectorIntent(@NonNull final Activity activity,
-                                           @Nullable ActivityResultLauncher<String[]> missingPermissionsLauncher) {
+                                       @Nullable ActivityResultLauncher<String[]> missingPermissionsLauncher) {
         if (missingPermissionsLauncher != null) {
             LinkedList<String> request = getMissingPermissions(activity,
                     new String[]{Manifest.permission.CAMERA, Manifest.permission.READ_EXTERNAL_STORAGE});
@@ -571,7 +576,7 @@ public class UiUtils {
             if (photo != null) {
                 // Image from the camera.
                 args.putParcelable(AttachmentHandler.ARG_SRC_BITMAP, photo);
-            } else if (uri != null){
+            } else if (uri != null) {
                 // Image from the gallery.
                 args.putParcelable(AttachmentHandler.ARG_LOCAL_URI, data.getData());
             }
@@ -589,8 +594,9 @@ public class UiUtils {
 
     /**
      * Ensure that the bitmap is square and no larger than the given max size.
-     * @param bmp       bitmap to scale
-     * @param size   maximum linear size of the bitmap.
+     *
+     * @param bmp  bitmap to scale
+     * @param size maximum linear size of the bitmap.
      * @return scaled bitmap or original, it it does not need ot be cropped or scaled.
      */
     @NonNull
@@ -959,8 +965,7 @@ public class UiUtils {
         };
         final AlertDialog.Builder builder = new AlertDialog.Builder(activity);
         final LayoutInflater inflater = LayoutInflater.from(builder.getContext());
-        @SuppressLint("InflateParams")
-        final LinearLayout editor = (LinearLayout) inflater.inflate(R.layout.dialog_edit_permissions, null);
+        @SuppressLint("InflateParams") final LinearLayout editor = (LinearLayout) inflater.inflate(R.layout.dialog_edit_permissions, null);
         builder
                 .setView(editor)
                 .setTitle(R.string.edit_permissions);
@@ -1049,9 +1054,10 @@ public class UiUtils {
 
     /**
      * Send request to server with a new avatar after optionally uploading the avatar if required.
+     *
      * @param topic topic to update
-     * @param bmp new avatar
-     * @param <T> type of the topic
+     * @param bmp   new avatar
+     * @param <T>   type of the topic
      * @return result of the request to the server.
      */
     @SuppressWarnings("UnusedReturnValue")
@@ -1490,5 +1496,20 @@ public class UiUtils {
             });
             return null;
         }
+    }
+
+    @TargetApi(Build.VERSION_CODES.LOLLIPOP)
+    public static void initStatusBar(Activity activity) {
+        if (activity == null) {
+            return;
+        }
+        Window window = activity.getWindow();
+        if (window == null) {
+            return;
+        }
+        window.clearFlags(WindowManager.LayoutParams.FLAG_TRANSLUCENT_STATUS);
+        window.addFlags(WindowManager.LayoutParams.FLAG_DRAWS_SYSTEM_BAR_BACKGROUNDS);
+        window.setStatusBarColor(activity.getResources().getColor(R.color.white));
+        window.getDecorView().setSystemUiVisibility(View.SYSTEM_UI_FLAG_LIGHT_STATUS_BAR);
     }
 }
