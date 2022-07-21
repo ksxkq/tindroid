@@ -12,6 +12,7 @@ public class AccountInfoSettingActivity extends BaseFragmentActivity {
 
     static final String FRAGMENT_ACC_PERSONAL = "acc_personal";
     static final String FRAGMENT_ACC_NOTIFICATIONS = "acc_notifications";
+    static final String FRAGMENT_ACC_SECURITY = "acc_security";
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
@@ -28,6 +29,8 @@ public class AccountInfoSettingActivity extends BaseFragmentActivity {
                 return new AccPersonalFragment();
             case FRAGMENT_ACC_NOTIFICATIONS:
                return new AccNotificationsFragment();
+            case FRAGMENT_ACC_SECURITY:
+                return new AccSecurityFragment();
         }
         return null;
     }
