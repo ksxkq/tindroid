@@ -129,8 +129,7 @@ public class AccountInfoFragment extends Fragment implements ChatsActivity.FormU
             if (activity == null || activity.isFinishing() || activity.isDestroyed()) {
                 return false;
             }
-
-//            ((ChatsActivity) activity).showFragment(ChatsActivity.FRAGMENT_ACC_PERSONAL, null);
+            AccountInfoSettingActivity.start(getActivity(), AccountInfoSettingActivity.FRAGMENT_ACC_PERSONAL, getResources().getString(R.string.edit_account));
             return true;
         }
         return false;

@@ -178,7 +178,10 @@
 
         <activity
             android:name=".FindByIDActivity"
-            android:launchMode="singleTask"
+            android:theme="@style/AppMaterialTheme" />
+
+        <activity
+            android:name=".AccountInfoSettingActivity"
             android:theme="@style/AppMaterialTheme" />
 
         <activity
