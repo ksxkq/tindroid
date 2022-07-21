@@ -76,11 +76,11 @@ public class ChatsActivity extends AppCompatActivity
     private ViewPager mViewPage; // ViewPage2 has problem with scroll vertical and horizontal
     private int[] mTitles = {R.string.tab_message, R.string.tab_contact, R.string.tab_discover, R.string.tab_me};
     private int[] mIconUnselectIds = {
-            R.drawable.ic_block_gray, R.drawable.ic_block_gray,
-            R.drawable.ic_block_gray, R.drawable.ic_block_gray};
+            R.drawable.ic_tab_message_unselect, R.drawable.ic_tab_contact_unselect,
+            R.drawable.ic_tab_discover_unselcet, R.drawable.ic_tab_me_unselect};
     private int[] mIconSelectIds = {
-            R.drawable.ic_block_red, R.drawable.ic_block_red,
-            R.drawable.ic_block_red, R.drawable.ic_block_red};
+            R.drawable.ic_tab_message, R.drawable.ic_tab_contact,
+            R.drawable.ic_tab_discover, R.drawable.ic_tab_me};
     private ArrayList<CustomTabEntity> mTabEntities = new ArrayList<>();
     private ArrayList<Fragment> mFragments = new ArrayList<>();
 
