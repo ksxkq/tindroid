@@ -168,7 +168,7 @@ public class SignUpFragment extends Fragment
             bmp = null;
         }
         // This is called on the websocket thread.
-        tinode.connect(hostName, tls, false)
+        tinode.connect(hostName, false, false)
                 .thenApply(new PromisedReply.SuccessListener<ServerMessage>() {
                             @Override
                             public PromisedReply<ServerMessage> onSuccess(ServerMessage ignored_msg) {

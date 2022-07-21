@@ -33,7 +33,7 @@ android {
 
     buildTypes {
         debug {
-            resValue "string", "default_host_name", '"web.tinode.co"'
+            resValue "string", "default_host_name", '"10.40.64.60:6060"'
         }
         release {
             resValue "string", "default_host_name", '"api.tinode.co"'
