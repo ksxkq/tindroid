@@ -518,7 +518,7 @@ public class MessageActivity extends AppCompatActivity
         }
 
         int id = item.getItemId();
-        if (id == R.id.action_view_contact) {
+        if (id == R.id.action_info) {
             showFragment(FRAGMENT_INFO, null, true);
             return true;
         } else if (id == R.id.action_archive) {
@@ -532,14 +532,15 @@ public class MessageActivity extends AppCompatActivity
                 mTopic.updateArchived(false);
             }
             return true;
-        } else if (id == R.id.action_call) {
-            Intent intent = new Intent(getApplicationContext(), CallActivity.class);
-            intent.setAction(CallActivity.INTENT_ACTION_CALL_START);
-            intent.putExtra("topic", mTopicName);
-            intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_SINGLE_TOP);
-            startActivity(intent);
-            return true;
         }
+//        else if (id == R.id.action_call) {
+//            Intent intent = new Intent(getApplicationContext(), CallActivity.class);
+//            intent.setAction(CallActivity.INTENT_ACTION_CALL_START);
+//            intent.putExtra("topic", mTopicName);
+//            intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_SINGLE_TOP);
+//            startActivity(intent);
+//            return true;
+//        }
 
         return false;
     }
