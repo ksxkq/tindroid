@@ -39,14 +39,14 @@ public class AccountInfoFragment extends Fragment implements ChatsActivity.FormU
         }
         // Inflate the fragment layout
         View fragment = inflater.inflate(R.layout.fragment_account_info, container, false);
-        final ActionBar bar = activity.getSupportActionBar();
-        if (bar != null) {
-            bar.setDisplayHomeAsUpEnabled(true);
-        }
-
-        Toolbar toolbar = activity.findViewById(R.id.toolbar);
-        toolbar.setTitle(R.string.account_settings);
-        toolbar.setNavigationOnClickListener(v -> activity.getSupportFragmentManager().popBackStack());
+//        final ActionBar bar = activity.getSupportActionBar();
+//        if (bar != null) {
+//            bar.setDisplayHomeAsUpEnabled(true);
+//        }
+//
+//        Toolbar toolbar = activity.findViewById(R.id.toolbar);
+//        toolbar.setTitle(R.string.account_settings);
+//        toolbar.setNavigationOnClickListener(v -> activity.getSupportFragmentManager().popBackStack());
 
         fragment.findViewById(R.id.notifications).setOnClickListener(v ->
                 ((ChatsActivity) activity).showFragment(ChatsActivity.FRAGMENT_ACC_NOTIFICATIONS, null));
@@ -130,7 +130,7 @@ public class AccountInfoFragment extends Fragment implements ChatsActivity.FormU
                 return false;
             }
 
-            ((ChatsActivity) activity).showFragment(ChatsActivity.FRAGMENT_ACC_PERSONAL, null);
+//            ((ChatsActivity) activity).showFragment(ChatsActivity.FRAGMENT_ACC_PERSONAL, null);
             return true;
         }
         return false;
