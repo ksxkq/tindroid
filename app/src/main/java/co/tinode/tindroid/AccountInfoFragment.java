@@ -17,6 +17,7 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentActivity;
+
 import co.tinode.tindroid.media.VxCard;
 import co.tinode.tinodesdk.MeTopic;
 
@@ -49,7 +50,7 @@ public class AccountInfoFragment extends Fragment implements ChatsActivity.FormU
 //        toolbar.setNavigationOnClickListener(v -> activity.getSupportFragmentManager().popBackStack());
 
         fragment.findViewById(R.id.notifications).setOnClickListener(v ->
-                ((ChatsActivity) activity).showFragment(ChatsActivity.FRAGMENT_ACC_NOTIFICATIONS, null));
+                AccountInfoSettingActivity.start(getActivity(), AccountInfoSettingActivity.FRAGMENT_ACC_NOTIFICATIONS, R.string.notifications));
         fragment.findViewById(R.id.security).setOnClickListener(v ->
                 ((ChatsActivity) activity).showFragment(ChatsActivity.FRAGMENT_ACC_SECURITY, null));
         fragment.findViewById(R.id.help).setOnClickListener(v ->
@@ -129,7 +130,7 @@ public class AccountInfoFragment extends Fragment implements ChatsActivity.FormU
             if (activity == null || activity.isFinishing() || activity.isDestroyed()) {
                 return false;
             }
-            AccountInfoSettingActivity.start(getActivity(), AccountInfoSettingActivity.FRAGMENT_ACC_PERSONAL, getResources().getString(R.string.edit_account));
+            AccountInfoSettingActivity.start(getActivity(), AccountInfoSettingActivity.FRAGMENT_ACC_PERSONAL, R.string.edit_account);
             return true;
         }
         return false;
