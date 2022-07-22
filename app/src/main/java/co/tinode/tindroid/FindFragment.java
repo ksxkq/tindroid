@@ -188,96 +188,97 @@ public class FindFragment extends Fragment implements UiUtils.ProgressIndicator 
     @Override
     public void onCreateOptionsMenu(@NonNull Menu menu, @NonNull MenuInflater inflater) {
         menu.clear();
-        inflater.inflate(R.menu.menu_contacts, menu);
+        inflater.inflate(R.menu.menu_chats, menu); // keep same from chatfragment
+//        inflater.inflate(R.menu.menu_contacts, menu);
 
-        final FragmentActivity activity = getActivity();
-        if (activity == null || activity.isFinishing() || activity.isDestroyed()) {
-            return;
-        }
+//        final FragmentActivity activity = getActivity();
+//        if (activity == null || activity.isFinishing() || activity.isDestroyed()) {
+//            return;
+//        }
 
-        final SearchManager searchManager =
-                (SearchManager) activity.getSystemService(Activity.SEARCH_SERVICE);
+//        final SearchManager searchManager =
+//                (SearchManager) activity.getSystemService(Activity.SEARCH_SERVICE);
+//
+//        if (searchManager == null) {
+//            return;
+//        }
 
-        if (searchManager == null) {
-            return;
-        }
-
-        // Setting up SearchView
-
-        // Locate the search item
-        MenuItem searchItem = menu.findItem(R.id.action_search);
-
-        // Retrieves the SearchView from the search menu item
-        final SearchView searchView = (SearchView) searchItem.getActionView();
-        searchView.setQueryHint(getResources().getString(R.string.hint_search_tags));
-        // Assign searchable info to SearchView
-        searchView.setSearchableInfo(searchManager.getSearchableInfo(activity.getComponentName()));
-        searchView.setFocusable(true);
-        searchView.setFocusableInTouchMode(true);
-
-        // Set listeners for SearchView
-        searchView.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
-            private Handler mHandler;
-
-            @Override
-            public boolean onQueryTextSubmit(String queryText) {
-                if (mHandler != null) {
-                    mHandler.removeCallbacksAndMessages(null);
-                }
-
-                mSearchTerm = doSearch(queryText);
-
-                return true;
-            }
-
-            @Override
-            public boolean onQueryTextChange(final String queryText) {
-
-                if (mHandler == null) {
-                    mHandler = new Handler();
-                } else {
-                    mHandler.removeCallbacksAndMessages(null);
-                }
-
-                // Delay search in case of more input
-                mHandler.postDelayed(() -> mSearchTerm = doSearch(queryText), SEARCH_REQUEST_DELAY);
-                return true;
-            }
-        });
-
-        searchItem.setOnActionExpandListener(new MenuItem.OnActionExpandListener() {
-            @Override
-            public boolean onMenuItemActionExpand(MenuItem menuItem) {
-                searchView.setIconified(false);
-                searchView.requestFocus();
-                searchView.requestFocusFromTouch();
-                return true;
-            }
-
-            @Override
-            public boolean onMenuItemActionCollapse(MenuItem menuItem) {
-                searchView.clearFocus();
-                mSearchTerm = null;
-                return true;
-            }
-        });
-
-
-        if (mSearchTerm != null) {
-            // If search term is already set here then this fragment is
-            // being restored from a saved state and the search menu item
-            // needs to be expanded and populated again.
-
-            // Stores the search term (as it will be wiped out by
-            // onQueryTextChange() when the menu item is expanded).
-            final String savedSearchTerm = mSearchTerm;
-
-            // Expands the search menu item
-            searchItem.expandActionView();
-
-            // Sets the SearchView to the previous search string
-            searchView.setQuery(savedSearchTerm, false);
-        }
+//        // Setting up SearchView
+//
+//        // Locate the search item
+//        MenuItem searchItem = menu.findItem(R.id.action_search);
+//
+//        // Retrieves the SearchView from the search menu item
+//        final SearchView searchView = (SearchView) searchItem.getActionView();
+//        searchView.setQueryHint(getResources().getString(R.string.hint_search_tags));
+//        // Assign searchable info to SearchView
+//        searchView.setSearchableInfo(searchManager.getSearchableInfo(activity.getComponentName()));
+//        searchView.setFocusable(true);
+//        searchView.setFocusableInTouchMode(true);
+//
+//        // Set listeners for SearchView
+//        searchView.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
+//            private Handler mHandler;
+//
+//            @Override
+//            public boolean onQueryTextSubmit(String queryText) {
+//                if (mHandler != null) {
+//                    mHandler.removeCallbacksAndMessages(null);
+//                }
+//
+//                mSearchTerm = doSearch(queryText);
+//
+//                return true;
+//            }
+//
+//            @Override
+//            public boolean onQueryTextChange(final String queryText) {
+//
+//                if (mHandler == null) {
+//                    mHandler = new Handler();
+//                } else {
+//                    mHandler.removeCallbacksAndMessages(null);
+//                }
+//
+//                // Delay search in case of more input
+//                mHandler.postDelayed(() -> mSearchTerm = doSearch(queryText), SEARCH_REQUEST_DELAY);
+//                return true;
+//            }
+//        });
+//
+//        searchItem.setOnActionExpandListener(new MenuItem.OnActionExpandListener() {
+//            @Override
+//            public boolean onMenuItemActionExpand(MenuItem menuItem) {
+//                searchView.setIconified(false);
+//                searchView.requestFocus();
+//                searchView.requestFocusFromTouch();
+//                return true;
+//            }
+//
+//            @Override
+//            public boolean onMenuItemActionCollapse(MenuItem menuItem) {
+//                searchView.clearFocus();
+//                mSearchTerm = null;
+//                return true;
+//            }
+//        });
+//
+//
+//        if (mSearchTerm != null) {
+//            // If search term is already set here then this fragment is
+//            // being restored from a saved state and the search menu item
+//            // needs to be expanded and populated again.
+//
+//            // Stores the search term (as it will be wiped out by
+//            // onQueryTextChange() when the menu item is expanded).
+//            final String savedSearchTerm = mSearchTerm;
+//
+//            // Expands the search menu item
+//            searchItem.expandActionView();
+//
+//            // Sets the SearchView to the previous search string
+//            searchView.setQuery(savedSearchTerm, false);
+//        }
     }
 
     @Override
@@ -289,29 +290,34 @@ public class FindFragment extends Fragment implements UiUtils.ProgressIndicator 
 
         Intent intent;
         int id = item.getItemId();
-        if (id == R.id.action_add_contact) {
-            intent = new Intent(Intent.ACTION_INSERT, ContactsContract.Contacts.CONTENT_URI);
-            if (intent.resolveActivity(activity.getPackageManager()) != null) {
-                startActivity(intent);
-            } else {
-                Toast.makeText(activity, R.string.action_failed, Toast.LENGTH_LONG).show();
-            }
-            return true;
-        } else if (id == R.id.action_invite) {
-            ShareActionProvider provider = (ShareActionProvider) MenuItemCompat.getActionProvider(item);
-            if (provider == null) {
-                return false;
-            }
-            intent = new Intent(Intent.ACTION_SEND);
-            intent.setType("text/plain");
-            intent.putExtra(Intent.EXTRA_SUBJECT, activity.getResources().getString(R.string.tinode_invite_subject));
-            intent.putExtra(Intent.EXTRA_TEXT, activity.getResources().getString(R.string.tinode_invite_body));
-            provider.setShareIntent(intent);
-            return true;
-        } else if (id == R.id.action_offline) {
-            Cache.getTinode().reconnectNow(true, false, false);
+        if (id == R.id.action_add) {
+            startActivity(new Intent(getActivity(), FindByIDActivity.class));
             return true;
         }
+
+//        if (id == R.id.action_add_contact) {
+//            intent = new Intent(Intent.ACTION_INSERT, ContactsContract.Contacts.CONTENT_URI);
+//            if (intent.resolveActivity(activity.getPackageManager()) != null) {
+//                startActivity(intent);
+//            } else {
+//                Toast.makeText(activity, R.string.action_failed, Toast.LENGTH_LONG).show();
+//            }
+//            return true;
+//        } else if (id == R.id.action_invite) {
+//            ShareActionProvider provider = (ShareActionProvider) MenuItemCompat.getActionProvider(item);
+//            if (provider == null) {
+//                return false;
+//            }
+//            intent = new Intent(Intent.ACTION_SEND);
+//            intent.setType("text/plain");
+//            intent.putExtra(Intent.EXTRA_SUBJECT, activity.getResources().getString(R.string.tinode_invite_subject));
+//            intent.putExtra(Intent.EXTRA_TEXT, activity.getResources().getString(R.string.tinode_invite_body));
+//            provider.setShareIntent(intent);
+//            return true;
+//        } else if (id == R.id.action_offline) {
+//            Cache.getTinode().reconnectNow(true, false, false);
+//            return true;
+//        }
 
         return false;
     }
