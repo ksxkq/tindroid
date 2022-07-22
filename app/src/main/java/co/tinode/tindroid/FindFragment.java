@@ -135,35 +135,34 @@ public class FindFragment extends Fragment implements UiUtils.ProgressIndicator 
             return;
         }
 
-        // todo not need for now 2022/07/20
-//        Cache.attachFndTopic(mFndListener)
-//                .thenApply(new PromisedReply.SuccessListener<ServerMessage>() {
-//                    @Override
-//                    public PromisedReply<ServerMessage> onSuccess(ServerMessage result) {
-//                        final FragmentActivity activity = getActivity();
-//                        if (activity == null || activity.isFinishing() || activity.isDestroyed()) {
-//                            return null;
-//                        }
-//
-//                        mAdapter.resetFound(activity, mSearchTerm);
-//                        // Refresh cursor.
-//                        activity.runOnUiThread(() -> restartLoader(activity, mSearchTerm));
-//                        return null;
-//                    }
-//                })
-//                .thenCatch(new UiUtils.ToastFailureListener(getActivity()))
-//                .thenApply(new PromisedReply.SuccessListener<ServerMessage>() {
-//                    @Override
-//                    public PromisedReply<ServerMessage> onSuccess(ServerMessage result) {
-//                        final FragmentActivity activity = getActivity();
-//                        if (activity == null || activity.isFinishing() || activity.isDestroyed()) {
-//                            return null;
-//                        }
-//                        // Load local contacts even if there is no connection.
-//                        activity.runOnUiThread(() -> restartLoader(activity, mSearchTerm));
-//                        return null;
-//                    }
-//                });
+        Cache.attachFndTopic(mFndListener)
+                .thenApply(new PromisedReply.SuccessListener<ServerMessage>() {
+                    @Override
+                    public PromisedReply<ServerMessage> onSuccess(ServerMessage result) {
+                        final FragmentActivity activity = getActivity();
+                        if (activity == null || activity.isFinishing() || activity.isDestroyed()) {
+                            return null;
+                        }
+
+                        mAdapter.resetFound(activity, mSearchTerm);
+                        // Refresh cursor.
+                        activity.runOnUiThread(() -> restartLoader(activity, mSearchTerm));
+                        return null;
+                    }
+                })
+                .thenCatch(new UiUtils.ToastFailureListener(getActivity()))
+                .thenApply(new PromisedReply.SuccessListener<ServerMessage>() {
+                    @Override
+                    public PromisedReply<ServerMessage> onSuccess(ServerMessage result) {
+                        final FragmentActivity activity = getActivity();
+                        if (activity == null || activity.isFinishing() || activity.isDestroyed()) {
+                            return null;
+                        }
+                        // Load local contacts even if there is no connection.
+                        activity.runOnUiThread(() -> restartLoader(activity, mSearchTerm));
+                        return null;
+                    }
+                });
     }
 
     @Override
