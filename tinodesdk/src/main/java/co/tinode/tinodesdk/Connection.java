@@ -242,6 +242,7 @@ public class Connection extends WebSocketClient {
         if (mListener != null) {
             mListener.onMessage(this, message);
         }
+        Log.d("kkk", "onMessage " + message);
     }
 
     @Override
