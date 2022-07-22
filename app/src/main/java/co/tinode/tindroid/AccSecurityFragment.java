@@ -46,17 +46,8 @@ public class AccSecurityFragment extends Fragment implements ChatsActivity.FormU
             return null;
         }
         // Inflate the fragment layout
-        View fragment = inflater.inflate(R.layout.fragment_acc_security, container, false);
-        final ActionBar bar = activity.getSupportActionBar();
-        if (bar != null) {
-            bar.setDisplayHomeAsUpEnabled(true);
-        }
 
-        Toolbar toolbar = activity.findViewById(R.id.toolbar);
-        toolbar.setTitle(R.string.security);
-        toolbar.setNavigationOnClickListener(v -> activity.getSupportFragmentManager().popBackStack());
-
-        return fragment;
+        return inflater.inflate(R.layout.fragment_acc_security, container, false);
     }
 
     @Override

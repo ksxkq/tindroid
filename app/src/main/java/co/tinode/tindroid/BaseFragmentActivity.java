@@ -1,6 +1,7 @@
 package co.tinode.tindroid;
 
 import android.os.Bundle;
+import android.view.MenuItem;
 
 import androidx.annotation.LayoutRes;
 import androidx.annotation.Nullable;
@@ -46,6 +47,15 @@ public abstract class BaseFragmentActivity extends AppCompatActivity {
             actionBar.setDisplayUseLogoEnabled(false);
             actionBar.setHomeButtonEnabled(true);
         }
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        if (item.getItemId() == android.R.id.home) {
+            onBackPressed();
+            return true;
+        }
+        return super.onOptionsItemSelected(item);
     }
 
     abstract Fragment getFragment();

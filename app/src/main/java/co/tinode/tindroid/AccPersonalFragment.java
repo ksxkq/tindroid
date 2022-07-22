@@ -78,17 +78,7 @@ public class AccPersonalFragment extends Fragment
             return null;
         }
         // Inflate the fragment layout
-        View fragment = inflater.inflate(R.layout.fragment_acc_personal, container, false);
-        final ActionBar bar = activity.getSupportActionBar();
-        if (bar != null) {
-            bar.setDisplayHomeAsUpEnabled(true);
-        }
-
-        Toolbar toolbar = activity.findViewById(R.id.toolbar);
-        toolbar.setTitle(R.string.general);
-        toolbar.setNavigationOnClickListener(v -> activity.getSupportFragmentManager().popBackStack());
-
-        return fragment;
+        return inflater.inflate(R.layout.fragment_acc_personal, container, false);
     }
 
     @Override
@@ -343,6 +333,6 @@ public class AccPersonalFragment extends Fragment
             .thenCatch(new UiUtils.ToastFailureListener(activity));
             return true;
         }
-        return false;
+        return super.onOptionsItemSelected(item);
     }
 }
