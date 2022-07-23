@@ -101,6 +101,6 @@ public class ContactFragment extends Fragment {
     private void update() {
         newTopics.clear();
         newTopics.addAll(Cache.getTinode().getFilteredTopics(t ->
-                t.getTopicType().match(ComTopic.TopicType.USER)));
+                t.getTopicType().match(ComTopic.TopicType.USER) && t.getPub() != null));
     }
 }
