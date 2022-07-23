@@ -129,7 +129,11 @@ public class ChatsActivity extends AppCompatActivity
 
             @Override
             public void onPageSelected(int position) {
+                Fragment fragment = mFragments.get(position);
                 mSegmentTabLayout.setCurrentTab(position);
+                if (fragment instanceof ContactFragment) {
+                    ((ContactFragment) fragment).updateData();
+                }
                 mToolbar.setTitle(mTitles[position]);
             }
 

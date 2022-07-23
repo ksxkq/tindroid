@@ -29,6 +29,7 @@ import co.tinode.tinodesdk.ComTopic;
 public class ContactFragment extends Fragment {
 
     private RecyclerView recyclerView;
+    private RecyclerView.Adapter<ContactViewHolder> contactViewHolderAdapter;
     private List<ComTopic<VxCard>> newTopics = new ArrayList<>();
 
     @Nullable
@@ -40,11 +41,10 @@ public class ContactFragment extends Fragment {
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         setHasOptionsMenu(true);
-        update();
 
         recyclerView = view.findViewById(R.id.chat_list);
         recyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
-        recyclerView.setAdapter(new RecyclerView.Adapter<ContactViewHolder>() {
+        contactViewHolderAdapter = new RecyclerView.Adapter<ContactViewHolder>() {
             @NonNull
             @Override
             public ContactViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
@@ -84,7 +84,9 @@ public class ContactFragment extends Fragment {
             public int getItemCount() {
                 return newTopics.size();
             }
-        });
+        };
+        recyclerView.setAdapter(contactViewHolderAdapter);
+        updateData();
     }
 
     static class ContactViewHolder extends RecyclerView.ViewHolder {
@@ -103,10 +105,13 @@ public class ContactFragment extends Fragment {
 
     }
 
-    private void update() {
+    public void updateData() {
         newTopics.clear();
         newTopics.addAll(Cache.getTinode().getFilteredTopics(t ->
                 t.getTopicType().match(ComTopic.TopicType.USER) && t.getPub() != null));
+        if (contactViewHolderAdapter != null) {
+            contactViewHolderAdapter.notifyDataSetChanged();
+        }
     }
 
     @Override
