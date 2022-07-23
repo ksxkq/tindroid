@@ -115,6 +115,12 @@ public class ContactFragment extends Fragment {
     }
 
     @Override
+    public void onResume() {
+        super.onResume();
+        updateData();
+    }
+
+    @Override
     public void onCreateOptionsMenu(@NonNull Menu menu, @NonNull MenuInflater inflater) {
         menu.clear();
         inflater.inflate(R.menu.menu_chats, menu); // keep same from chatfragment

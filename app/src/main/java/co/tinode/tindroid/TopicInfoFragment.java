@@ -136,6 +136,43 @@ public class TopicInfoFragment extends Fragment implements MessageActivity.DataS
         view.findViewById(R.id.buttonAddMembers).setOnClickListener(v ->
                 ((MessageActivity) activity).showFragment(MessageActivity.FRAGMENT_EDIT_MEMBERS,
                         null, true));
+
+        view.findViewById(R.id.del).setOnClickListener(v ->
+                showConfirmationDialog(R.string.leave_conversation,
+                        R.string.confirm_leave_topic));
+    }
+
+    private void showConfirmationDialog(
+            int title_id, int message_id) {
+        final FragmentActivity activity = getActivity();
+        if (activity == null) {
+            return;
+        }
+
+        final AlertDialog.Builder confirmBuilder = new AlertDialog.Builder(activity);
+        confirmBuilder.setNegativeButton(android.R.string.no, null);
+        if (title_id != 0) {
+            confirmBuilder.setTitle(title_id);
+        }
+        String message = activity.getString(message_id, null);
+        confirmBuilder.setMessage(message);
+
+        confirmBuilder.setPositiveButton(android.R.string.yes, (dialog, which) -> {
+            PromisedReply<ServerMessage> response = mTopic.delete(true);
+            if (response != null) {
+                response.thenApply(new PromisedReply.SuccessListener<ServerMessage>() {
+                    @Override
+                    public PromisedReply<ServerMessage> onSuccess(ServerMessage result) {
+                        Intent intent = new Intent(activity, ChatsActivity.class);
+                        intent.addFlags(Intent.FLAG_ACTIVITY_REORDER_TO_FRONT);
+                        startActivity(intent);
+                        activity.finish();
+                        return null;
+                    }
+                }).thenCatch(mFailureListener);
+            }
+        });
+        confirmBuilder.show();
     }
 
     @Override
