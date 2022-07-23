@@ -4,6 +4,9 @@ import android.content.Intent;
 import android.graphics.Typeface;
 import android.os.Bundle;
 import android.view.LayoutInflater;
+import android.view.Menu;
+import android.view.MenuInflater;
+import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
@@ -11,6 +14,7 @@ import android.widget.TextView;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
+import androidx.fragment.app.FragmentActivity;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
@@ -35,6 +39,7 @@ public class ContactFragment extends Fragment {
 
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
+        setHasOptionsMenu(true);
         update();
 
         recyclerView = view.findViewById(R.id.chat_list);
@@ -102,5 +107,26 @@ public class ContactFragment extends Fragment {
         newTopics.clear();
         newTopics.addAll(Cache.getTinode().getFilteredTopics(t ->
                 t.getTopicType().match(ComTopic.TopicType.USER) && t.getPub() != null));
+    }
+
+    @Override
+    public void onCreateOptionsMenu(@NonNull Menu menu, @NonNull MenuInflater inflater) {
+        menu.clear();
+        inflater.inflate(R.menu.menu_chats, menu); // keep same from chatfragment
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(@NonNull MenuItem item) {
+        final FragmentActivity activity = getActivity();
+        if (activity == null || activity.isFinishing() || activity.isDestroyed()) {
+            return true;
+        }
+
+        int id = item.getItemId();
+        if (id == R.id.action_add) {
+            startActivity(new Intent(getActivity(), FindByIDActivity.class));
+            return true;
+        }
+        return super.onOptionsItemSelected(item);
     }
 }
