@@ -74,8 +74,13 @@
         <item name="android:textColor">?android:textColorSecondary</item>
     </style>
 
+    <style name="preferenceTitle" >
+        <item name="android:textColor">@color/black</item>
+        <item name="android:textSize">16sp</item>
+    </style>
+
     <style name="sectionTitleStyle" parent="@android:style/TextAppearance.Medium">
-        <item name="android:textColor">@color/colorAccent</item>
+        <item name="android:textColor">@color/colorPrimary</item>
         <item name="android:textAllCaps">true</item>
         <item name="android:fontFeatureSettings">smcp</item>
         <item name="android:layout_marginBottom">@dimen/activity_padding</item>
