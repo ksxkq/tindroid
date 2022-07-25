@@ -341,5 +341,6 @@
     <string name="tab_contact">通讯录</string>
     <string name="tab_discover">发现</string>
     <string name="tab_me">我</string>
+    <string name="copied_to_clipboard">Copied to clipboard</string>
 
 </resources>
