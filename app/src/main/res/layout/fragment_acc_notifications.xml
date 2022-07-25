@@ -15,9 +15,10 @@
             android:layout_height="wrap_content"
             android:layout_weight="1"
             android:text="@string/incognito_mode_enabled"
-            android:textAppearance="?android:textAppearanceLarge" />
+            style="@style/preferenceTitle"/>
 
         <androidx.appcompat.widget.SwitchCompat
+            style="@style/switchStyle"
             android:id="@+id/switchIncognitoMode"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
@@ -38,9 +39,10 @@
             android:layout_height="wrap_content"
             android:layout_weight="1"
             android:text="@string/read_receipts_enabled"
-            android:textAppearance="?android:textAppearanceLarge" />
+            style="@style/preferenceTitle" />
 
         <androidx.appcompat.widget.SwitchCompat
+            style="@style/switchStyle"
             android:id="@+id/switchReadReceipts"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
@@ -61,9 +63,10 @@
             android:layout_height="wrap_content"
             android:layout_weight="1"
             android:text="@string/typing_notifications_enabled"
-            android:textAppearance="?android:textAppearanceLarge" />
+            style="@style/preferenceTitle" />
 
         <androidx.appcompat.widget.SwitchCompat
+            style="@style/switchStyle"
             android:id="@+id/switchTypingNotifications"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
