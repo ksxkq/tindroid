@@ -183,7 +183,6 @@ public class MessagesAdapter extends RecyclerView.Adapter<MessagesAdapter.ViewHo
             @Override
             public boolean onCreateActionMode(ActionMode actionMode, Menu menu) {
                 mActivity.getMenuInflater().inflate(R.menu.menu_message_selected, menu);
-                menu.findItem(R.id.action_delete).setVisible(!ComTopic.isChannel(mTopicName));
                 return true;
             }
 
@@ -318,7 +317,7 @@ public class MessagesAdapter extends RecyclerView.Adapter<MessagesAdapter.ViewHo
             notifyItemChanged(pos);
         }
 
-        updateSelectionMode();
+        updateSelectionMode(-1);
 
         if (sb.length() > 1) {
             // Delete unnecessary CR in the beginning.
@@ -363,19 +362,19 @@ public class MessagesAdapter extends RecyclerView.Adapter<MessagesAdapter.ViewHo
                             @Override
                             public PromisedReply<ServerMessage> onSuccess(ServerMessage result) {
                                 runLoader(false);
-                                mActivity.runOnUiThread(() -> updateSelectionMode());
+                                mActivity.runOnUiThread(() -> updateSelectionMode(-1));
                                 return null;
                             }
                         }, new UiUtils.ToastFailureListener(mActivity));
             } else if (discarded > 0) {
                 runLoader(false);
-                updateSelectionMode();
+                updateSelectionMode(-1);
             }
         }
     }
 
     private String messageFrom(StoredMessage msg) {
-        Tinode tinode =  Cache.getTinode();
+        Tinode tinode = Cache.getTinode();
         String uname = null;
         if (tinode.isMe(msg.from)) {
             MeTopic<VxCard> me = tinode.getMeTopic();
@@ -406,7 +405,7 @@ public class MessagesAdapter extends RecyclerView.Adapter<MessagesAdapter.ViewHo
         if (msg != null && msg.status == BaseDb.Status.SYNCED) {
             toggleSelectionAt(pos);
             notifyItemChanged(pos);
-            updateSelectionMode();
+            updateSelectionMode(pos);
             ThumbnailTransformer tr = new ThumbnailTransformer();
             Drafty replyContent = msg.content.replyContent(UiUtils.QUOTED_REPLY_LENGTH, 1).transform(tr);
             tr.completionPromise().thenApply(new PromisedReply.SuccessListener<Void>() {
@@ -429,7 +428,7 @@ public class MessagesAdapter extends RecyclerView.Adapter<MessagesAdapter.ViewHo
         if (msg != null) { // No need to check message status, OK to forward failed message.
             toggleSelectionAt(pos);
             notifyItemChanged(pos);
-            updateSelectionMode();
+            updateSelectionMode(pos);
 
             Bundle args = new Bundle();
             String uname = "➦ " + messageFrom(msg);
@@ -697,7 +696,7 @@ public class MessagesAdapter extends RecyclerView.Adapter<MessagesAdapter.ViewHo
 
             toggleSelectionAt(pos);
             notifyItemChanged(pos);
-            updateSelectionMode();
+            updateSelectionMode(pos);
 
             return true;
         });
@@ -706,7 +705,7 @@ public class MessagesAdapter extends RecyclerView.Adapter<MessagesAdapter.ViewHo
                 int pos = holder.getBindingAdapterPosition();
                 toggleSelectionAt(pos);
                 notifyItemChanged(pos);
-                updateSelectionMode();
+                updateSelectionMode(pos);
             } else {
                 animateMessageBubble(holder, m.isMine(), true);
                 int replySeq = UiUtils.parseSeqReference(m.getStringHeader("reply"));
@@ -825,7 +824,7 @@ public class MessagesAdapter extends RecyclerView.Adapter<MessagesAdapter.ViewHo
         }
     }
 
-    private void updateSelectionMode() {
+    private void updateSelectionMode(int pos) {
         if (mSelectionMode != null) {
             int selected = mSelectedItems.size();
             if (selected == 0) {
@@ -836,6 +835,10 @@ public class MessagesAdapter extends RecyclerView.Adapter<MessagesAdapter.ViewHo
                 Menu menu = mSelectionMode.getMenu();
                 menu.findItem(R.id.action_reply).setVisible(selected == 1);
                 menu.findItem(R.id.action_forward).setVisible(selected == 1);
+                if (pos != -1) {
+                    StoredMessage message = getMessage(pos);
+                    menu.findItem(R.id.action_delete).setVisible(selected == 1 && message != null && message.isMine());
+                }
             }
         }
     }
