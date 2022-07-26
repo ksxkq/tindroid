@@ -1613,6 +1613,10 @@ public class Tinode {
         return sendDeleteMessage(new ClientMessage(new MsgClientDel(getNextId(), topicName, seqId, hard)));
     }
 
+    public PromisedReply<ServerMessage> withdrawMessage(final String topicName, final MsgRange[] ranges, final boolean hard) {
+        return sendDeleteMessage(new ClientMessage(new MsgClientDel(getNextId(), topicName, ranges, hard,true)));
+    }
+
     /**
      * Low-level request to delete topic. Use {@link Topic#delete(boolean)} instead.
      *

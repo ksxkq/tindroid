@@ -1505,6 +1505,36 @@ public class Topic<DP, DR, SP, SR> implements LocalData, Comparable<Topic> {
     }
 
     /**
+     * !Modify
+     */
+    public PromisedReply<ServerMessage> withdrawMessages(final MsgRange[] ranges, final boolean hard) {
+        if (mStore != null) {
+            mStore.msgMarkToDelete(this, ranges, hard);
+        }
+
+        if (mAttached) {
+            return mTinode.withdrawMessage(getName(), ranges, hard).thenApply(new PromisedReply.SuccessListener<ServerMessage>() {
+                @Override
+                public PromisedReply<ServerMessage> onSuccess(ServerMessage result) {
+                    int delId = result.ctrl.getIntParam("del", 0);
+                    setClear(delId);
+                    setMaxDel(delId);
+                    if (mStore != null && delId > 0) {
+                        mStore.msgDelete(Topic.this, delId, ranges);
+                    }
+                    return null;
+                }
+            });
+        }
+
+        if (mTinode.isConnected()) {
+            return new PromisedReply<>(new NotSubscribedException());
+        }
+
+        return new PromisedReply<>(new NotConnectedException());
+    }
+
+    /**
      * Delete topic
      *
      * @param hard hard-delete topic.

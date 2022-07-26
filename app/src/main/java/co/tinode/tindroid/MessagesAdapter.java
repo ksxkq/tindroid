@@ -358,7 +358,7 @@ public class MessagesAdapter extends RecyclerView.Adapter<MessagesAdapter.ViewHo
             }
 
             if (!toDelete.isEmpty()) {
-                topic.delMessages(MsgRange.listToRanges(toDelete), true)
+                topic.withdrawMessages(MsgRange.listToRanges(toDelete), true)
                         .thenApply(new PromisedReply.SuccessListener<ServerMessage>() {
                             @Override
                             public PromisedReply<ServerMessage> onSuccess(ServerMessage result) {

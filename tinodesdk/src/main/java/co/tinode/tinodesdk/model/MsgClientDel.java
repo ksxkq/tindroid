@@ -35,6 +35,7 @@ public class MsgClientDel implements Serializable {
     public String user;
     public Credential cred;
     public Boolean hard;
+    public Boolean withdraw = false;
 
     public MsgClientDel() {}
 
@@ -54,6 +55,11 @@ public class MsgClientDel implements Serializable {
      */
     public MsgClientDel(String id, String topic, MsgRange[] ranges, boolean hard) {
         this(id, topic, STR_MSG, ranges, null, null, hard);
+    }
+
+    public MsgClientDel(String id, String topic, MsgRange[] ranges, boolean hard,boolean withdraw) {
+        this(id, topic, STR_MSG, ranges, null, null, hard);
+        this.withdraw = withdraw;
     }
 
 
