@@ -16,14 +16,16 @@ public class MsgClientHi implements Serializable {
     public final String ver;
     public final String ua;   // User Agent
     public final String dev;  // Device ID
+    public final String devicetype;
     public final String lang;
     public final Boolean bkg;
 
-    public MsgClientHi(String id, String version, String userAgent, String deviceId, String lang, Boolean background) {
+    public MsgClientHi(String id, String version, String userAgent, String deviceId, String devicetype, String lang, Boolean background) {
         this.id = id;
         this.ver = version;
         this.ua = userAgent;
         this.dev = deviceId;
+        this.devicetype = devicetype;
         this.lang = lang;
         this.bkg = background;
     }

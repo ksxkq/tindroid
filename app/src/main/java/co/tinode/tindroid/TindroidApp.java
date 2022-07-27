@@ -31,6 +31,10 @@ import android.text.TextUtils;
 import android.util.Log;
 
 import com.google.firebase.crashlytics.FirebaseCrashlytics;
+import com.mixpush.core.GetRegisterIdCallback;
+import com.mixpush.core.MixPushClient;
+import com.mixpush.core.MixPushLogger;
+import com.mixpush.core.MixPushPlatform;
 import com.squareup.picasso.OkHttp3Downloader;
 import com.squareup.picasso.Picasso;
 
@@ -40,6 +44,7 @@ import java.util.Date;
 import java.util.Map;
 
 import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
 import androidx.lifecycle.DefaultLifecycleObserver;
 import androidx.lifecycle.Lifecycle;
 import androidx.lifecycle.LifecycleObserver;
@@ -49,9 +54,11 @@ import androidx.lifecycle.ProcessLifecycleOwner;
 import androidx.localbroadcastmanager.content.LocalBroadcastManager;
 import androidx.preference.PreferenceManager;
 import androidx.work.WorkManager;
+
 import co.tinode.tindroid.account.ContactsObserver;
 import co.tinode.tindroid.account.Utils;
 import co.tinode.tindroid.db.BaseDb;
+import co.tinode.tindroid.push.MyPushReceiver;
 import co.tinode.tinodesdk.ComTopic;
 import co.tinode.tinodesdk.ServerResponseException;
 import co.tinode.tinodesdk.Storage;
@@ -174,16 +181,41 @@ public class TindroidApp extends Application implements DefaultLifecycleObserver
             Log.w(TAG, "Failed to retrieve app version", e);
         }
 
+        // register push
+        MixPushClient.getInstance().setLogger(new MixPushLogger() {
+            @Override
+            public void log(String tag, String content, Throwable throwable) {
+                Log.d("Tinode", content, throwable);
+            }
+
+            @Override
+            public void log(String tag, String content) {
+                Log.d("Tinode", content);
+            }
+        });
+        MixPushClient.getInstance().setPushReceiver(new MyPushReceiver());
+//        // 默认初始化5个推送平台（小米推送、华为推送、魅族推送、OPPO推送、VIVO推送），以小米推荐作为默认平台
+        MixPushClient.getInstance().getRegisterId(this, new GetRegisterIdCallback() {
+            @Override
+            public void callback(@Nullable MixPushPlatform platform) {
+                if (platform != null) {
+                    String platformName = platform.getPlatformName();
+                    String regId = platform.getRegId();
+                    sTinodeCache.setDeviceToken(regId, platformName);
+                }
+            }
+        });
+        MixPushClient.getInstance().register(this);
         // Disable Crashlytics for debug builds.
 //        FirebaseCrashlytics.getInstance().setCrashlyticsCollectionEnabled(!BuildConfig.DEBUG);
 
         BroadcastReceiver br = new BroadcastReceiver() {
             @Override
             public void onReceive(Context context, Intent intent) {
-                String token = intent.getStringExtra("token");
-                if (token != null && !token.equals("")) {
-                    sTinodeCache.setDeviceToken(token);
-                }
+//                String token = intent.getStringExtra("token");
+//                if (token != null && !token.equals("")) {
+//                    sTinodeCache.setDeviceToken(token,"");
+//                }
             }
         };
         LocalBroadcastManager.getInstance(this).registerReceiver(br, new IntentFilter("FCM_REFRESH_TOKEN"));

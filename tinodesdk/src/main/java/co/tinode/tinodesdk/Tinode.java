@@ -1,5 +1,6 @@
 package co.tinode.tinodesdk;
 
+import android.text.TextUtils;
 import android.util.Log;
 
 import com.fasterxml.jackson.annotation.JsonInclude;
@@ -158,6 +159,7 @@ public class Tinode {
     private String mServerVersion = null;
     private String mServerBuild = null;
     private String mDeviceToken = null;
+    private String mPlatform = null;
     private String mLanguage = null;
     private String mOsVersion;
     // Counter for the active background connections.
@@ -234,7 +236,14 @@ public class Tinode {
         mStore = store;
         if (mStore != null) {
             mMyUid = mStore.getMyUid();
-            mDeviceToken = mStore.getDeviceToken();
+            String tokenAndPlatform = mStore.getDeviceToken();
+            if (!TextUtils.isEmpty(tokenAndPlatform)) {
+                String[] tokens = tokenAndPlatform.split(",");
+                if (tokens.length == 2) {
+                    mDeviceToken = tokens[0];
+                    mPlatform = tokens[1];
+                }
+            }
         }
         // If mStore is fully initialized, this will load topics, otherwise noop
         loadTopics();
@@ -1098,26 +1107,34 @@ public class Tinode {
      *
      * @param token device token; to delete token pass NULL_VALUE
      */
-    public PromisedReply<ServerMessage> setDeviceToken(final String token) {
+    public PromisedReply<ServerMessage> setDeviceToken(final String token, final String platform) {
+        if (!TextUtils.isEmpty(token) && !TextUtils.isEmpty(platform)) {
+            mDeviceToken = token;
+            mPlatform = platform;
+        }
         if (!isAuthenticated()) {
             // Don't send a message if the client is not logged in.
             return new PromisedReply<>(new AuthenticationRequiredException());
         }
         // If token is not initialized, try to read one from storage.
-        if (mDeviceToken == null && mStore != null) {
-            mDeviceToken = mStore.getDeviceToken();
+        if ((mDeviceToken == null || mPlatform == null) && mStore != null) {
+            String tokenAndPlatform = mStore.getDeviceToken();
+            if (!TextUtils.isEmpty(tokenAndPlatform)) {
+                String[] tokens = tokenAndPlatform.split(",");
+                if (tokens.length == 2) {
+                    mDeviceToken = tokens[0];
+                    mPlatform = tokens[1];
+                }
+                mStore.saveDeviceToken(token + "," + platform);
+            }
         }
         // Check if token has changed
         if (mDeviceToken == null || !mDeviceToken.equals(token)) {
             // Cache token here assuming the call to server does not fail. If it fails clear the cached token.
             // This prevents multiple unnecessary calls to the server with the same token.
             mDeviceToken = NULL_VALUE.equals(token) ? null : token;
-            if (mStore != null) {
-                mStore.saveDeviceToken(mDeviceToken);
-            }
-
             ClientMessage msg = new ClientMessage(new MsgClientHi(getNextId(), null, null,
-                    token, null, null));
+                    token, platform,null, null));
             return sendWithPromise(msg, msg.hi.id).thenCatch(new PromisedReply.FailureListener<ServerMessage>() {
                 @Override
                 public PromisedReply<ServerMessage> onFailure(Exception err) {
@@ -1156,7 +1173,7 @@ public class Tinode {
     @SuppressWarnings("WeakerAccess")
     public PromisedReply<ServerMessage> hello(Boolean background) {
         ClientMessage msg = new ClientMessage(new MsgClientHi(getNextId(), VERSION, makeUserAgent(),
-                mDeviceToken, mLanguage, background));
+                mDeviceToken, mPlatform, mLanguage, background));
         return sendWithPromise(msg, msg.hi.id).thenApply(
                 new PromisedReply.SuccessListener<ServerMessage>() {
                     @Override
@@ -1480,7 +1497,7 @@ public class Tinode {
     public void logout() {
         // Best effort to clear device token on logout.
         // The app logs out even if the token request has failed.
-        setDeviceToken(NULL_VALUE).thenFinally(new PromisedReply.FinalListener() {
+        setDeviceToken(NULL_VALUE, null).thenFinally(new PromisedReply.FinalListener() {
             @Override
             public void onFinally() {
                 disconnect(false);
