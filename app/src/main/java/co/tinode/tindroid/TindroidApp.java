@@ -122,6 +122,10 @@ public class TindroidApp extends Application implements DefaultLifecycleObserver
         sTinodeCache.setServer(sServerHost, false);
     }
 
+    public static Tinode getTinodeCache() {
+        return sTinodeCache;
+    }
+
     // Detect if the code is running in an emulator.
     // Used mostly for convenience to use correct server address i.e. 10.0.2.2:6060 vs web.tinode.co and
     // to enable/disable Crashlytics. It's OK if it's imprecise.
@@ -195,16 +199,6 @@ public class TindroidApp extends Application implements DefaultLifecycleObserver
         });
         MixPushClient.getInstance().setPushReceiver(new MyPushReceiver());
 //        // 默认初始化5个推送平台（小米推送、华为推送、魅族推送、OPPO推送、VIVO推送），以小米推荐作为默认平台
-        MixPushClient.getInstance().getRegisterId(this, new GetRegisterIdCallback() {
-            @Override
-            public void callback(@Nullable MixPushPlatform platform) {
-                if (platform != null) {
-                    String platformName = platform.getPlatformName();
-                    String regId = platform.getRegId();
-                    sTinodeCache.setDeviceToken(regId, platformName);
-                }
-            }
-        });
         MixPushClient.getInstance().register(this);
         // Disable Crashlytics for debug builds.
 //        FirebaseCrashlytics.getInstance().setCrashlyticsCollectionEnabled(!BuildConfig.DEBUG);
