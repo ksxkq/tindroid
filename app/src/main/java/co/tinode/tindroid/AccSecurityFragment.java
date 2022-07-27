@@ -69,17 +69,17 @@ public class AccSecurityFragment extends Fragment implements ChatsActivity.FormU
             return false;
         });
 
-        if (countBanned.get() > 0) {
-            activity.findViewById(R.id.bannedUsersPanel).setVisibility(View.VISIBLE);
-            activity.findViewById(R.id.buttonBlockedUsers).setOnClickListener(v -> {
-                // Start ChatsActivity + Chats Fragment with Bundle "banned" = true.
-                Intent intent = new Intent(activity, ChatsActivity.class);
-                intent.putExtra(ChatsActivity.TAG_FRAGMENT_NAME, ChatsActivity.FRAGMENT_BANNED);
-                activity.startActivity(intent);
-            });
-        } else {
-            activity.findViewById(R.id.bannedUsersPanel).setVisibility(View.GONE);
-        }
+//        if (countBanned.get() > 0) {
+//            activity.findViewById(R.id.bannedUsersPanel).setVisibility(View.VISIBLE);
+//            activity.findViewById(R.id.buttonBlockedUsers).setOnClickListener(v -> {
+//                // Start ChatsActivity + Chats Fragment with Bundle "banned" = true.
+//                Intent intent = new Intent(activity, ChatsActivity.class);
+//                intent.putExtra(ChatsActivity.TAG_FRAGMENT_NAME, ChatsActivity.FRAGMENT_BANNED);
+//                activity.startActivity(intent);
+//            });
+//        } else {
+//            activity.findViewById(R.id.bannedUsersPanel).setVisibility(View.GONE);
+//        }
 
         // Attach listeners to editable form fields.
 
@@ -123,12 +123,12 @@ public class AccSecurityFragment extends Fragment implements ChatsActivity.FormU
                     .show();
         });
 
-        activity.findViewById(R.id.authPermissions)
-                .setOnClickListener(v -> UiUtils.showEditPermissions(activity, me, me.getAuthAcsStr(), null,
-                        UiUtils.ACTION_UPDATE_AUTH, "O"));
-        activity.findViewById(R.id.anonPermissions)
-                .setOnClickListener(v -> UiUtils.showEditPermissions(activity, me, me.getAnonAcsStr(), null,
-                        UiUtils.ACTION_UPDATE_ANON, "O"));
+//        activity.findViewById(R.id.authPermissions)
+//                .setOnClickListener(v -> UiUtils.showEditPermissions(activity, me, me.getAuthAcsStr(), null,
+//                        UiUtils.ACTION_UPDATE_AUTH, "O"));
+//        activity.findViewById(R.id.anonPermissions)
+//                .setOnClickListener(v -> UiUtils.showEditPermissions(activity, me, me.getAnonAcsStr(), null,
+//                        UiUtils.ACTION_UPDATE_ANON, "O"));
 
         // Assign initial form values.
         updateFormValues(activity, me);
@@ -142,10 +142,10 @@ public class AccSecurityFragment extends Fragment implements ChatsActivity.FormU
             return;
         }
 
-        if (me != null) {
-            ((TextView) activity.findViewById(R.id.authPermissions)).setText(me.getAuthAcsStr());
-            ((TextView) activity.findViewById(R.id.anonPermissions)).setText(me.getAnonAcsStr());
-        }
+//        if (me != null) {
+//            ((TextView) activity.findViewById(R.id.authPermissions)).setText(me.getAuthAcsStr());
+//            ((TextView) activity.findViewById(R.id.anonPermissions)).setText(me.getAnonAcsStr());
+//        }
     }
 
     private void changePassword(String login, String password) {
