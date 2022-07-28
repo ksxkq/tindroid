@@ -255,7 +255,7 @@
 
     <string name="topic_tags_description">搜索标签以查找组</string>
     <string name="delete_group">删除会话</string>
-    <string name="id">ID:</string>
+    <string name="id">账号:</string>
     <string name="topic_default_permissions_explained">新成员会自动获得这些权限</string>
     <string name="user_default_permissions_explained">其他人则以这些权限开始与您对话</string>
 

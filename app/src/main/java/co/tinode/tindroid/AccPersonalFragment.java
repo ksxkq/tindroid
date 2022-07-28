@@ -99,9 +99,9 @@ public class AccPersonalFragment extends Fragment
             }
         });
 
-        activity.findViewById(R.id.buttonManageTags).setOnClickListener(view -> showEditTags());
-
-        activity.findViewById(R.id.buttonAddContact).setOnClickListener(view -> showAddCredential());
+//        activity.findViewById(R.id.buttonManageTags).setOnClickListener(view -> showEditTags());
+//
+//        activity.findViewById(R.id.buttonAddContact).setOnClickListener(view -> showAddCredential());
 
         // Assign initial form values.
         updateFormValues(activity, me);
@@ -120,41 +120,41 @@ public class AccPersonalFragment extends Fragment
         if (me != null) {
             LayoutInflater inflater = LayoutInflater.from(activity);
 
-            LinearLayout credList = activity.findViewById(R.id.credList);
-
-            // Remove all items from the list of credentials.
-            while (credList.getChildCount() > 0) {
-                credList.removeViewAt(0);
-            }
-
-            Credential[] creds = me.getCreds();
-            if (creds != null) {
-                for (Credential cred : creds) {
-                    View container = inflater.inflate(R.layout.credential, credList, false);
-                    ((TextView) container.findViewById(R.id.method)).setText(cred.meth);
-                    ((TextView) container.findViewById(R.id.value)).setText(cred.val);
-                    Button btn = container.findViewById(R.id.buttonConfirm);
-                    if (cred.isDone()) {
-                        btn.setVisibility(View.GONE);
-                    } else {
-                        btn.setVisibility(View.VISIBLE);
-                        btn.setTag(cred);
-                    }
-                    btn.setOnClickListener(view -> {
-                        Credential cred1 = (Credential) view.getTag();
-                        showConfirmCredential(cred1.meth, cred1.val);
-                    });
-
-                    ImageButton ibtn = container.findViewById(R.id.buttonDelete);
-                    ibtn.setTag(cred);
-                    ibtn.setOnClickListener(view -> {
-                        Credential cred12 = (Credential) view.getTag();
-                        showDeleteCredential(cred12.meth, cred12.val);
-                    });
-                    credList.addView(container, 0);
-                }
-            }
-            credList.requestLayout();
+//            LinearLayout credList = activity.findViewById(R.id.credList);
+//
+//            // Remove all items from the list of credentials.
+//            while (credList.getChildCount() > 0) {
+//                credList.removeViewAt(0);
+//            }
+//
+//            Credential[] creds = me.getCreds();
+//            if (creds != null) {
+//                for (Credential cred : creds) {
+//                    View container = inflater.inflate(R.layout.credential, credList, false);
+//                    ((TextView) container.findViewById(R.id.method)).setText(cred.meth);
+//                    ((TextView) container.findViewById(R.id.value)).setText(cred.val);
+//                    Button btn = container.findViewById(R.id.buttonConfirm);
+//                    if (cred.isDone()) {
+//                        btn.setVisibility(View.GONE);
+//                    } else {
+//                        btn.setVisibility(View.VISIBLE);
+//                        btn.setTag(cred);
+//                    }
+//                    btn.setOnClickListener(view -> {
+//                        Credential cred1 = (Credential) view.getTag();
+//                        showConfirmCredential(cred1.meth, cred1.val);
+//                    });
+//
+//                    ImageButton ibtn = container.findViewById(R.id.buttonDelete);
+//                    ibtn.setTag(cred);
+//                    ibtn.setOnClickListener(view -> {
+//                        Credential cred12 = (Credential) view.getTag();
+//                        showDeleteCredential(cred12.meth, cred12.val);
+//                    });
+//                    credList.addView(container, 0);
+//                }
+//            }
+//            credList.requestLayout();
 
             VxCard pub = me.getPub();
             UiUtils.setAvatar(activity.findViewById(R.id.imageAvatar), pub, Cache.getTinode().getMyId(), false);
@@ -163,19 +163,19 @@ public class AccPersonalFragment extends Fragment
                 description = pub.note;
             }
 
-            FlexboxLayout tagsView = activity.findViewById(R.id.tagList);
-            tagsView.removeAllViews();
-
-            String[] tags = me.getTags();
-            if (tags != null) {
-                for (String tag : tags) {
-                    TextView label = (TextView) inflater.inflate(R.layout.tag, tagsView, false);
-                    label.setText(tag);
-                    tagsView.addView(label);
-                    label.requestLayout();
-                }
-            }
-            tagsView.requestLayout();
+//            FlexboxLayout tagsView = activity.findViewById(R.id.tagList);
+//            tagsView.removeAllViews();
+//
+//            String[] tags = me.getTags();
+//            if (tags != null) {
+//                for (String tag : tags) {
+//                    TextView label = (TextView) inflater.inflate(R.layout.tag, tagsView, false);
+//                    label.setText(tag);
+//                    tagsView.addView(label);
+//                    label.requestLayout();
+//                }
+//            }
+//            tagsView.requestLayout();
         }
 
         ((TextView) activity.findViewById(R.id.topicTitle)).setText(fn);
