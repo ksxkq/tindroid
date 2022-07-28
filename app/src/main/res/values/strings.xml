@@ -342,5 +342,6 @@
     <string name="tab_discover">发现</string>
     <string name="tab_me">我</string>
     <string name="copied_to_clipboard">Copied to clipboard</string>
+    <string name="hint_add_by_userid">输入账号</string>
 
 </resources>
