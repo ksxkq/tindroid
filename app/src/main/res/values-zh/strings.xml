@@ -289,7 +289,7 @@
     <string name="action_save">保存</string>
     <string name="online_now">在线</string>
     <string name="action_reply">回复</string>
-    <string name="action_forward">重定向</string>
+    <string name="action_forward">转发</string>
     <string name="forward_to">重定向消息</string>
     <string name="change_avatar">更改头像</string>
     <string name="topic_settings">聊天设置</string>

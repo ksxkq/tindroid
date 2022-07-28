@@ -344,5 +344,6 @@
     <string name="tab_me">我</string>
     <string name="copied_to_clipboard">Copied to clipboard</string>
     <string name="hint_add_by_userid">输入账号</string>
+    <string name="withdraw">撤回</string>
 
 </resources>
