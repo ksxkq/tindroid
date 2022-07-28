@@ -162,7 +162,8 @@ public class MessagesAdapter extends RecyclerView.Adapter<MessagesAdapter.ViewHo
                 }
                 int selected = mSelectedItems.size();
                 menu.findItem(R.id.action_reply).setVisible(selected <= 1);
-                menu.findItem(R.id.action_forward).setVisible(selected <= 1);
+//                menu.findItem(R.id.action_forward).setVisible(selected <= 1);
+                menu.findItem(R.id.action_forward).setVisible(false);
                 return true;
             }
 
@@ -834,7 +835,8 @@ public class MessagesAdapter extends RecyclerView.Adapter<MessagesAdapter.ViewHo
                 mSelectionMode.setTitle(String.valueOf(selected));
                 Menu menu = mSelectionMode.getMenu();
                 menu.findItem(R.id.action_reply).setVisible(selected == 1);
-                menu.findItem(R.id.action_forward).setVisible(selected == 1);
+//                menu.findItem(R.id.action_forward).setVisible(selected == 1);
+                menu.findItem(R.id.action_forward).setVisible(false);
                 if (pos != -1) {
                     StoredMessage message = getMessage(pos);
                     menu.findItem(R.id.action_delete).setVisible(selected == 1 && message != null && message.isMine());
