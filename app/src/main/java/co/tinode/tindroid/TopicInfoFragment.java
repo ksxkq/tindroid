@@ -138,8 +138,8 @@ public class TopicInfoFragment extends Fragment implements MessageActivity.DataS
                         null, true));
 
         view.findViewById(R.id.del).setOnClickListener(v ->
-                showConfirmationDialog(R.string.leave_conversation,
-                        R.string.confirm_leave_topic));
+                showConfirmationDialog(R.string.delete_friend,
+                        R.string.delete_friend_confirmation));
     }
 
     private void showConfirmationDialog(
@@ -435,7 +435,7 @@ public class TopicInfoFragment extends Fragment implements MessageActivity.DataS
     @Override
     public void onCreateOptionsMenu(@NonNull Menu menu, @NonNull MenuInflater inflater) {
         // Inflate the menu; this adds items to the action bar if it is present.
-        inflater.inflate(R.menu.menu_edit, menu);
+//        inflater.inflate(R.menu.menu_edit, menu);
         super.onCreateOptionsMenu(menu, inflater);
     }
 
