@@ -280,8 +280,8 @@
     <string name="accept_avatar_button_hint">接受头像</string>
     <string name="next_button_hint">往下走</string>
     <string name="your_name">你的姓名</string>
-    <string name="description_optional">说明（可选）</string>
-    <string name="description">说明</string>
+    <string name="description_optional">描述（可选）</string>
+    <string name="description">描述</string>
     <string name="badge_verified">值得信赖</string>
     <string name="badge_staff">在员工管理下</string>
     <string name="badge_danger">可疑的</string>

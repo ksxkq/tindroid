@@ -21,7 +21,7 @@
     <TextView
         android:layout_marginTop="8dp"
         android:id="@+id/topicTitle"
-        style="?android:textAppearanceLarge"
+        style="@style/preferenceTitle"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:clickable="false"
@@ -40,6 +40,7 @@
 
         <TextView
             style="@style/sectionTitleStyle"
+            android:textSize="16sp"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginEnd="@dimen/activity_horizontal_margin"
@@ -47,6 +48,7 @@
 
         <TextView
             android:id="@+id/topicAddress"
+            android:textSize="16sp"
             style="?android:textAppearanceMedium"
             android:layout_width="0dp"
             android:layout_weight="1"
@@ -113,12 +115,14 @@
         <TextView
             style="@style/sectionTitleStyle"
             android:layout_width="wrap_content"
+            android:textSize="16sp"
             android:layout_height="wrap_content"
             android:text="@string/description" />
 
         <TextView
             android:id="@+id/topicDescription"
             style="@style/textSecondary"
+            android:textSize="16sp"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginBottom="@dimen/activity_padding"
@@ -135,7 +139,7 @@
         android:layout_marginTop="@dimen/activity_padding"
         android:layout_marginBottom="@dimen/activity_padding"
         android:background="@color/grey"
-        android:alpha="0.1"
+        android:alpha="0.2"
         tools:ignore="SmallSp" />
 
     <LinearLayout
