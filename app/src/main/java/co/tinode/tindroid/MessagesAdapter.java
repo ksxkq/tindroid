@@ -1194,7 +1194,7 @@ public class MessagesAdapter extends RecyclerView.Adapter<MessagesAdapter.ViewHo
 
                 case "EX":
                     // Attachment
-                    if (verifyStoragePermissions()) {
+//                    if (verifyStoragePermissions()) {
                         String fname = null;
                         String mimeType = null;
                         try {
@@ -1220,9 +1220,9 @@ public class MessagesAdapter extends RecyclerView.Adapter<MessagesAdapter.ViewHo
                         }
 
                         AttachmentHandler.enqueueDownloadAttachment(mActivity, data, fname, mimeType);
-                    } else {
-                        Toast.makeText(mActivity, R.string.failed_to_save_download, Toast.LENGTH_SHORT).show();
-                    }
+//                    } else {
+//                        Toast.makeText(mActivity, R.string.failed_to_save_download, Toast.LENGTH_SHORT).show();
+//                    }
                     break;
 
                 case "BN":

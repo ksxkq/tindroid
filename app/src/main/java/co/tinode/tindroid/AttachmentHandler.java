@@ -261,7 +261,7 @@ public class AttachmentHandler extends Worker {
                     Intent intent = new Intent();
                     intent.setAction(android.content.Intent.ACTION_VIEW);
                     intent.setDataAndType(FileProvider.getUriForFile(activity,
-                            "co.tinode.tindroid.provider", file), mimeType);
+                            activity.getPackageName()+".provider", file), mimeType);
                     intent.addFlags(Intent.FLAG_GRANT_READ_URI_PERMISSION);
                     try {
                         activity.startActivity(intent);
