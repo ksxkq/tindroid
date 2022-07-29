@@ -2077,6 +2077,10 @@ public class Topic<DP, DR, SP, SR> implements LocalData, Comparable<Topic> {
                 break;
 
             case DEL:
+                MsgRange[] msgRanges;
+                if (pres.delseq == null) {
+                    pres.delseq = pres.withdrawseq;
+                }
                 routeMetaDel(pres.clear, pres.delseq);
                 break;
 

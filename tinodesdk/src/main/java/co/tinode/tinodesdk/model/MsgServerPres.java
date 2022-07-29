@@ -14,6 +14,7 @@ public class MsgServerPres implements Serializable {
     public Integer seq;
     public Integer clear;
     public MsgRange[] delseq;
+    public MsgRange[] withdrawseq;
     public String ua;
     public String act;
     public String tgt;
