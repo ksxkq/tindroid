@@ -345,5 +345,6 @@
     <string name="copied_to_clipboard">Copied to clipboard</string>
     <string name="hint_add_by_userid">输入账号</string>
     <string name="withdraw">撤回</string>
+    <string name="save_success">保存成功</string>
 
 </resources>

@@ -4,6 +4,7 @@ import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
 import android.text.TextUtils;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuInflater;
@@ -15,6 +16,7 @@ import android.widget.EditText;
 import android.widget.ImageButton;
 import android.widget.LinearLayout;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.google.android.flexbox.FlexboxLayout;
 
@@ -325,7 +327,10 @@ public class AccPersonalFragment extends Fragment
                         @Override
                         public PromisedReply<ServerMessage> onSuccess(ServerMessage unused) {
                             if (!activity.isFinishing() && !activity.isDestroyed()) {
-                                activity.runOnUiThread(() -> activity.getSupportFragmentManager().popBackStack());
+                                activity.runOnUiThread(() -> {
+                                    activity.finish();
+                                    Toast.makeText(activity, R.string.save_success, Toast.LENGTH_SHORT).show();
+                                });
                             }
                             return null;
                         }
