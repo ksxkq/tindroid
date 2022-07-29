@@ -2,11 +2,11 @@
 <layer-list xmlns:android="http://schemas.android.com/apk/res/android"
             android:opacity="opaque">
 
-    <item android:drawable="@color/colorSplashScreenBackground" />
+    <item android:drawable="@color/white" />
 
     <item>
         <bitmap
-            android:src="@drawable/logo_src"
+            android:src="@drawable/ic_launcher_logo"
             android:width="128dp"
             android:height="128dp"
             android:gravity="center"/>

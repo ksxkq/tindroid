@@ -13,6 +13,7 @@ public class SplashActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        UiUtils.initStatusBar(this);
 
         // No need to check for live connection here.
 
