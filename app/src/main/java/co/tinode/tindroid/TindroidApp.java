@@ -30,7 +30,6 @@ import android.provider.ContactsContract;
 import android.text.TextUtils;
 import android.util.Log;
 
-import com.google.firebase.crashlytics.FirebaseCrashlytics;
 import com.mixpush.core.GetRegisterIdCallback;
 import com.mixpush.core.MixPushClient;
 import com.mixpush.core.MixPushLogger;

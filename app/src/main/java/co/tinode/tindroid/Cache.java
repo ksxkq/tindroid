@@ -2,8 +2,6 @@ package co.tinode.tindroid;
 
 import android.os.Build;
 
-import com.google.firebase.messaging.FirebaseMessaging;
-
 import java.util.Locale;
 
 import co.tinode.tindroid.db.BaseDb;
@@ -75,7 +73,7 @@ public class Cache {
         if (sTinode != null) {
             sTinode.logout();
             sTinode = null;
-            FirebaseMessaging.getInstance().deleteToken();
+//            FirebaseMessaging.getInstance().deleteToken();
         }
     }
 

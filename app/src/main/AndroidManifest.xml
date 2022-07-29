@@ -229,12 +229,6 @@
         <!-- FirebaseMessagingService performs security checks at runtime,
              no need for explicit permissions despite exported="true".
              Using tools:ignore="ExportedService" to disable the warning -->
-        <service android:name=".services.FBaseMessagingService"
-            android:exported="true" tools:ignore="ExportedService">
-            <intent-filter>
-                <action android:name="com.google.firebase.MESSAGING_EVENT" />
-            </intent-filter>
-        </service>
 
         <provider
             android:name="androidx.core.content.FileProvider"
