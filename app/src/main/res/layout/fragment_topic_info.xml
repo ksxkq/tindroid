@@ -201,7 +201,7 @@
                 android:layout_height="wrap_content"
                 android:layout_gravity="center_vertical"
                 android:layout_weight="1"
-                android:text="@string/delete_credential_title" />
+                android:text="@string/delete_friend" />
 
             <ImageView
                 android:layout_width="wrap_content"
