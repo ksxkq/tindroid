@@ -1187,7 +1187,7 @@ public class MessagesFragment extends Fragment {
             // Continue only if the File was successfully created
             if (photoFile != null) {
                 Uri photoUri = FileProvider.getUriForFile(activity,
-                        "co.tinode.tindroid.provider", photoFile);
+                        activity.getPackageName()+".provider", photoFile);
 
                 cameraIntent.putExtra(MediaStore.EXTRA_OUTPUT, photoUri);
                 // See explanation here: http://medium.com/@quiro91/ceb9bb0eec3a
