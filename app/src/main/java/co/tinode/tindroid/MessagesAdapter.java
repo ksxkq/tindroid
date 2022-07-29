@@ -109,12 +109,12 @@ public class MessagesAdapter extends RecyclerView.Adapter<MessagesAdapter.ViewHo
     // _SIMPLE_ == no bubble tip, just a rounded rectangle.
     // _DATE == the date bubble is visible.
     private static final int VIEWTYPE_SIDE_CENTER = 0b000001;
-    private static final int VIEWTYPE_SIDE_LEFT   = 0b000010;
-    private static final int VIEWTYPE_SIDE_RIGHT  = 0b000100;
-    private static final int VIEWTYPE_TIP         = 0b001000;
-    private static final int VIEWTYPE_AVATAR      = 0b010000;
-    private static final int VIEWTYPE_DATE        = 0b100000;
-    private static final int VIEWTYPE_INVALID     = 0b000000;
+    private static final int VIEWTYPE_SIDE_LEFT = 0b000010;
+    private static final int VIEWTYPE_SIDE_RIGHT = 0b000100;
+    private static final int VIEWTYPE_TIP = 0b001000;
+    private static final int VIEWTYPE_AVATAR = 0b010000;
+    private static final int VIEWTYPE_DATE = 0b100000;
+    private static final int VIEWTYPE_INVALID = 0b000000;
 
     // Duration of a message bubble animation in ms.
     private static final int MESSAGE_BUBBLE_ANIMATION_SHORT = 150;
@@ -769,8 +769,8 @@ public class MessagesAdapter extends RecyclerView.Adapter<MessagesAdapter.ViewHo
         int from = vh.mMessageBubble.getResources().getColor(isMine ?
                 R.color.colorMessageBubbleMine : R.color.colorMessageBubbleOther, null);
         int to = vh.mMessageBubble.getResources().getColor(isMine ?
-                (light ? R.color.colorMessageBubbleMineFlashingLight : R.color.colorMessageBubbleMineFlashing) :
-                (light ? R.color.colorMessageBubbleOtherFlashingLight: R.color.colorMessageBubbleOtherFlashing),
+                        (light ? R.color.colorMessageBubbleMineFlashingLight : R.color.colorMessageBubbleMineFlashing) :
+                        (light ? R.color.colorMessageBubbleOtherFlashingLight : R.color.colorMessageBubbleOtherFlashing),
                 null);
         ValueAnimator colorAnimation = ValueAnimator.ofArgb(from, to, from);
         colorAnimation.setDuration(light ? MESSAGE_BUBBLE_ANIMATION_SHORT : MESSAGE_BUBBLE_ANIMATION_LONG);
@@ -837,9 +837,12 @@ public class MessagesAdapter extends RecyclerView.Adapter<MessagesAdapter.ViewHo
                 menu.findItem(R.id.action_reply).setVisible(selected == 1);
 //                menu.findItem(R.id.action_forward).setVisible(selected == 1);
                 menu.findItem(R.id.action_forward).setVisible(false);
-                if (pos != -1) {
-                    StoredMessage message = getMessage(pos);
-                    menu.findItem(R.id.action_delete).setVisible(selected == 1 && message != null && message.isMine());
+                if (selected == 1) {
+                    int selectPosition = getSelectedArray()[0];
+                    StoredMessage message = getMessage(selectPosition);
+                    menu.findItem(R.id.action_delete).setVisible(message != null && message.isMine());
+                } else {
+                    menu.findItem(R.id.action_delete).setVisible(false);
                 }
             }
         }
@@ -1026,6 +1029,7 @@ public class MessagesAdapter extends RecyclerView.Adapter<MessagesAdapter.ViewHo
                                 mRippleOverlay.postDelayed(() -> mRippleOverlay.setPressed(false), 250);
                             }
                         }
+
                         @Override
                         public boolean onDown(MotionEvent ev) {
                             // Convert click coordinates in itemView to TexView.
@@ -1195,31 +1199,31 @@ public class MessagesAdapter extends RecyclerView.Adapter<MessagesAdapter.ViewHo
                 case "EX":
                     // Attachment
 //                    if (verifyStoragePermissions()) {
-                        String fname = null;
-                        String mimeType = null;
-                        try {
-                            fname = (String) data.get("name");
-                            mimeType = (String) data.get("mime");
-                        } catch (ClassCastException ignored) {
-                        }
+                    String fname = null;
+                    String mimeType = null;
+                    try {
+                        fname = (String) data.get("name");
+                        mimeType = (String) data.get("mime");
+                    } catch (ClassCastException ignored) {
+                    }
 
-                        // Try to extract file name from reference.
-                        if (TextUtils.isEmpty(fname)) {
-                            Object ref = data.get("ref");
-                            if (ref instanceof String) {
-                                try {
-                                    URL url = new URL((String) ref);
-                                    fname = url.getFile();
-                                } catch (MalformedURLException ignored) {
-                                }
+                    // Try to extract file name from reference.
+                    if (TextUtils.isEmpty(fname)) {
+                        Object ref = data.get("ref");
+                        if (ref instanceof String) {
+                            try {
+                                URL url = new URL((String) ref);
+                                fname = url.getFile();
+                            } catch (MalformedURLException ignored) {
                             }
                         }
+                    }
 
-                        if (TextUtils.isEmpty(fname)) {
-                            fname = mActivity.getString(R.string.default_attachment_name);
-                        }
+                    if (TextUtils.isEmpty(fname)) {
+                        fname = mActivity.getString(R.string.default_attachment_name);
+                    }
 
-                        AttachmentHandler.enqueueDownloadAttachment(mActivity, data, fname, mimeType);
+                    AttachmentHandler.enqueueDownloadAttachment(mActivity, data, fname, mimeType);
 //                    } else {
 //                        Toast.makeText(mActivity, R.string.failed_to_save_download, Toast.LENGTH_SHORT).show();
 //                    }
