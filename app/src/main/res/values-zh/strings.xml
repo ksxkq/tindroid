@@ -251,7 +251,7 @@
     <string name="notifications">通知</string>
     <string name="user_tags_description">其他人可以通过这些标签找到您</string>
     <string name="help_explained">支援，法律，关于</string>
-    <string name="account_security_explained">密码，权限，删除帐户</string>
+    <string name="account_security_explained">密码，权限</string>
 
     <string name="topic_tags_description">搜索标签以查找组</string>
     <string name="delete_group">删除会话</string>

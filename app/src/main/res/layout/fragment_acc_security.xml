@@ -10,7 +10,8 @@
     <androidx.appcompat.widget.AppCompatButton
         android:id="@+id/buttonChangePassword"
         style="?attr/buttonBarButtonStyle"
-        android:layout_width="wrap_content"
+        android:gravity="left|center_vertical"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:contentDescription="@string/change_password"
         android:drawablePadding="4sp"
@@ -22,7 +23,8 @@
     <androidx.appcompat.widget.AppCompatButton
         android:id="@+id/buttonLogout"
         style="?attr/buttonBarButtonStyle"
-        android:layout_width="wrap_content"
+        android:layout_width="match_parent"
+        android:gravity="left|center_vertical"
         android:layout_height="wrap_content"
         android:contentDescription="@string/logout"
         android:drawablePadding="4sp"
