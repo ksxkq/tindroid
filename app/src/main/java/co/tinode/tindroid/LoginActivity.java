@@ -6,6 +6,7 @@ import android.os.Bundle;
 import android.text.TextUtils;
 import android.util.Log;
 import android.view.MenuItem;
+import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Toast;
@@ -58,6 +59,8 @@ public class LoginActivity extends AppCompatActivity implements ImageViewFragmen
 
     private AvatarViewModel mAvatarVM;
 
+    private Toolbar toolbar;
+
     static {
         // Otherwise crash on API 21.
         AppCompatDelegate.setCompatVectorFromResourcesEnabled(true);
@@ -66,12 +69,13 @@ public class LoginActivity extends AppCompatActivity implements ImageViewFragmen
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        UiUtils.initStatusBar(this);
 
         setContentView(R.layout.activity_login);
 
         PreferenceManager.setDefaultValues(this, R.xml.login_preferences, false);
 
-        final Toolbar toolbar = findViewById(R.id.toolbar);
+        toolbar = findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
 
         // Handle clicks on the '<-' arrow in the toolbar.
@@ -159,7 +163,7 @@ public class LoginActivity extends AppCompatActivity implements ImageViewFragmen
         showFragment(tag, args, true);
     }
 
-    private void showFragment(String tag, Bundle args, Boolean addToBackstack) {
+    public void showFragment(String tag, Bundle args, Boolean addToBackstack) {
         if (isFinishing() || isDestroyed()) {
             return;
         }

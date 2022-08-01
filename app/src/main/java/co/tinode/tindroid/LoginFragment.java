@@ -63,8 +63,15 @@ public class LoginFragment extends Fragment implements View.OnClickListener {
         }
 
         fragment.findViewById(R.id.signIn).setOnClickListener(this);
-        fragment.findViewById(R.id.forgotPassword).setOnClickListener(this);
-        fragment.findViewById(R.id.newLogin).setOnClickListener(this);
+//        fragment.findViewById(R.id.forgotPassword).setOnClickListener(this);
+        fragment.findViewById(R.id.signUp).setOnClickListener(v -> {
+            final LoginActivity parent = (LoginActivity) getActivity();
+            if (parent == null) {
+                return;
+            }
+
+            parent.showFragment(LoginActivity.FRAGMENT_SIGNUP, null, true);
+        });
 
         return fragment;
     }
@@ -73,7 +80,6 @@ public class LoginFragment extends Fragment implements View.OnClickListener {
     @Override
     public void onCreateOptionsMenu(@NonNull Menu menu, @NonNull MenuInflater inflater) {
         // Inflate the menu; this adds items to the action bar if it is present.
-        inflater.inflate(R.menu.menu_login, menu);
         super.onCreateOptionsMenu(menu, inflater);
     }
 
@@ -88,15 +94,10 @@ public class LoginFragment extends Fragment implements View.OnClickListener {
             return;
         }
 
-        if (v.getId() == R.id.forgotPassword) {
-            parent.showFragment(LoginActivity.FRAGMENT_RESET, null);
-            return;
-        }
-        if (v.getId() == R.id.newLogin) {
-            startActivity(new Intent(getActivity(), NewLoginActivity.class));
-            getActivity().finish();
-            return;
-        }
+//        if (v.getId() == R.id.forgotPassword) {
+//            parent.showFragment(LoginActivity.FRAGMENT_RESET, null);
+//            return;
+//        }
 
         EditText loginInput = parent.findViewById(R.id.editLogin);
         EditText passwordInput = parent.findViewById(R.id.editPassword);
