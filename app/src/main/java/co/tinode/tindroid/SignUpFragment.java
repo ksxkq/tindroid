@@ -118,8 +118,8 @@ public class SignUpFragment extends Fragment
         }
 
         final String login = ((EditText) parent.findViewById(R.id.newLogin)).getText().toString().trim();
-        if (login.isEmpty()) {
-            ((EditText) parent.findViewById(R.id.newLogin)).setError(getText(R.string.login_required));
+        if (login.isEmpty() || login.length() < 6 || login.length() > 16) {
+            ((EditText) parent.findViewById(R.id.newLogin)).setError(getText(R.string.account_required_condition));
             return;
         }
         if (login.contains(":")) {
@@ -128,8 +128,8 @@ public class SignUpFragment extends Fragment
         }
 
         final String password = ((EditText) parent.findViewById(R.id.newPassword)).getText().toString().trim();
-        if (password.isEmpty()) {
-            ((EditText) parent.findViewById(R.id.newPassword)).setError(getText(R.string.password_required));
+        if (password.isEmpty() || password.length() < 6 || password.length() > 20) {
+            ((EditText) parent.findViewById(R.id.newPassword)).setError(getText(R.string.password_required_condition));
             return;
         }
 
@@ -140,8 +140,8 @@ public class SignUpFragment extends Fragment
 //        }
 
         String fn = ((EditText) parent.findViewById(R.id.fullName)).getText().toString().trim();
-        if (fn.isEmpty()) {
-            ((EditText) parent.findViewById(R.id.fullName)).setError(getText(R.string.full_name_required));
+        if (fn.isEmpty() || fn.length() > 16) {
+            ((EditText) parent.findViewById(R.id.fullName)).setError(getText(R.string.nickname_required_condition));
             return;
         }
         // Make sure user name is not too long.

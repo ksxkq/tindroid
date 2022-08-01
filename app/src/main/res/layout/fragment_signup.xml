@@ -70,31 +70,55 @@
             <!--                android:layout_height="wrap_content"-->
             <!--                android:text="@string/security" />-->
 
+            <TextView
+                android:text="@string/pls_input_account"
+                style="@style/TextAppearance.AppCompat.Title"
+                android:layout_marginTop="8dp"
+                android:layout_marginBottom="4dp"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content" />
+
             <com.google.android.material.textfield.TextInputLayout
                 style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:hint="@string/pls_input_account">
+                android:orientation="vertical"
+                android:hint="@string/account_required_condition">
 
                 <com.google.android.material.textfield.TextInputEditText
                     android:id="@+id/newLogin"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_marginTop="10dp"
-                    android:inputType="textShortMessage" />
+                    android:maxLength="16"
+                    android:minEms="6"
+                    android:maxEms="16"
+                    android:ems="16"
+                    android:inputType="text"
+                    android:digits="0123456789abcdefghijklmnopqrstuvwxyz"/>
             </com.google.android.material.textfield.TextInputLayout>
+
+            <TextView
+                android:text="@string/pls_input_password"
+                style="@style/TextAppearance.AppCompat.Title"
+                android:layout_marginTop="12dp"
+                android:layout_marginBottom="4dp"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content" />
 
             <com.google.android.material.textfield.TextInputLayout
                 style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:hint="@string/pls_input_password">
+                android:hint="@string/password_required_condition">
 
                 <com.google.android.material.textfield.TextInputEditText
                     android:id="@+id/newPassword"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:ems="10"
+                    android:maxLength="20"
+                    android:ems="20"
+                    android:maxEms="20"
+                    android:minEms="1"
                     android:inputType="textPassword" />
             </com.google.android.material.textfield.TextInputLayout>
 
@@ -104,17 +128,28 @@
             <!--                android:layout_height="wrap_content"-->
             <!--                android:text="@string/general" />-->
 
+            <TextView
+                android:text="@string/pls_input_nickname"
+                style="@style/TextAppearance.AppCompat.Title"
+                android:layout_marginTop="12dp"
+                android:layout_marginBottom="4dp"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content" />
+
             <com.google.android.material.textfield.TextInputLayout
                 style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:hint="@string/pls_input_nickname">
+                android:hint="@string/nickname_required_condition">
 
                 <com.google.android.material.textfield.TextInputEditText
                     android:id="@+id/fullName"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:ems="10"
+                    android:maxLength="16"
+                    android:ems="16"
+                    android:maxEms="16"
+                    android:minEms="6"
                     android:inputType="textPersonName" />
             </com.google.android.material.textfield.TextInputLayout>
 
