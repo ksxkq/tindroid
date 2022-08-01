@@ -206,6 +206,7 @@ public class SignUpFragment extends Fragment
                                 // We are requesting immediate login with the new account.
                                 // If the action succeeded, assume we have logged in.
                                 tinode.setAutoLoginToken(tinode.getAuthToken());
+                                sharedPref.edit().putString(LoginActivity.PREFS_LAST_LOGIN, login).apply();
                                 UiUtils.onLoginSuccess(parent, signUp, tinode.getMyId());
                             }
                         });
