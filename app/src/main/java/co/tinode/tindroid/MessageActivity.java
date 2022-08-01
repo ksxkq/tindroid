@@ -46,6 +46,7 @@ import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
 import androidx.fragment.app.FragmentTransaction;
 import androidx.preference.PreferenceManager;
+
 import co.tinode.tindroid.account.ContactsManager;
 import co.tinode.tindroid.account.Utils;
 import co.tinode.tindroid.db.BaseDb;
@@ -112,7 +113,7 @@ public class MessageActivity extends AppCompatActivity
             Cursor c = dm.query(query);
             if (c.moveToFirst()) {
                 int idx = c.getColumnIndex(DownloadManager.COLUMN_STATUS);
-                int status = idx >=0 ? c.getInt(idx) : -1;
+                int status = idx >= 0 ? c.getInt(idx) : -1;
                 if (DownloadManager.STATUS_SUCCESSFUL == status) {
                     idx = c.getColumnIndex(DownloadManager.COLUMN_LOCAL_URI);
                     URI fileUri = idx >= 0 ? URI.create(c.getString(idx)) : null;
@@ -122,7 +123,7 @@ public class MessageActivity extends AppCompatActivity
                         intent = new Intent();
                         intent.setAction(android.content.Intent.ACTION_VIEW);
                         intent.setDataAndType(FileProvider.getUriForFile(MessageActivity.this,
-                                "co.tinode.tindroid.provider", new File(fileUri)), mimeType);
+                                getPackageName() + ".provider", new File(fileUri)), mimeType);
                         intent.addFlags(Intent.FLAG_GRANT_READ_URI_PERMISSION);
                         try {
                             startActivity(intent);
@@ -468,11 +469,11 @@ public class MessageActivity extends AppCompatActivity
                     }
                 })
                 .thenFinally(new PromisedReply.FinalListener() {
-            @Override
-            public void onFinally() {
-                setRefreshing(false);
-            }
-        });
+                    @Override
+                    public void onFinally() {
+                        setRefreshing(false);
+                    }
+                });
     }
 
     // Clean up everything related to the topic being replaced of removed.
@@ -676,7 +677,7 @@ public class MessageActivity extends AppCompatActivity
 
     boolean sendMessage(Drafty content, int seq) {
         if (mTopic != null) {
-            Map<String,Object> head = seq > 0 ? Tinode.headersForReply(seq) : null;
+            Map<String, Object> head = seq > 0 ? Tinode.headersForReply(seq) : null;
             PromisedReply<ServerMessage> done = mTopic.publish(content, head);
             BaseDb.getInstance().getStore().msgPruneFailed(mTopic);
             runMessagesLoader(); // Refreshes the messages: hides removed, shows pending.
