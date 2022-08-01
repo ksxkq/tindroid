@@ -1,6 +1,7 @@
 package co.tinode.tindroid.push;
 
 import android.content.Context;
+import android.text.TextUtils;
 import android.util.Log;
 
 import com.mixpush.core.MixPushMessage;
@@ -15,6 +16,9 @@ public class MyPushReceiver extends MixPushReceiver {
         if (platform != null) {
             String platformName = platform.getPlatformName();
             String regId = platform.getRegId();
+            if (TextUtils.equals(platformName, "mi")) {
+                platformName = "xiaomi";
+            }
             TindroidApp.getTinodeCache().setDeviceToken(regId, platformName);
             Log.d("Tinode", "Registered with " + platformName + ": " + regId);
         }
