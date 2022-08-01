@@ -420,7 +420,8 @@ public class Tinode {
 
                 try {
                     latest.close();
-                } catch (IOException ignored) {}
+                } catch (IOException ignored) {
+                }
             }
             mTopicsLoaded = true;
         }
@@ -429,8 +430,8 @@ public class Tinode {
     /**
      * Open a websocket connection to the server, process handshake exchange then optionally login.
      *
-     * @param serverURI     address of the server to connect to.
-     * @param background    this is a background connection: the server will delay user's online announcement for 5 sec.
+     * @param serverURI  address of the server to connect to.
+     * @param background this is a background connection: the server will delay user's online announcement for 5 sec.
      * @return PromisedReply to be resolved or rejected when the connection is completed.
      */
     protected PromisedReply<ServerMessage> connect(@NotNull URI serverURI, boolean background) {
@@ -733,8 +734,8 @@ public class Tinode {
      * Out of band notification handling. Called externally by the FCM push service.
      * Must not be called on the UI thread.
      *
-     * @param data FCM payload.
-     * @param authToken authentication token to use in case login is needed.
+     * @param data           FCM payload.
+     * @param authToken      authentication token to use in case login is needed.
      * @param keepConnection if <code>true</code> do not terminate new connection.
      */
     public void oobNotification(Map<String, String> data, String authToken, boolean keepConnection) {
@@ -746,7 +747,8 @@ public class Tinode {
         try {
             // noinspection ConstantConditions: null value is acceptable here.
             seq = Integer.parseInt(data.get("seq"));
-        } catch (NumberFormatException ignored) {}
+        } catch (NumberFormatException ignored) {
+        }
 
         Topic topic = getTopic(topicName);
         // noinspection ConstantConditions
@@ -801,7 +803,8 @@ public class Tinode {
                                 // Leave the topic before disconnecting.
                                 topic.leave().getResult();
                             }
-                        } catch (Exception ignored) {}
+                        } catch (Exception ignored) {
+                        }
                     }
 
                     if (newConnection && !keepConnection) {
@@ -827,7 +830,8 @@ public class Tinode {
                     // New topic subscription, fetch topic description.
                     try {
                         getMeta(topicName, MsgGetMeta.desc()).getResult();
-                    } catch (Exception ignored) {}
+                    } catch (Exception ignored) {
+                    }
 
                     String senderId = data.get("xfrom");
                     if (senderId != null && getUser(senderId) == null) {
@@ -858,7 +862,8 @@ public class Tinode {
                     newConnection = true;
                 }
                 loginToken(authToken).getResult();
-            } catch (Exception ignored) {}
+            } catch (Exception ignored) {
+            }
         }
         return newConnection;
     }
@@ -942,7 +947,8 @@ public class Tinode {
     public void setServer(@NotNull String host, boolean tls) {
         try {
             mServerURI = createWebsocketURI(host, tls);
-        } catch (URISyntaxException ignored) {}
+        } catch (URISyntaxException ignored) {
+        }
     }
 
     /**
@@ -1108,49 +1114,35 @@ public class Tinode {
      * @param token device token; to delete token pass NULL_VALUE
      */
     public PromisedReply<ServerMessage> setDeviceToken(final String token, final String platform) {
-        if (!TextUtils.isEmpty(token) && !TextUtils.isEmpty(platform)) {
-            mDeviceToken = token;
-            mPlatform = platform;
-        }
+        mDeviceToken = NULL_VALUE.equals(token) ? null : token;
+        mPlatform = platform;
         if (!isAuthenticated()) {
             // Don't send a message if the client is not logged in.
             return new PromisedReply<>(new AuthenticationRequiredException());
         }
         // If token is not initialized, try to read one from storage.
-        if ((mDeviceToken == null || mPlatform == null) && mStore != null) {
-            String tokenAndPlatform = mStore.getDeviceToken();
-            if (!TextUtils.isEmpty(tokenAndPlatform)) {
-                String[] tokens = tokenAndPlatform.split(",");
-                if (tokens.length == 2) {
-                    mDeviceToken = tokens[0];
-                    mPlatform = tokens[1];
-                }
+        if (mStore != null) {
+            if (!TextUtils.isEmpty(token)) {
                 mStore.saveDeviceToken(token + "," + platform);
+            } else {
+                mStore.saveDeviceToken(null);
             }
         }
-        // Check if token has changed
-        if (mDeviceToken == null || !mDeviceToken.equals(token)) {
-            // Cache token here assuming the call to server does not fail. If it fails clear the cached token.
-            // This prevents multiple unnecessary calls to the server with the same token.
-            mDeviceToken = NULL_VALUE.equals(token) ? null : token;
-            ClientMessage msg = new ClientMessage(new MsgClientHi(getNextId(), null, null,
-                    token, platform,null, null));
-            return sendWithPromise(msg, msg.hi.id).thenCatch(new PromisedReply.FailureListener<ServerMessage>() {
-                @Override
-                public PromisedReply<ServerMessage> onFailure(Exception err) {
-                    // Clear cached value on failure to allow for retries.
-                    mDeviceToken = null;
-                    if (mStore != null) {
-                        mStore.saveDeviceToken(null);
-                    }
-                    return null;
+        // Cache token here assuming the call to server does not fail. If it fails clear the cached token.
+        // This prevents multiple unnecessary calls to the server with the same token.
+        ClientMessage msg = new ClientMessage(new MsgClientHi(getNextId(), null, null,
+                token, platform, null, null));
+        return sendWithPromise(msg, msg.hi.id).thenCatch(new PromisedReply.FailureListener<ServerMessage>() {
+            @Override
+            public PromisedReply<ServerMessage> onFailure(Exception err) {
+                // Clear cached value on failure to allow for retries.
+                mDeviceToken = null;
+                if (mStore != null) {
+                    mStore.saveDeviceToken(null);
                 }
-            });
-
-        } else {
-            // No change: return resolved promise.
-            return new PromisedReply<>((ServerMessage) null);
-        }
+                return null;
+            }
+        });
     }
 
     /**
@@ -1181,7 +1173,7 @@ public class Tinode {
                         if (pkt.ctrl == null) {
                             throw new InvalidObjectException("Unexpected type of reply packet to hello");
                         }
-                        Map<String,Object> params = pkt.ctrl.params;
+                        Map<String, Object> params = pkt.ctrl.params;
                         if (params != null) {
                             mServerVersion = (String) params.get("ver");
                             mServerBuild = (String) params.get("build");
@@ -1545,10 +1537,10 @@ public class Tinode {
      * Low-level request to publish data. A {@link Topic#publish} should be normally
      * used instead.
      *
-     * @param topicName     name of the topic to publish to
-     * @param data          payload to publish to topic
-     * @param head          message header
-     * @param attachments   URLs of out-of-band attachments contained in the message.
+     * @param topicName   name of the topic to publish to
+     * @param data        payload to publish to topic
+     * @param head        message header
+     * @param attachments URLs of out-of-band attachments contained in the message.
      * @return PromisedReply of the reply ctrl message
      */
     public PromisedReply<ServerMessage> publish(String topicName, Object data, Map<String, Object> head, String[] attachments) {
@@ -1631,7 +1623,7 @@ public class Tinode {
     }
 
     public PromisedReply<ServerMessage> withdrawMessage(final String topicName, final MsgRange[] ranges, final boolean hard) {
-        return sendDeleteMessage(new ClientMessage(new MsgClientDel(getNextId(), topicName, ranges, hard,true)));
+        return sendDeleteMessage(new ClientMessage(new MsgClientDel(getNextId(), topicName, ranges, hard, true)));
     }
 
     /**
@@ -1751,15 +1743,17 @@ public class Tinode {
 
     /**
      * Send a video call notification to server.
+     *
      * @param topicName specifies the call topic.
-     * @param seq call message ID.
-     * @param event is a video call event to notify the other call party about (e.g. "accept" or "hang-up").
-     * @param payload is a JSON payload associated with the event.
+     * @param seq       call message ID.
+     * @param event     is a video call event to notify the other call party about (e.g. "accept" or "hang-up").
+     * @param payload   is a JSON payload associated with the event.
      */
     public void videoCall(String topicName, int seq, String event, Object payload) {
         try {
             send(new ClientMessage(new MsgClientNote(topicName, NOTE_CALL, seq, event, payload)));
-        } catch (JsonProcessingException | NotConnectedException ignored) {}
+        } catch (JsonProcessingException | NotConnectedException ignored) {
+        }
     }
 
     /**
@@ -1972,7 +1966,7 @@ public class Tinode {
             return null;
         }
         Pair<Topic, ?> p = mTopics.get(name);
-        return p != null? p.first : null;
+        return p != null ? p.first : null;
     }
 
     /**
@@ -1996,6 +1990,7 @@ public class Tinode {
 
     /**
      * Get the latest cached message in the given topic.
+     *
      * @param topicName name of the topic to get message for.
      * @return last cached message or null.
      */
@@ -2004,7 +1999,7 @@ public class Tinode {
             return null;
         }
         Pair<?, Storage.Message> p = mTopics.get(topicName);
-        return p != null? p.second : null;
+        return p != null ? p.second : null;
     }
 
     void setLastMessage(String topicName, Storage.Message msg) {
@@ -2059,7 +2054,7 @@ public class Tinode {
     /**
      * Create blank user in cache: in memory and in persistent storage.
      *
-     * @param uid ID of the user to create.
+     * @param uid  ID of the user to create.
      * @param desc description of the new user.
      * @return {@link User} created user.
      */
