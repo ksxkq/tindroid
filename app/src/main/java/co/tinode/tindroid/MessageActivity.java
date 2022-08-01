@@ -163,6 +163,7 @@ public class MessageActivity extends AppCompatActivity
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        UiUtils.initStatusBar(this);
 
         if (savedInstanceState != null) {
             mTopicName = savedInstanceState.getString(TOPIC_NAME);
