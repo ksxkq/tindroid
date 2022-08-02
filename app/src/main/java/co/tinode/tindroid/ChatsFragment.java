@@ -181,17 +181,17 @@ public class ChatsFragment extends Fragment implements ActionMode.Callback, UiUt
 
         // This is needed in order to accept video calls while the app is in the background.
         // It should be already granted to apps in playstore, but needed when developing.
-        if (!Settings.canDrawOverlays(activity)) {
-            Intent intent = new Intent(Settings.ACTION_MANAGE_OVERLAY_PERMISSION,
-                    Uri.parse("package:" + activity.getPackageName()));
-            try {
-                //noinspection deprecation: registerForActivityResult does not work for this permission.
-                startActivityForResult(intent, ACTION_MANAGE_OVERLAY_PERMISSION_REQUEST_CODE);
-            } catch (ActivityNotFoundException ignored) {
-                Log.w(TAG, "Unable to enable overlays, incoming calls limited.");
-                Toast.makeText(activity, R.string.voice_calls_limited, Toast.LENGTH_LONG).show();
-            }
-        }
+//        if (!Settings.canDrawOverlays(activity)) {
+//            Intent intent = new Intent(Settings.ACTION_MANAGE_OVERLAY_PERMISSION,
+//                    Uri.parse("package:" + activity.getPackageName()));
+//            try {
+//                //noinspection deprecation: registerForActivityResult does not work for this permission.
+//                startActivityForResult(intent, ACTION_MANAGE_OVERLAY_PERMISSION_REQUEST_CODE);
+//            } catch (ActivityNotFoundException ignored) {
+//                Log.w(TAG, "Unable to enable overlays, incoming calls limited.");
+//                Toast.makeText(activity, R.string.voice_calls_limited, Toast.LENGTH_LONG).show();
+//            }
+//        }
     }
 
     // The registerForActivityResult does not work for this permission.
