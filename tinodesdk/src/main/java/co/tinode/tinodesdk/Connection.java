@@ -102,8 +102,7 @@ public class Connection extends WebSocketClient {
 
         String scheme = endpoint.getScheme();
         // Normalize scheme to ws or wss.
-        scheme = "ws";
-//        scheme = ("wss".equals(scheme) || "https".equals(scheme)) ? "wss" : "ws";
+        scheme = ("wss".equals(scheme) || "https".equals(scheme)) ? "wss" : "ws";
 
         int port = endpoint.getPort();
         if (port < 0) {
