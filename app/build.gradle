@@ -45,10 +45,10 @@ android {
     buildTypes {
         debug {
             signingConfig signingConfigs.chatsign
-            resValue "string", "default_host_name", '"10.40.64.60:6060"'
+            resValue "string", "default_host_name", '"demo.imtalk.vip"'
         }
         release {
-            resValue "string", "default_host_name", '"api.tinode.co"'
+            resValue "string", "default_host_name", '"demo.imtalk.vip"'
             minifyEnabled true
             shrinkResources true
             proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
