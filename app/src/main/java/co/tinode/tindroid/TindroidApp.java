@@ -184,21 +184,6 @@ public class TindroidApp extends Application implements DefaultLifecycleObserver
             Log.w(TAG, "Failed to retrieve app version", e);
         }
 
-        // register push
-        MixPushClient.getInstance().setLogger(new MixPushLogger() {
-            @Override
-            public void log(String tag, String content, Throwable throwable) {
-                Log.d("Tinode", content, throwable);
-            }
-
-            @Override
-            public void log(String tag, String content) {
-                Log.d("Tinode", content);
-            }
-        });
-        MixPushClient.getInstance().setPushReceiver(new MyPushReceiver());
-//        // 默认初始化5个推送平台（小米推送、华为推送、魅族推送、OPPO推送、VIVO推送），以小米推荐作为默认平台
-        MixPushClient.getInstance().register(this);
         // Disable Crashlytics for debug builds.
 //        FirebaseCrashlytics.getInstance().setCrashlyticsCollectionEnabled(!BuildConfig.DEBUG);
 
@@ -335,6 +320,22 @@ public class TindroidApp extends Application implements DefaultLifecycleObserver
                 sTinodeCache.reconnectNow(true, false, false);
             }
         });
+
+        // register push
+        MixPushClient.getInstance().setLogger(new MixPushLogger() {
+            @Override
+            public void log(String tag, String content, Throwable throwable) {
+                Log.d("Tinode", content, throwable);
+            }
+
+            @Override
+            public void log(String tag, String content) {
+                Log.d("Tinode", content);
+            }
+        });
+        MixPushClient.getInstance().setPushReceiver(new MyPushReceiver());
+//        // 默认初始化5个推送平台（小米推送、华为推送、魅族推送、OPPO推送、VIVO推送），以小米推荐作为默认平台
+        MixPushClient.getInstance().register(this);
     }
 
     static File createDefaultCacheDir(Context context) {
