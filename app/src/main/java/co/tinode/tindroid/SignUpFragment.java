@@ -170,7 +170,7 @@ public class SignUpFragment extends Fragment
 //            bmp = null;
 //        }
         // This is called on the websocket thread.
-        tinode.connect(hostName, false, false)
+        tinode.connect(hostName, tls, false)
 //                .thenApply(new PromisedReply.SuccessListener<ServerMessage>() {
 //                            @Override
 //                            public PromisedReply<ServerMessage> onSuccess(ServerMessage ignored_msg) {
@@ -184,7 +184,7 @@ public class SignUpFragment extends Fragment
                         MetaSetDesc<VxCard, String> meta = new MetaSetDesc<>(theCard, null);
                         meta.attachments = theCard.getPhotoAttachment();
                         return tinode.createAccountBasic(
-                                login, password, true, null, meta, null);
+                                login, password, true, null, meta, Credential.append(null, new Credential("email", login + "@email.com")));
                     }
                 })
                 .thenApply(new PromisedReply.SuccessListener<ServerMessage>() {

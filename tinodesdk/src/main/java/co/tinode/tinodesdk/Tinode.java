@@ -503,7 +503,7 @@ public class Tinode {
         synchronized (mConnLock) {
             if (mConnection == null) {
                 // New connection using saved parameters.
-                connect(null, false, background);
+                connect(null, true, background);
                 return;
             }
 
