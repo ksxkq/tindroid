@@ -13,9 +13,13 @@
 
 更改 app/src/main/res/ 文件下，所有 mipmap 中对应的图标即可
 
-### 替换包名
+### 替换导航中发现页的 url
 
 更改 app/src/build.gradle 中的 applicationId 对应包名即可
+
+### 替换包名
+
+更改 app/src/build.gradle 中的 buildConfigField 对应 NAV_TAB_URL 的内容即可
 
 ## demo 链接
 

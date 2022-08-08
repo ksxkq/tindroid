@@ -30,6 +30,7 @@ android {
 
         buildConfigField 'int', 'VERSION_CODE', "${rootProject.ext.version_code}"
         buildConfigField 'String', 'VERSION_NAME', "\"${rootProject.ext.version_name}\""
+        buildConfigField 'String', 'NAV_TAB_URL', '"https://www.baidu.com/"'
 
         versionCode rootProject.ext.version_code
         versionName rootProject.ext.version_name

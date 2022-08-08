@@ -99,7 +99,7 @@ public class ChatsActivity extends AppCompatActivity
 
         mFragments.add(new ChatsFragment());
         mFragments.add(new ContactFragment());
-        mFragments.add(WebViewFragment.newInstance("https://www.baidu.com/"));
+        mFragments.add(WebViewFragment.newInstance(BuildConfig.NAV_TAB_URL));
         mFragments.add(new AccountInfoFragment());
 
         for (int i = 0; i < mTitles.length; i++) {
