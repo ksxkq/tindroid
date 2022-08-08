@@ -17,10 +17,14 @@
 
 更改 app/src/build.gradle 中的 applicationId 对应包名即可
 
+### 离线推送
+
+目前支持对接五家厂商离线推送，分别是：小米、华为、魅族、OPPO、VIVO。如果需要集成离线推送功能，请到各个厂商的推送平台上进行注册并新建应用，获取到相关 appid 和 appkey 后，更改 app/src/build.gradle 中对应的配置
+
 ### 替换包名
 
 更改 app/src/build.gradle 中的 buildConfigField 对应 NAV_TAB_URL 的内容即可
 
-## demo 链接
+## 体验 demo
 
 https://www.pgyer.com/oZii
