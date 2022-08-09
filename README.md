@@ -25,6 +25,10 @@
 
 更改 app/src/build.gradle 中的 applicationId 对应包名即可
 
+### 替换签名配置
+
+更改 app/src/build.gradle 中的 signingConfigs 对应的签名配置
+
 ## 体验 demo
 
 https://www.pgyer.com/oZii
