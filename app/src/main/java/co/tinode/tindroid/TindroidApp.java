@@ -241,21 +241,6 @@ public class TindroidApp extends Application implements DefaultLifecycleObserver
                         return;
                     }
                 }
-
-                CallInProgress call = Cache.getCallInProgress();
-                if (call == null) {
-                    // Call invite from the peer.
-                    Intent intent = new Intent();
-                    intent.setAction(CallActivity.INTENT_ACTION_CALL_INCOMING);
-                    intent.putExtra("topic", data.topic);
-                    intent.putExtra("seq", data.seq);
-                    intent.putExtra("from", data.from);
-                    intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
-                    TindroidApp.this.startActivity(intent);
-                } else if (!call.equals(data.topic, data.seq)) {
-                    // Another incoming call. Decline.
-                    topic.videoCallHangUp(data.seq);
-                }
             }
 
             @Override
@@ -265,17 +250,6 @@ public class TindroidApp extends Application implements DefaultLifecycleObserver
                 }
                 if (MsgServerInfo.parseEvent(info.event) != MsgServerInfo.Event.ACCEPT) {
                     return;
-                }
-
-                CallInProgress call = Cache.getCallInProgress();
-                if (Tinode.TOPIC_ME.equals(info.topic) && sTinodeCache.isMe(info.from) &&
-                    call != null && call.equals(info.src, info.seq)) {
-                    // Another client has accepted the call. Dismiss call notification.
-                    LocalBroadcastManager lbm = LocalBroadcastManager.getInstance(TindroidApp.this);
-                    Intent intent = new Intent(CallActivity.INTENT_ACTION_CALL_CLOSE);
-                    intent.putExtra("topic", info.src);
-                    intent.putExtra("seq", info.seq);
-                    lbm.sendBroadcast(intent);
                 }
             }
         });
@@ -334,7 +308,11 @@ public class TindroidApp extends Application implements DefaultLifecycleObserver
         });
         MixPushClient.getInstance().setPushReceiver(new MyPushReceiver());
 //        // 默认初始化5个推送平台（小米推送、华为推送、魅族推送、OPPO推送、VIVO推送），以小米推荐作为默认平台
-        MixPushClient.getInstance().register(this);
+        try {
+            MixPushClient.getInstance().register(this);
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
     }
 
     static File createDefaultCacheDir(Context context) {
