@@ -15,10 +15,8 @@ public class AccountInfoSettingActivity extends BaseFragmentActivity {
     static final String FRAGMENT_ACC_SECURITY = "acc_security";
 
     @Override
-    protected void onCreate(@Nullable Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-        String title = getIntent().getStringExtra("title");
-        initToolbar(title);
+    String getTitleString() {
+        return getIntent().getStringExtra("title");
     }
 
     @Override
