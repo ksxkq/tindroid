@@ -240,8 +240,10 @@ public class ChatsFragment extends Fragment implements ActionMode.Callback, UiUt
             return true;
         }
         int id = item.getItemId();
-        if (id == R.id.action_add) {
-            startActivity(new Intent(getActivity(), FindByIDActivity.class));
+        if (id == R.id.action_add || id == R.id.action_join_group) {
+            Intent intent = new Intent(getActivity(), FindByIDActivity.class);
+            intent.putExtra("id", id);
+            startActivity(intent);
             return true;
         }
 //        if (id == R.id.action_show_archive) {

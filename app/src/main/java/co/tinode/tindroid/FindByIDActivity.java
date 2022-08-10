@@ -10,7 +10,9 @@ public class FindByIDActivity extends BaseFragmentActivity {
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        initToolbar(R.string.action_add_contact);
+        int id = getIntent().getIntExtra("id", R.id.action_add);
+        int titleRes = id == R.id.action_add ? R.string.add_friend : R.string.join_group;
+        initToolbar(titleRes);
     }
 
     @Override
