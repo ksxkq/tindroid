@@ -1,11 +1,42 @@
 <?xml version="1.0" encoding="utf-8"?>
 <menu xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto">
-
     <item
-        android:id="@+id/action_add"
-        android:icon="@drawable/ic_person_add"
-        android:title="@string/add_contact"
-        app:showAsAction="always" />
+        android:icon="@drawable/ic_add_black"
+        android:title="@string/more"
+        app:showAsAction="ifRoom">
+        <menu>
+            <item
+                android:id="@+id/action_add"
+                android:title="@string/add_friend"
+                app:showAsAction="collapseActionView" />
+            <item
+                android:id="@+id/action_join_group"
+                android:title="@string/join_group"
+                app:showAsAction="collapseActionView" />
+            <item
+                android:id="@+id/action_create_group"
+                android:title="@string/create_group"
+                app:showAsAction="collapseActionView" />
+        </menu>
+    </item>
+
+    <!--    <group android:menuCategory="system">-->
+    <!--        <item-->
+    <!--            android:id="@+id/action_add"-->
+    <!--            android:icon="@drawable/ic_person_add"-->
+    <!--            android:title="@string/add_friend"-->
+    <!--            app:showAsAction="collapseActionView" />-->
+    <!--        <item-->
+    <!--            android:id="@+id/action_join_group"-->
+    <!--            android:orderInCategory="100"-->
+    <!--            android:title="@string/join_group"-->
+    <!--            app:showAsAction="collapseActionView" />-->
+    <!--        <item-->
+    <!--            android:id="@+id/action_create_group"-->
+    <!--            android:orderInCategory="100"-->
+    <!--            android:title="@string/create_group"-->
+    <!--            app:showAsAction="collapseActionView" />-->
+    <!--    </group>-->
 
 </menu>

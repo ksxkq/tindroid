@@ -356,5 +356,9 @@
     <string name="account_required_condition">6 ~ 16 位字母或数字</string>
     <string name="password_required_condition">6 ~ 20 位字母、字符或数字</string>
     <string name="nickname_required_condition">最多 16 位中文、字母或数字</string>
+    <string name="add_friend">添加好友</string>
+    <string name="join_group">加入群聊</string>
+    <string name="create_group">发起群聊</string>
+    <string name="more">更多</string>
 
 </resources>
