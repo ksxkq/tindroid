@@ -246,6 +246,11 @@ public class ChatsFragment extends Fragment implements ActionMode.Callback, UiUt
             startActivity(intent);
             return true;
         }
+        if (id == R.id.action_create_group) {
+            Intent intent = new Intent(getActivity(), CreateGroupActivity.class);
+            startActivity(intent);
+            return true;
+        }
 //        if (id == R.id.action_show_archive) {
 //            activity.showFragment(ChatsActivity.FRAGMENT_ARCHIVE, null);
 //            return true;

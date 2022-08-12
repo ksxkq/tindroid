@@ -360,5 +360,6 @@
     <string name="join_group">加入群聊</string>
     <string name="create_group">发起群聊</string>
     <string name="more">更多</string>
+    <string name="group_name">群聊名称</string>
 
 </resources>
