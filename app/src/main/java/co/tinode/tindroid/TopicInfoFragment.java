@@ -67,7 +67,8 @@ public class TopicInfoFragment extends Fragment implements MessageActivity.DataS
     private PromisedReply.FailureListener<ServerMessage> mFailureListener;
 
     private final ActivityResultLauncher<String[]> mRequestContactsPermissionsLauncher =
-            registerForActivityResult(new ActivityResultContracts.RequestMultiplePermissions(), result -> {});
+            registerForActivityResult(new ActivityResultContracts.RequestMultiplePermissions(), result -> {
+            });
 
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, ViewGroup container,
@@ -133,9 +134,11 @@ public class TopicInfoFragment extends Fragment implements MessageActivity.DataS
                 ((MessageActivity) activity).showFragment(MessageActivity.FRAGMENT_PERMISSIONS, null,
                         true));
 
-        view.findViewById(R.id.buttonAddMembers).setOnClickListener(v ->
-                ((MessageActivity) activity).showFragment(MessageActivity.FRAGMENT_EDIT_MEMBERS,
-                        null, true));
+        view.findViewById(R.id.buttonAddMembers).setOnClickListener(v -> {
+            Bundle args = new Bundle();
+            args.putString(AttachmentHandler.ARG_TOPIC_NAME, mTopic.getName());
+            BaseFragmentContainerActivity.startFragment(getActivity(), GroupMemberEditFragment.class, getResources().getString(R.string.group_members), args);
+        });
 
         view.findViewById(R.id.del).setOnClickListener(v ->
                 showConfirmationDialog(R.string.delete_friend,

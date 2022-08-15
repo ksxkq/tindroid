@@ -37,7 +37,6 @@ public class CreateGroupActivity extends BaseActivity {
 
     private RecyclerView recyclerView;
     private BaseRecyclerAdapter<SelectWrapper<ComTopic<VxCard>>> adapter;
-    private List<ComTopic<VxCard>> topics = new ArrayList<>();
     private final List<SelectWrapper<ComTopic<VxCard>>> data = new ArrayList<>();
     private Button confirmBtn;
     private TextInputEditText groupNameEt;
@@ -101,7 +100,7 @@ public class CreateGroupActivity extends BaseActivity {
         confirmBtn.setOnClickListener(v -> {
             String topicTitle = groupNameEt.getText().toString();
 
-            String[] members = null;
+            String[] members;
             List<String> selectMemberList = new ArrayList<>();
             for (SelectWrapper<ComTopic<VxCard>> selectWrapper : data) {
                 if (selectWrapper.isSelected()) {
