@@ -168,6 +168,10 @@
             android:theme="@style/AppMaterialTheme" />
 
         <activity
+            android:name=".BaseFragmentContainerActivity"
+            android:theme="@style/AppMaterialTheme" />
+
+        <activity
             android:name="com.google.android.gms.oss.licenses.OssLicensesMenuActivity"
             android:theme="@style/LicensesTheme" />
 
