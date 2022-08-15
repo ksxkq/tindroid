@@ -361,5 +361,6 @@
     <string name="create_group">发起群聊</string>
     <string name="more">更多</string>
     <string name="group_name">群聊名称</string>
+    <string name="pls_input_group_name">请输入群聊名称</string>
 
 </resources>
