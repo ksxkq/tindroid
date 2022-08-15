@@ -1,0 +1,66 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="?attr/listPreferredItemHeight"
+    android:background="?android:selectableItemBackground"
+    android:gravity="center_vertical"
+    android:orientation="horizontal"
+    android:paddingEnd="@dimen/activity_padding">
+
+    <CheckBox
+        android:id="@+id/checkbox"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:clickable="false"
+        android:background="@null"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <com.google.android.material.imageview.ShapeableImageView
+        android:id="@+id/avatar"
+        android:layout_width="32dp"
+        android:layout_height="32dp"
+        android:layout_marginEnd="8dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintLeft_toRightOf="@+id/checkbox"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <LinearLayout
+        android:layout_width="0dp"
+        android:layout_height="match_parent"
+        android:layout_marginLeft="8dp"
+        android:gravity="center_vertical"
+        android:orientation="vertical"
+        app:layout_constraintLeft_toRightOf="@+id/avatar"
+        app:layout_constraintRight_toRightOf="parent">
+
+        <TextView
+            android:id="@android:id/text1"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_gravity="start"
+            android:maxLines="1"
+            android:paddingEnd="16sp"
+            android:textAppearance="@style/contactListTextPrimary"
+            app:layout_constraintLeft_toRightOf="@+id/avatar"
+            app:layout_constraintRight_toRightOf="parent"
+            tools:ignore="RtlSymmetry"
+            tools:text="Contact title" />
+
+        <TextView
+            android:id="@android:id/text2"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_gravity="top"
+            android:ellipsize="end"
+            android:maxWidth="240sp"
+            android:maxLines="1"
+            android:textAppearance="?android:attr/textAppearanceSmall"
+            app:layout_constraintLeft_toRightOf="@+id/avatar"
+            tools:text="Dolorem ipsum quia dolor sit amet consectetur adipisci velit" />
+    </LinearLayout>
+
+</androidx.constraintlayout.widget.ConstraintLayout>
