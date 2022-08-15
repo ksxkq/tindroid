@@ -201,6 +201,7 @@ public class TopicInfoFragment extends Fragment implements MessageActivity.DataS
         if (mTopic.isGrpType()) {
             // Group topic
             groupMembers.setVisibility(View.VISIBLE);
+            activity.findViewById(R.id.del).setVisibility(View.GONE);
 
             Button button = activity.findViewById(R.id.buttonAddMembers);
             if (!mTopic.isSharer() && !mTopic.isManager()) {
@@ -215,6 +216,7 @@ public class TopicInfoFragment extends Fragment implements MessageActivity.DataS
             }
         } else {
             // P2P topic
+            activity.findViewById(R.id.del).setVisibility(View.VISIBLE);
             groupMembers.setVisibility(View.GONE);
         }
 
@@ -435,7 +437,7 @@ public class TopicInfoFragment extends Fragment implements MessageActivity.DataS
     @Override
     public void onCreateOptionsMenu(@NonNull Menu menu, @NonNull MenuInflater inflater) {
         // Inflate the menu; this adds items to the action bar if it is present.
-//        inflater.inflate(R.menu.menu_edit, menu);
+        inflater.inflate(R.menu.menu_edit, menu);
         super.onCreateOptionsMenu(menu, inflater);
     }
 

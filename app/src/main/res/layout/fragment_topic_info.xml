@@ -190,6 +190,7 @@
 
         <LinearLayout
             android:id="@+id/del"
+            android:visibility="gone"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:gravity="center_vertical"
@@ -233,14 +234,6 @@
                 android:layout_margin="4dp" />
 
         </LinearLayout>
-
-        <View
-            android:layout_width="match_parent"
-            android:layout_height="1sp"
-            android:layout_marginTop="@dimen/activity_padding"
-            android:layout_marginBottom="@dimen/activity_padding"
-            android:background="@color/grey"
-            tools:ignore="SmallSp" />
 
         <RelativeLayout
             android:id="@+id/permissions"
