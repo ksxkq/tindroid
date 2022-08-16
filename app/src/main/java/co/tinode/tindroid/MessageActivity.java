@@ -381,13 +381,6 @@ public class MessageActivity extends AppCompatActivity
     @Override
     public void onPause() {
         super.onPause();
-
-        Cache.getTinode().removeListener(mTinodeListener);
-
-        topicDetach();
-
-        // Stop handling read messages
-        mNoteReadHandler.removeMessages(0);
     }
 
     private void showMessagesFragmentOnAttach() {
@@ -499,6 +492,12 @@ public class MessageActivity extends AppCompatActivity
     @Override
     public void onDestroy() {
         super.onDestroy();
+        Cache.getTinode().removeListener(mTinodeListener);
+
+        topicDetach();
+
+        // Stop handling read messages
+        mNoteReadHandler.removeMessages(0);
 
         mMessageSender.shutdownNow();
         unregisterReceiver(onDownloadComplete);
