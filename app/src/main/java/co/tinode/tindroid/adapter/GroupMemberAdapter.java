@@ -1,8 +1,10 @@
 package co.tinode.tindroid.adapter;
 
+import java.util.Objects;
+
 public class GroupMemberAdapter {
 
-   public static class GroupMember {
+    public static class GroupMember {
         private String nickName;
         private String user;
 
@@ -25,6 +27,19 @@ public class GroupMemberAdapter {
 
         public void setUser(String user) {
             this.user = user;
+        }
+
+        @Override
+        public boolean equals(Object o) {
+            if (this == o) return true;
+            if (o == null || getClass() != o.getClass()) return false;
+            GroupMember that = (GroupMember) o;
+            return user.equals(that.user);
+        }
+
+        @Override
+        public int hashCode() {
+            return Objects.hash(user);
         }
     }
 }

@@ -1,8 +1,10 @@
 package co.tinode.tindroid;
 
+import android.app.Activity;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
+import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
@@ -19,8 +21,11 @@ import co.tinode.tindroid.adapter.GroupMemberAdapter;
 import co.tinode.tindroid.adapter.RecyclerViewHolder;
 import co.tinode.tindroid.media.VxCard;
 import co.tinode.tinodesdk.ComTopic;
+import co.tinode.tinodesdk.NotConnectedException;
+import co.tinode.tinodesdk.PromisedReply;
 import co.tinode.tinodesdk.Tinode;
 import co.tinode.tinodesdk.model.PrivateType;
+import co.tinode.tinodesdk.model.ServerMessage;
 import co.tinode.tinodesdk.model.Subscription;
 
 public class GroupMemberEditFragment extends BaseFragment {
@@ -30,7 +35,10 @@ public class GroupMemberEditFragment extends BaseFragment {
     private BaseRecyclerAdapter<SelectWrapper<GroupMemberAdapter.GroupMember>> adapter;
     private final List<SelectWrapper<GroupMemberAdapter.GroupMember>> data = new ArrayList<>();
     private Button confirmBtn;
-    private boolean isDataChanged;
+    private List<GroupMemberAdapter.GroupMember> originalSelectedMemberList = new ArrayList<>();
+    private List<GroupMemberAdapter.GroupMember> removedMemberList = new ArrayList<>();
+    private List<GroupMemberAdapter.GroupMember> addMemberList = new ArrayList<>();
+    private List<GroupMemberAdapter.GroupMember> currentSelectedMemberList = new ArrayList<>();
 
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
@@ -51,16 +59,17 @@ public class GroupMemberEditFragment extends BaseFragment {
 
         Collection<Subscription<VxCard, PrivateType>> subs = mTopic.getSubscriptions();
         if (subs != null) {
-            boolean isManager = mTopic.isManager();
             for (Subscription<VxCard, PrivateType> sub : subs) {
                 for (SelectWrapper<GroupMemberAdapter.GroupMember> memberSelectWrapper : data) {
                     if (memberSelectWrapper.getData().getUser().equals(sub.user)) {
                         memberSelectWrapper.setSelected(true);
+                        originalSelectedMemberList.add(memberSelectWrapper.getData());
                         break;
                     }
                 }
             }
         }
+        currentSelectedMemberList.addAll(originalSelectedMemberList);
 
         adapter = new BaseRecyclerAdapter<SelectWrapper<GroupMemberAdapter.GroupMember>>(getActivity(), data) {
             @Override
@@ -84,28 +93,64 @@ public class GroupMemberEditFragment extends BaseFragment {
         };
         adapter.setOnItemClickListener((itemView, pos) -> {
             SelectWrapper<GroupMemberAdapter.GroupMember> item = data.get(pos);
-            item.setSelected(!item.isSelected());
+            boolean isSelect = !item.isSelected();
+            if (isSelect) {
+                currentSelectedMemberList.add(item.getData());
+            } else {
+                currentSelectedMemberList.remove(item.getData());
+            }
+            item.setSelected(isSelect);
             adapter.notifyItemChanged(pos);
-            isDataChanged = true;
             updateConfirmButtonEnableState();
         });
         recyclerView.setAdapter(adapter);
         updateConfirmButtonEnableState();
+
+        confirmBtn.setOnClickListener(v -> updateContacts(getActivity()));
+    }
+
+    private void updateContacts(final Activity activity) {
+        try {
+            List<GroupMemberAdapter.GroupMember> removedMemberList = new ArrayList<>(originalSelectedMemberList);
+            List<GroupMemberAdapter.GroupMember> addMemberList = new ArrayList<>(currentSelectedMemberList);
+            removedMemberList.removeAll(currentSelectedMemberList);
+            addMemberList.removeAll(originalSelectedMemberList);
+            PromisedReply.FailureListener<ServerMessage> failureListener = new UiUtils.ToastFailureListener(getActivity());
+            for (GroupMemberAdapter.GroupMember addMember : addMemberList) {
+                mTopic.invite(addMember.getUser(), null /* use default */).thenCatch(failureListener);
+            }
+            for (GroupMemberAdapter.GroupMember removedMember : removedMemberList) {
+                mTopic.eject(removedMember.getUser(), false).thenCatch(failureListener);
+            }
+            getActivity().finish();
+        } catch (NotConnectedException ignored) {
+            Toast.makeText(activity, R.string.no_connection, Toast.LENGTH_SHORT).show();
+            // Go back to contacts
+        } catch (Exception ex) {
+            Toast.makeText(activity, R.string.action_failed, Toast.LENGTH_SHORT).show();
+        }
     }
 
     private void updateConfirmButtonEnableState() {
-        int selectCnt = 0;
-        for (SelectWrapper<GroupMemberAdapter.GroupMember> selectWrapper : data) {
-            if (selectWrapper.isSelected()) {
-                selectCnt++;
+        // 检测变化
+        removedMemberList.clear();
+        addMemberList.clear();
+        List<GroupMemberAdapter.GroupMember> currentSelectedMemberList = new ArrayList<>();
+        for (SelectWrapper<GroupMemberAdapter.GroupMember> memberSelectWrapper : data) {
+            if (memberSelectWrapper.isSelected()) {
+                currentSelectedMemberList.add(memberSelectWrapper.getData());
             }
         }
-        if (!isDataChanged) {
+        List<GroupMemberAdapter.GroupMember> removedMemberList = new ArrayList<>(originalSelectedMemberList);
+        List<GroupMemberAdapter.GroupMember> addMemberList = new ArrayList<>(currentSelectedMemberList);
+        removedMemberList.removeAll(currentSelectedMemberList);
+        addMemberList.removeAll(originalSelectedMemberList);
+        if (removedMemberList.size() == 0 && addMemberList.size() == 0) {
             confirmBtn.setEnabled(false);
             confirmBtn.setText(getResources().getString(R.string.confirm));
         } else {
             confirmBtn.setEnabled(true);
-            confirmBtn.setText(getResources().getString(R.string.confirm) + "(" + selectCnt + ")");
+            confirmBtn.setText(getResources().getString(R.string.confirm) + "(" + currentSelectedMemberList.size() + ")");
         }
     }
 
