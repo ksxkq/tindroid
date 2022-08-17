@@ -70,6 +70,10 @@ public class TopicInfoFragment extends Fragment implements MessageActivity.DataS
             registerForActivityResult(new ActivityResultContracts.RequestMultiplePermissions(), result -> {
             });
 
+    private Button leaveGroupBtn;
+    private Button leaveAndDeleteBtn;
+    private View groupBottomLl;
+
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
@@ -92,6 +96,9 @@ public class TopicInfoFragment extends Fragment implements MessageActivity.DataS
         toolbar.setTitle(R.string.topic_settings);
         toolbar.setSubtitle(null);
         toolbar.setLogo(null);
+        groupBottomLl = view.findViewById(R.id.groupBottomLl);
+        leaveGroupBtn = view.findViewById(R.id.leaveBtn);
+        leaveAndDeleteBtn = view.findViewById(R.id.leaveAndDeleteBtn);
 
         mMembersAdapter = new MembersAdapter();
         mFailureListener = new UiUtils.ToastFailureListener(activity);
@@ -143,6 +150,44 @@ public class TopicInfoFragment extends Fragment implements MessageActivity.DataS
         view.findViewById(R.id.del).setOnClickListener(v ->
                 showConfirmationDialog(R.string.delete_friend,
                         R.string.delete_friend_confirmation));
+        leaveGroupBtn.setOnClickListener(v -> {
+            final AlertDialog.Builder confirmBuilder = new AlertDialog.Builder(activity);
+            confirmBuilder.setNegativeButton(android.R.string.no, null);
+            confirmBuilder.setTitle(R.string.leave_group);
+            confirmBuilder.setMessage(R.string.leave_group_content);
+            confirmBuilder.setPositiveButton(android.R.string.yes, (dialog, which) -> {
+                PromisedReply<ServerMessage> response = mTopic.leave(true);
+                if (response != null) {
+                    response.thenApply(new PromisedReply.SuccessListener<ServerMessage>() {
+                        @Override
+                        public PromisedReply<ServerMessage> onSuccess(ServerMessage result) {
+                            activity.finish();
+                            return null;
+                        }
+                    }).thenCatch(mFailureListener);
+                }
+            });
+            confirmBuilder.show();
+        });
+        leaveAndDeleteBtn.setOnClickListener(v -> {
+            final AlertDialog.Builder confirmBuilder = new AlertDialog.Builder(activity);
+            confirmBuilder.setNegativeButton(android.R.string.no, null);
+            confirmBuilder.setTitle(R.string.leave_and_delete_group);
+            confirmBuilder.setMessage(R.string.leave_and_delete_group_content);
+            confirmBuilder.setPositiveButton(android.R.string.yes, (dialog, which) -> {
+                PromisedReply<ServerMessage> response = mTopic.delete(true);
+                if (response != null) {
+                    response.thenApply(new PromisedReply.SuccessListener<ServerMessage>() {
+                        @Override
+                        public PromisedReply<ServerMessage> onSuccess(ServerMessage result) {
+                            activity.finish();
+                            return null;
+                        }
+                    }).thenCatch(mFailureListener);
+                }
+            });
+            confirmBuilder.show();
+        });
     }
 
     private void showConfirmationDialog(
@@ -204,6 +249,7 @@ public class TopicInfoFragment extends Fragment implements MessageActivity.DataS
         if (mTopic.isGrpType()) {
             // Group topic
             groupMembers.setVisibility(View.VISIBLE);
+            groupBottomLl.setVisibility(View.VISIBLE);
             activity.findViewById(R.id.del).setVisibility(View.GONE);
 
             Button button = activity.findViewById(R.id.buttonAddMembers);
@@ -217,10 +263,14 @@ public class TopicInfoFragment extends Fragment implements MessageActivity.DataS
                 button.setEnabled(true);
                 button.setVisibility(View.VISIBLE);
             }
+            if (!mTopic.isManager()) {
+                leaveAndDeleteBtn.setVisibility(View.GONE);
+            }
         } else {
             // P2P topic
             activity.findViewById(R.id.del).setVisibility(View.VISIBLE);
             groupMembers.setVisibility(View.GONE);
+            groupBottomLl.setVisibility(View.GONE);
         }
 
         notifyDataSetChanged();

@@ -90,7 +90,6 @@
     <string name="no_members">No group members</string>
     <string name="add_one_member">Add at least one group member</string>
     <string name="add_members">Add members</string>
-    <string name="leave_group">Leave group</string>
     <string name="id">ID:</string>
     <string name="topic_muted">Muted</string>
     <string name="permissions">Permissions</string>
@@ -362,5 +361,9 @@
     <string name="more">更多</string>
     <string name="group_name">群聊名称</string>
     <string name="pls_input_group_name">请输入群聊名称</string>
+    <string name="leave_group">删除并退出</string>
+    <string name="leave_group_content">是否真的要删除并退出？</string>
+    <string name="leave_and_delete_group">解散该群聊</string>
+    <string name="leave_and_delete_group_content">是否真的要解散该群聊？</string>
 
 </resources>

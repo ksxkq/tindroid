@@ -80,7 +80,7 @@
     <string name="no_members">编组成员不存在</string>
     <string name="add_one_member">至少添加一位编组成员</string>
     <string name="add_members">添加成员</string>
-    <string name="leave_group">离开编组</string>
+    <string name="leave_group">删除并退出</string>
     <string name="topic_muted">静音</string>
     <string name="permissions">权限</string>
     <string name="your_permissions">你的</string>
