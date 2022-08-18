@@ -21,6 +21,7 @@
         android:id="@+id/buttonViewProfile"
         style="@style/textSecondary"
         android:layout_width="match_parent"
+        android:visibility="gone"
         android:layout_height="?android:attr/listPreferredItemHeightSmall"
         android:background="?android:attr/selectableItemBackground"
         android:clickable="true"
@@ -47,6 +48,7 @@
     <androidx.appcompat.widget.AppCompatTextView
         android:id="@+id/buttonPermissions"
         style="@style/textSecondary"
+        android:visibility="gone"
         android:layout_width="match_parent"
         android:layout_height="?android:attr/listPreferredItemHeightSmall"
         android:background="?android:attr/selectableItemBackground"
@@ -94,6 +96,7 @@
         android:drawablePadding="4sp"
         android:focusable="true"
         android:gravity="center_vertical"
+        android:visibility="gone"
         android:text="@string/block"
         app:drawableStartCompat="@drawable/ic_block_gray" />
 

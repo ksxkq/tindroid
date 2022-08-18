@@ -413,16 +413,17 @@ public class TopicInfoFragment extends Fragment implements MessageActivity.DataS
             actions.findViewById(R.id.buttonMakeOwner).setOnClickListener(ocl);
         } else {
             actions.findViewById(R.id.buttonMakeOwner).setVisibility(View.GONE);
-        }
-        if (mTopic.isManager()) {
-            actions.findViewById(R.id.buttonPermissions).setOnClickListener(ocl);
-            actions.findViewById(R.id.buttonRemove).setOnClickListener(ocl);
-            actions.findViewById(R.id.buttonBlock).setOnClickListener(ocl);
-        } else {
-            actions.findViewById(R.id.buttonPermissions).setVisibility(View.GONE);
             actions.findViewById(R.id.buttonRemove).setVisibility(View.GONE);
-            actions.findViewById(R.id.buttonBlock).setVisibility(View.GONE);
         }
+//        if (mTopic.isManager()) {
+//            actions.findViewById(R.id.buttonPermissions).setOnClickListener(ocl);
+            actions.findViewById(R.id.buttonRemove).setOnClickListener(ocl);
+//            actions.findViewById(R.id.buttonBlock).setOnClickListener(ocl);
+//        } else {
+//            actions.findViewById(R.id.buttonPermissions).setVisibility(View.GONE);
+//            actions.findViewById(R.id.buttonRemove).setVisibility(View.GONE);
+//            actions.findViewById(R.id.buttonBlock).setVisibility(View.GONE);
+//        }
         dialog.show();
     }
 
