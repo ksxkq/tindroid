@@ -38,6 +38,9 @@ public class TheCard implements Serializable, Mergeable {
     public Birthday bday;
     // Free-form description.
     public String note;
+    public boolean inviteOnlyOwner;
+    public boolean muteGroup;
+    public boolean blockP2P;
 
     public TheCard() {
     }

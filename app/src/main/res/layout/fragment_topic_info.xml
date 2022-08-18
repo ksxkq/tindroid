@@ -173,6 +173,24 @@
                 tools:ignore="SmallSp" />
 
             <LinearLayout
+                android:visibility="gone"
+                android:id="@+id/group_setting_ll"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:gravity="center_vertical"
+                android:minHeight="48dp">
+
+                <TextView
+                    style="@style/textPrimary"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center_vertical"
+                    android:layout_weight="1"
+                    android:text="@string/group_setting" />
+
+            </LinearLayout>
+
+            <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:gravity="center_vertical"

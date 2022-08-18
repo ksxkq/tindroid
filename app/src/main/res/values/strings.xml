@@ -365,5 +365,6 @@
     <string name="leave_group_content">是否真的要删除并退出？</string>
     <string name="leave_and_delete_group">解散该群聊</string>
     <string name="leave_and_delete_group_content">是否真的要解散该群聊？</string>
+    <string name="group_setting">群管理</string>
 
 </resources>

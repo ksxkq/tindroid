@@ -73,6 +73,7 @@ public class TopicInfoFragment extends Fragment implements MessageActivity.DataS
     private Button leaveGroupBtn;
     private Button leaveAndDeleteBtn;
     private View groupBottomLl;
+    private View groupSettingLl;
 
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, ViewGroup container,
@@ -96,6 +97,7 @@ public class TopicInfoFragment extends Fragment implements MessageActivity.DataS
         toolbar.setTitle(R.string.topic_settings);
         toolbar.setSubtitle(null);
         toolbar.setLogo(null);
+        groupSettingLl = view.findViewById(R.id.group_setting_ll);
         groupBottomLl = view.findViewById(R.id.groupBottomLl);
         leaveGroupBtn = view.findViewById(R.id.leaveBtn);
         leaveAndDeleteBtn = view.findViewById(R.id.leaveAndDeleteBtn);
@@ -188,6 +190,11 @@ public class TopicInfoFragment extends Fragment implements MessageActivity.DataS
             });
             confirmBuilder.show();
         });
+        groupSettingLl.setOnClickListener(v -> {
+            Bundle args = new Bundle();
+            args.putString(AttachmentHandler.ARG_TOPIC_NAME, mTopic.getName());
+            BaseFragmentContainerActivity.startFragment(getActivity(), GroupSettingFragment.class, getResources().getString(R.string.group_setting), args);
+        });
     }
 
     private void showConfirmationDialog(
@@ -268,6 +275,7 @@ public class TopicInfoFragment extends Fragment implements MessageActivity.DataS
                 leaveAndDeleteBtn.setVisibility(View.GONE);
                 leaveGroupBtn.setVisibility(View.VISIBLE);
             } else {
+                groupSettingLl.setVisibility(View.VISIBLE);
                 leaveAndDeleteBtn.setVisibility(View.VISIBLE);
                 leaveGroupBtn.setVisibility(View.GONE);
             }
@@ -418,7 +426,7 @@ public class TopicInfoFragment extends Fragment implements MessageActivity.DataS
         }
 //        if (mTopic.isManager()) {
 //            actions.findViewById(R.id.buttonPermissions).setOnClickListener(ocl);
-            actions.findViewById(R.id.buttonRemove).setOnClickListener(ocl);
+        actions.findViewById(R.id.buttonRemove).setOnClickListener(ocl);
 //            actions.findViewById(R.id.buttonBlock).setOnClickListener(ocl);
 //        } else {
 //            actions.findViewById(R.id.buttonPermissions).setVisibility(View.GONE);
