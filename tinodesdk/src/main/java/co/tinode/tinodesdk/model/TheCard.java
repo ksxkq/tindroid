@@ -205,6 +205,9 @@ public class TheCard implements Serializable, Mergeable {
         dst.comm = Contact.copyArray(src.comm);
         // Shallow copy of the photo
         dst.photo = src.photo != null ? src.photo.copy() : null;
+        dst.inviteOnlyOwner = src.inviteOnlyOwner;
+        dst.blockP2P = src.blockP2P;
+        dst.muteGroup = src.muteGroup;
 
         return dst;
     }
