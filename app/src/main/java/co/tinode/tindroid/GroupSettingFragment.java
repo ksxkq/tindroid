@@ -35,7 +35,6 @@ public class GroupSettingFragment extends BaseFragment {
         SwitchCompat blockP2pSw = view.findViewById(R.id.block_p2p_sw);
 
         onlyOwnerInviteSw.setChecked(topic.getPub().inviteOnlyOwner);
-
         onlyOwnerInviteLl.setOnClickListener(v -> {
             VxCard pub = topic.getPub().copy();
             pub.inviteOnlyOwner = !onlyOwnerInviteSw.isChecked();
@@ -43,13 +42,49 @@ public class GroupSettingFragment extends BaseFragment {
                 @Override
                 public PromisedReply<ServerMessage> onSuccess(ServerMessage result) {
                     topic.setPub(pub);
-//                    topic.getMeta(new MsgGetMeta(new MetaGetDesc(), null, null, null, null, false)).thenApply(new PromisedReply.SuccessListener<ServerMessage>() {
-//                        @Override
-//                        public PromisedReply<ServerMessage> onSuccess(ServerMessage result) throws Exception {
-//                            return null;
-//                        }
-//                    });
                     onMainThread(() -> onlyOwnerInviteSw.setChecked(pub.inviteOnlyOwner));
+                    return null;
+                }
+            }).thenCatch(new UiUtils.ToastFailureListener(getActivity()));
+        });
+
+        onlyOwnerInviteSw.setChecked(topic.getPub().inviteOnlyOwner);
+        onlyOwnerInviteLl.setOnClickListener(v -> {
+            VxCard pub = topic.getPub().copy();
+            pub.inviteOnlyOwner = !onlyOwnerInviteSw.isChecked();
+            topic.setDescription(pub, null, null).thenApply(new PromisedReply.SuccessListener<ServerMessage>() {
+                @Override
+                public PromisedReply<ServerMessage> onSuccess(ServerMessage result) {
+                    topic.setPub(pub);
+                    onMainThread(() -> onlyOwnerInviteSw.setChecked(pub.inviteOnlyOwner));
+                    return null;
+                }
+            }).thenCatch(new UiUtils.ToastFailureListener(getActivity()));
+        });
+
+        groupMuteSw.setChecked(topic.getPub().muteGroup);
+        groupMuteLl.setOnClickListener(v -> {
+            VxCard pub = topic.getPub().copy();
+            pub.muteGroup = !groupMuteSw.isChecked();
+            topic.setDescription(pub, null, null).thenApply(new PromisedReply.SuccessListener<ServerMessage>() {
+                @Override
+                public PromisedReply<ServerMessage> onSuccess(ServerMessage result) {
+                    topic.setPub(pub);
+                    onMainThread(() -> groupMuteSw.setChecked(pub.muteGroup));
+                    return null;
+                }
+            }).thenCatch(new UiUtils.ToastFailureListener(getActivity()));
+        });
+
+        blockP2pSw.setChecked(topic.getPub().blockP2P);
+        blockP2pLl.setOnClickListener(v -> {
+            VxCard pub = topic.getPub().copy();
+            pub.blockP2P = !blockP2pSw.isChecked();
+            topic.setDescription(pub, null, null).thenApply(new PromisedReply.SuccessListener<ServerMessage>() {
+                @Override
+                public PromisedReply<ServerMessage> onSuccess(ServerMessage result) {
+                    topic.setPub(pub);
+                    onMainThread(() -> blockP2pSw.setChecked(pub.blockP2P));
                     return null;
                 }
             }).thenCatch(new UiUtils.ToastFailureListener(getActivity()));
