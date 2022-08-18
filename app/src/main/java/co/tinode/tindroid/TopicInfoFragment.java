@@ -264,6 +264,7 @@ public class TopicInfoFragment extends Fragment implements MessageActivity.DataS
                 button.setVisibility(View.VISIBLE);
             }
             if (!mTopic.isOwner()) {
+                button.setVisibility(View.GONE);
                 leaveAndDeleteBtn.setVisibility(View.GONE);
                 leaveGroupBtn.setVisibility(View.VISIBLE);
             } else {
