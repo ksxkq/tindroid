@@ -38,8 +38,11 @@ public class TheCard implements Serializable, Mergeable {
     public Birthday bday;
     // Free-form description.
     public String note;
+    @JsonInclude
     public boolean inviteOnlyOwner;
+    @JsonInclude
     public boolean muteGroup;
+    @JsonInclude
     public boolean blockP2P;
 
     public TheCard() {

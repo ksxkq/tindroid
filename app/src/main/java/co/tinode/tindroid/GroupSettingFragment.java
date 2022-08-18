@@ -37,7 +37,7 @@ public class GroupSettingFragment extends BaseFragment {
         onlyOwnerInviteSw.setChecked(topic.getPub().inviteOnlyOwner);
 
         onlyOwnerInviteLl.setOnClickListener(v -> {
-            VxCard pub = new VxCard();
+            VxCard pub = topic.getPub().copy();
             pub.inviteOnlyOwner = !onlyOwnerInviteSw.isChecked();
             topic.setDescription(pub, null, null).thenApply(new PromisedReply.SuccessListener<ServerMessage>() {
                 @Override
