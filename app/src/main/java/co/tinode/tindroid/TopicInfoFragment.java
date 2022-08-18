@@ -263,8 +263,12 @@ public class TopicInfoFragment extends Fragment implements MessageActivity.DataS
                 button.setEnabled(true);
                 button.setVisibility(View.VISIBLE);
             }
-            if (!mTopic.isManager()) {
+            if (!mTopic.isOwner()) {
                 leaveAndDeleteBtn.setVisibility(View.GONE);
+                leaveGroupBtn.setVisibility(View.VISIBLE);
+            } else {
+                leaveAndDeleteBtn.setVisibility(View.VISIBLE);
+                leaveGroupBtn.setVisibility(View.GONE);
             }
         } else {
             // P2P topic
@@ -379,7 +383,12 @@ public class TopicInfoFragment extends Fragment implements MessageActivity.DataS
                             UiUtils.ACTION_UPDATE_SUB, "O");
 
                 } else if (id == R.id.buttonMakeOwner) {
-                    mTopic.updateMode(uid, "+O").thenApply(null, mFailureListener);
+                    mTopic.updateMode(uid, "+O").thenApply(new PromisedReply.SuccessListener<ServerMessage>() {
+                        @Override
+                        public PromisedReply<ServerMessage> onSuccess(ServerMessage result) {
+                            return mTopic.updateMode("-O");
+                        }
+                    }, mFailureListener);
                 } else if (id == R.id.buttonRemove) {
                     showConfirmationDialog(userTitleFixed, topicTitleFixed, uid,
                             R.string.remove_from_group,

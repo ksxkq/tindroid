@@ -335,12 +335,14 @@
         android:orientation="vertical">
 
         <Button
+            android:visibility="gone"
             android:id="@+id/leaveBtn"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:text="@string/leave_group" />
 
         <Button
+            android:visibility="gone"
             android:id="@+id/leaveAndDeleteBtn"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
