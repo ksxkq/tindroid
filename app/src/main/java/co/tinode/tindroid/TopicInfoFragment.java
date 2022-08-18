@@ -317,10 +317,10 @@ public class TopicInfoFragment extends Fragment implements MessageActivity.DataS
                 response.thenApply(new PromisedReply.SuccessListener<ServerMessage>() {
                     @Override
                     public PromisedReply<ServerMessage> onSuccess(ServerMessage result) {
-                        Intent intent = new Intent(activity, ChatsActivity.class);
-                        intent.addFlags(Intent.FLAG_ACTIVITY_REORDER_TO_FRONT);
-                        startActivity(intent);
-                        activity.finish();
+//                        Intent intent = new Intent(activity, ChatsActivity.class);
+//                        intent.addFlags(Intent.FLAG_ACTIVITY_REORDER_TO_FRONT);
+//                        startActivity(intent);
+//                        activity.finish();
                         return null;
                     }
                 }).thenCatch(mFailureListener);
