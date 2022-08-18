@@ -60,6 +60,8 @@ import co.tinode.tinodesdk.Tinode;
 import co.tinode.tinodesdk.Topic;
 import co.tinode.tinodesdk.model.Description;
 import co.tinode.tinodesdk.model.Drafty;
+import co.tinode.tinodesdk.model.MetaGetDesc;
+import co.tinode.tinodesdk.model.MsgGetMeta;
 import co.tinode.tinodesdk.model.MsgServerData;
 import co.tinode.tinodesdk.model.MsgServerInfo;
 import co.tinode.tinodesdk.model.MsgServerPres;
@@ -321,6 +323,8 @@ public class MessageActivity extends AppCompatActivity
                     }
                 }
             }
+            // 刷新组信息
+            mTopic.getMeta(new MsgGetMeta(new MetaGetDesc(), null, null, null, null, false));
         }
 
         if (mTopic == null) {
