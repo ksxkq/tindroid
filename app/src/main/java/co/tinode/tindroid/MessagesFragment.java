@@ -159,15 +159,15 @@ public class MessagesFragment extends Fragment {
 
     private final ActivityResultLauncher<String> mFileOpenerRequestPermissionLauncher =
             registerForActivityResult(new ActivityResultContracts.RequestPermission(), isGranted -> {
-        // Check if permission is granted.
-        if (isGranted) {
-            openFileSelector(getActivity());
-        }
-    });
+                // Check if permission is granted.
+                if (isGranted) {
+                    openFileSelector(getActivity());
+                }
+            });
 
     private final ActivityResultLauncher<String[]> mImagePickerRequestPermissionLauncher =
             registerForActivityResult(new ActivityResultContracts.RequestMultiplePermissions(), result -> {
-                for (Map.Entry<String,Boolean> e : result.entrySet()) {
+                for (Map.Entry<String, Boolean> e : result.entrySet()) {
                     // Check if all required permissions are granted.
                     if (!e.getValue()) {
                         return;
@@ -179,7 +179,7 @@ public class MessagesFragment extends Fragment {
 
     private final ActivityResultLauncher<String[]> mAudioRecorderPermissionLauncher =
             registerForActivityResult(new ActivityResultContracts.RequestMultiplePermissions(), result -> {
-                for (Map.Entry<String,Boolean> e : result.entrySet()) {
+                for (Map.Entry<String, Boolean> e : result.entrySet()) {
                     if (!e.getValue()) {
                         // Some permission is missing. Disable audio recording button.
                         Activity activity = getActivity();
@@ -236,7 +236,7 @@ public class MessagesFragment extends Fragment {
                     args.putParcelable(AttachmentHandler.ARG_LOCAL_URI, data.getData());
                 }
 
-                args.putString(AttachmentHandler.ARG_OPERATION,AttachmentHandler.ARG_OPERATION_IMAGE);
+                args.putString(AttachmentHandler.ARG_OPERATION, AttachmentHandler.ARG_OPERATION_IMAGE);
                 args.putString(AttachmentHandler.ARG_TOPIC_NAME, mTopicName);
                 // Show attachment preview.
                 activity.showFragment(MessageActivity.FRAGMENT_VIEW_IMAGE, args, true);
@@ -502,7 +502,16 @@ public class MessagesFragment extends Fragment {
         if (mVisibleSendPanel == id) {
             return;
         }
-        activity.findViewById(id).setVisibility(View.VISIBLE);
+        View view = activity.findViewById(id);
+        if (id == R.id.sendMessageDisabled) {
+            TextView blockTv = (TextView) view;
+            if ((!mTopic.isOwner() && mTopic.getPub().muteGroup)) {
+                blockTv.setText(R.string.mute_group);
+            } else {
+                blockTv.setText(R.string.sending_disabled);
+            }
+        }
+        view.setVisibility(View.VISIBLE);
         activity.findViewById(mVisibleSendPanel).setVisibility(View.GONE);
         mVisibleSendPanel = id;
     }
@@ -618,7 +627,7 @@ public class MessagesFragment extends Fragment {
         GestureDetector gd = new GestureDetector(getContext(), new GestureDetector.SimpleOnGestureListener() {
             public void onLongPress(MotionEvent e) {
                 if (!UiUtils.isPermissionGranted(activity, Manifest.permission.RECORD_AUDIO)) {
-                    mAudioRecorderPermissionLauncher.launch(new String[] {
+                    mAudioRecorderPermissionLauncher.launch(new String[]{
                             Manifest.permission.RECORD_AUDIO, Manifest.permission.MODIFY_AUDIO_SETTINGS
                     });
                     return;
@@ -765,7 +774,7 @@ public class MessagesFragment extends Fragment {
             args.remove(ForwardToFragment.FORWARDING_FROM_USER);
         }
 
-        if (!mTopic.isWriter() || mTopic.isBlocked() || mTopic.isDeleted()) {
+        if (!mTopic.isWriter() || mTopic.isBlocked() || mTopic.isDeleted() || (!mTopic.isOwner() && mTopic.getPub().muteGroup)) {
             setSendPanelVisible(activity, R.id.sendMessageDisabled);
         } else if (mContentToForward != null) {
             showContentToForward(activity, mForwardSender, mContentToForward);
@@ -1011,7 +1020,8 @@ public class MessagesFragment extends Fragment {
         if (mAudioRecorder != null) {
             try {
                 mAudioRecorder.stop();
-            } catch (RuntimeException ignored) {}
+            } catch (RuntimeException ignored) {
+            }
             mAudioRecorder.release();
             mAudioRecorder = null;
         }
@@ -1100,7 +1110,7 @@ public class MessagesFragment extends Fragment {
                 json.put("action", "report");
                 json.put("target", mTopic.getName());
                 Drafty msg = new Drafty().attachJSON(json);
-                HashMap<String,Object> head = new HashMap<>();
+                HashMap<String, Object> head = new HashMap<>();
                 head.put("mime", Drafty.MIME_TYPE);
                 Cache.getTinode().publish(Tinode.TOPIC_SYS, msg, head, null);
             } else {
@@ -1187,7 +1197,7 @@ public class MessagesFragment extends Fragment {
             // Continue only if the File was successfully created
             if (photoFile != null) {
                 Uri photoUri = FileProvider.getUriForFile(activity,
-                        activity.getPackageName()+".provider", photoFile);
+                        activity.getPackageName() + ".provider", photoFile);
 
                 cameraIntent.putExtra(MediaStore.EXTRA_OUTPUT, photoUri);
                 // See explanation here: http://medium.com/@quiro91/ceb9bb0eec3a
@@ -1497,7 +1507,7 @@ public class MessagesFragment extends Fragment {
         private void compact() {
             int len = VISUALIZATION_BARS / 2;
             // Donwsample the main buffer: two consecutive samples make one new sample.
-            for (int i = 0; i < len; i ++) {
+            for (int i = 0; i < len; i++) {
                 mSamples[i] = (mSamples[i * 2] + mSamples[i * 2 + 1]) * 0.5f;
             }
             // Copy scratch buffer to the upper half the the main buffer.

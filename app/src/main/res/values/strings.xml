@@ -367,5 +367,6 @@
     <string name="leave_and_delete_group_content">是否真的要解散该群聊？</string>
     <string name="group_setting">群管理</string>
     <string name="block_join_group">当前无法加入群聊</string>
+    <string name="mute_group">全员禁言</string>
 
 </resources>
