@@ -72,6 +72,7 @@ import co.tinode.tinodesdk.model.Pair;
 import co.tinode.tinodesdk.model.PrivateType;
 import co.tinode.tinodesdk.model.ServerMessage;
 import co.tinode.tinodesdk.model.Subscription;
+import co.tinode.tinodesdk.model.TheCard;
 
 @SuppressWarnings("WeakerAccess")
 public class Tinode {
@@ -1811,6 +1812,10 @@ public class Tinode {
         return Tinode.newTopic(this, name, l);
     }
 
+    public Topic newComTopic(final String name) {
+        return new ComTopic(null, name, new ComTopic.ComListener());
+    }
+
     /**
      * Instantiate topic from subscription.
      *
@@ -1872,6 +1877,13 @@ public class Tinode {
         } else if (TOPIC_FND.equals(meta.topic)) {
             topic = new FndTopic(this, null);
         } else {
+            // 开启了仅群主加入，就不再添加 topic
+            if (meta.desc.pub != null) {
+                TheCard pub = (TheCard) meta.desc.pub;
+                if (pub.inviteOnlyOwner) {
+                    return null;
+                }
+            }
             topic = new ComTopic(this, meta.topic, meta.desc);
         }
 

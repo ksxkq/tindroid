@@ -40,6 +40,7 @@ import android.view.Menu;
 import android.view.View;
 import android.view.Window;
 import android.view.WindowManager;
+import android.view.inputmethod.InputMethodManager;
 import android.webkit.MimeTypeMap;
 import android.widget.Button;
 import android.widget.CheckedTextView;
@@ -1511,5 +1512,18 @@ public class UiUtils {
         window.addFlags(WindowManager.LayoutParams.FLAG_DRAWS_SYSTEM_BAR_BACKGROUNDS);
         window.setStatusBarColor(activity.getResources().getColor(R.color.white));
         window.getDecorView().setSystemUiVisibility(View.SYSTEM_UI_FLAG_LIGHT_STATUS_BAR);
+    }
+
+    public static void dismissKeyboard(Activity activity) {
+        if (activity == null) {
+            return;
+        }
+        InputMethodManager imm = (InputMethodManager) activity.getSystemService(Context.INPUT_METHOD_SERVICE);
+//        imm.toggleSoftInput(0, InputMethodManager.HIDE_IMPLICIT_ONLY); // show
+//        if (imm.isActive()) {
+            imm.toggleSoftInput(InputMethodManager.HIDE_IMPLICIT_ONLY, 0); // hide
+//        } else {
+//            imm.toggleSoftInput(0, InputMethodManager.HIDE_IMPLICIT_ONLY); // show
+//        }
     }
 }

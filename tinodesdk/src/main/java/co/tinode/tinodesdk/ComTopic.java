@@ -34,6 +34,10 @@ public class ComTopic<DP extends TheCard> extends Topic<DP,PrivateType,DP,Privat
         super(tinode, l, isChannel);
     }
 
+    public void setTinode(Tinode tinode) {
+        mTinode = tinode;
+    }
+
     /**
      * Subscribe to topic.
      */
