@@ -49,7 +49,6 @@ public class AddByIDFragment extends Fragment {
                         return;
                     }
                     ComTopic topic = (ComTopic<VxCard>) Cache.getTinode().newComTopic(id);
-                    topic.setTinode(Cache.getTinode());
                     topic.getMeta(new MsgGetMeta(new MetaGetDesc(), null, null, null, null, false))
                             .thenApply(new PromisedReply.SuccessListener<ServerMessage>() {
                                 @Override
@@ -57,6 +56,8 @@ public class AddByIDFragment extends Fragment {
                                     VxCard pub = (VxCard) serverMessage.meta.desc.pub;
                                     if (pub.inviteOnlyOwner) {
                                         toastError(getActivity());
+                                        // 移除
+                                        Cache.getTinode().stopTrackingTopic(id);
                                         return null;
                                     }
                                     gotoDetails(activity, id);

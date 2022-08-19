@@ -680,14 +680,15 @@ public class Tinode {
                 }
             }
         } else if (pkt.meta != null) {
-            FutureHolder fh = mFutures.remove(pkt.meta.id);
-            if (fh != null) {
-                fh.future.resolve(pkt);
-            }
-
+            // 放到 resolve，方便处理 stopTracking
             Topic topic = getTopic(pkt.meta.topic);
             if (topic == null) {
                 topic = maybeCreateTopic(pkt.meta);
+            }
+
+            FutureHolder fh = mFutures.remove(pkt.meta.id);
+            if (fh != null) {
+                fh.future.resolve(pkt);
             }
 
             if (topic != null) {
@@ -1813,7 +1814,7 @@ public class Tinode {
     }
 
     public Topic newComTopic(final String name) {
-        return new ComTopic(null, name, new ComTopic.ComListener());
+        return new ComTopic(this, name, new ComTopic.ComListener());
     }
 
     /**
@@ -1877,13 +1878,6 @@ public class Tinode {
         } else if (TOPIC_FND.equals(meta.topic)) {
             topic = new FndTopic(this, null);
         } else {
-            // 开启了仅群主加入，就不再添加 topic
-            if (meta.desc.pub != null) {
-                TheCard pub = (TheCard) meta.desc.pub;
-                if (pub.inviteOnlyOwner) {
-                    return null;
-                }
-            }
             topic = new ComTopic(this, meta.topic, meta.desc);
         }
 
@@ -1996,7 +1990,7 @@ public class Tinode {
     /**
      * Stop tracking the topic: remove it from in-memory cache.
      */
-    void stopTrackingTopic(String topicName) {
+    public void stopTrackingTopic(String topicName) {
         mTopics.remove(topicName);
     }
 
