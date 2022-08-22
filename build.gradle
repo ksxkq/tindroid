@@ -51,12 +51,9 @@ task clean(type: Delete) {
 }
 
 static def gitVersionCode() {
-    def process = "git rev-list --count HEAD".execute()
-    return process.text.toInteger()
+    return 1
 }
 
 static def gitVersionName() {
-    def process = "git describe --tags".execute()
-    // Remove trailing CR and remove leading 'v' as in 'v1.2.3'
-    return process.text.trim().substring(1)
+    return 'v1.0.0'
 }
