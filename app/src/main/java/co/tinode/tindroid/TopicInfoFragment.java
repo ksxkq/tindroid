@@ -609,6 +609,7 @@ public class TopicInfoFragment extends Fragment implements MessageActivity.DataS
             final Subscription<VxCard, PrivateType> sub = mItems[position];
             final StoredSubscription ss = (StoredSubscription) sub.getLocal();
             final boolean isMe = Cache.getTinode().isMe(sub.user);
+            final boolean isOwner = mTopic.isOwner();
 
             String title = isMe ? activity.getString(R.string.current_user) : null;
             if (sub.pub != null) {
@@ -646,13 +647,26 @@ public class TopicInfoFragment extends Fragment implements MessageActivity.DataS
                         sub1.acs.getGiven());
             };
 
-            holder.itemView.setOnClickListener(action);
             if (isMe) {
                 holder.more.setVisibility(View.INVISIBLE);
             } else {
-                holder.more.setVisibility(View.VISIBLE);
-                holder.more.setOnClickListener(action);
+                if (mTopic.getPub().blockP2P) {
+                    holder.more.setVisibility(View.INVISIBLE);
+                    holder.more.setOnClickListener(null);
+                    holder.itemView.setOnClickListener(null);
+                } else {
+                    holder.more.setVisibility(View.VISIBLE);
+                    holder.more.setOnClickListener(action);
+                    holder.itemView.setOnClickListener(action);
+                }
+                if (isOwner) {
+                    holder.more.setVisibility(View.VISIBLE);
+                    holder.more.setOnClickListener(action);
+                    holder.itemView.setOnClickListener(action);
+                }
             }
+            // 是否屏蔽私聊
+            holder.extraInfo.setVisibility((mTopic.getPub().blockP2P && !isOwner) ? View.GONE : View.VISIBLE);
         }
     }
 }

@@ -103,15 +103,15 @@
         android:id="@android:id/text2"
         android:layout_width="fill_parent"
         android:layout_height="wrap_content"
-        android:layout_gravity="top"
-        android:ellipsize="end"
-        android:maxLines="1"
-        android:lines="1"
-        android:singleLine="true"
         android:layout_below="@android:id/text1"
+        android:layout_gravity="top"
         android:layout_toStartOf="@id/optionsMenu"
         android:layout_toEndOf="@android:id/icon"
-        tools:text="Dolorem ipsum quia dolor sit amet consectetur adipisci velit"
-        android:textAppearance="?android:attr/textAppearanceSmall"/>
+        android:ellipsize="end"
+        android:lines="1"
+        android:maxLines="1"
+        android:singleLine="true"
+        android:textAppearance="?android:attr/textAppearanceSmall"
+        tools:text="Dolorem ipsum quia dolor sit amet consectetur adipisci velit" />
 
 </RelativeLayout>
