@@ -892,22 +892,25 @@ public class MessagesFragment extends Fragment {
 //                }
 //            }, mFailureListener);
 //            return true;
-//        } else if (id == R.id.action_unmute || id == R.id.action_mute) {
+//        }
+//        else if (id == R.id.action_unmute || id == R.id.action_mute) {
 //            mTopic.updateMuted(!mTopic.isMuted());
 //            activity.invalidateOptionsMenu();
 //            return true;
-//        } else if (id == R.id.action_leave || id == R.id.action_delete) {
-//            if (mTopic.isDeleted()) {
-//                mTopic.delete(true);
-//                Intent intent = new Intent(activity, ChatsActivity.class);
-//                intent.addFlags(Intent.FLAG_ACTIVITY_REORDER_TO_FRONT);
-//                startActivity(intent);
-//                activity.finish();
-//            } else {
-//                showDeleteTopicConfirmationDialog(activity, id == R.id.action_delete);
-//            }
-//            return true;
-//        } else if (id == R.id.action_offline) {
+//        } else
+        if (id == R.id.action_delete) {
+            if (mTopic.isDeleted()) {
+                mTopic.delete(true);
+                Intent intent = new Intent(activity, ChatsActivity.class);
+                intent.addFlags(Intent.FLAG_ACTIVITY_REORDER_TO_FRONT);
+                startActivity(intent);
+                activity.finish();
+            } else {
+                showDeleteTopicConfirmationDialog(activity, true);
+            }
+            return true;
+        }
+//        else if (id == R.id.action_offline) {
 //            Cache.getTinode().reconnectNow(true, false, false);
 //            return true;
 //        }
