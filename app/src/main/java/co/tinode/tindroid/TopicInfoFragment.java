@@ -248,6 +248,7 @@ public class TopicInfoFragment extends Fragment implements MessageActivity.DataS
             activity.finish();
             return;
         }
+        activity.invalidateOptionsMenu();
 
         ((TextView) activity.findViewById(R.id.topicAddress)).setText(mTopic.getName());
 
@@ -513,6 +514,14 @@ public class TopicInfoFragment extends Fragment implements MessageActivity.DataS
         // Inflate the menu; this adds items to the action bar if it is present.
         inflater.inflate(R.menu.menu_edit, menu);
         super.onCreateOptionsMenu(menu, inflater);
+    }
+
+    @Override
+    public void onPrepareOptionsMenu(@NonNull Menu menu) {
+        if (mTopic != null) {
+            menu.findItem(R.id.action_edit).setVisible(mTopic.isOwner());
+        }
+        super.onPrepareOptionsMenu(menu);
     }
 
     @Override

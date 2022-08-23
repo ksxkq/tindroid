@@ -116,28 +116,30 @@ public class TopicGeneralFragment extends Fragment implements UiUtils.AvatarPrev
         ((TextView) activity.findViewById(R.id.topicAddress)).setText(mTopic.getName());
 
         final View tagManager = activity.findViewById(R.id.tagsManagerWrapper);
-        if (mTopic.isGrpType() && mTopic.isOwner()) {
-            // Group topic
-            tagManager.setVisibility(View.VISIBLE);
-            tagManager.findViewById(R.id.buttonManageTags)
-                    .setOnClickListener(view -> showEditTags());
+//        if (mTopic.isGrpType() && mTopic.isOwner()) {
+//            // Group topic
+//            tagManager.setVisibility(View.VISIBLE);
+//            tagManager.findViewById(R.id.buttonManageTags)
+//                    .setOnClickListener(view -> showEditTags());
+//
+//            LayoutInflater inflater = LayoutInflater.from(activity);
+//            FlexboxLayout tagsView = activity.findViewById(R.id.tagList);
+//            tagsView.removeAllViews();
+//
+//            String[] tags = mTopic.getTags();
+//            if (tags != null) {
+//                for (String tag : tags) {
+//                    TextView label = (TextView) inflater.inflate(R.layout.tag, tagsView, false);
+//                    label.setText(tag);
+//                    tagsView.addView(label);
+//                }
+//            }
+//        } else {
+//            // P2P topic
+//            tagManager.setVisibility(View.GONE);
+//        }
 
-            LayoutInflater inflater = LayoutInflater.from(activity);
-            FlexboxLayout tagsView = activity.findViewById(R.id.tagList);
-            tagsView.removeAllViews();
-
-            String[] tags = mTopic.getTags();
-            if (tags != null) {
-                for (String tag : tags) {
-                    TextView label = (TextView) inflater.inflate(R.layout.tag, tagsView, false);
-                    label.setText(tag);
-                    tagsView.addView(label);
-                }
-            }
-        } else {
-            // P2P topic
-            tagManager.setVisibility(View.GONE);
-        }
+        tagManager.setVisibility(View.GONE);
 
         notifyDataSetChanged();
         super.onResume();
