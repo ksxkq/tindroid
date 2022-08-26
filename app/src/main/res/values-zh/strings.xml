@@ -81,7 +81,7 @@
     <string name="add_one_member">至少添加一位编组成员</string>
     <string name="add_members">添加成员</string>
     <string name="leave_group">删除并退出</string>
-    <string name="topic_muted">静音</string>
+    <string name="topic_muted">消息免打扰</string>
     <string name="permissions">权限</string>
     <string name="your_permissions">你的</string>
 
