@@ -139,6 +139,29 @@
     </androidx.cardview.widget.CardView>
 
     <androidx.cardview.widget.CardView
+        android:visibility="gone"
+        tools:visibility="visible"
+        android:id="@+id/sizeOverCv"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="@dimen/activity_default_margin"
+        android:layout_centerHorizontal="true"
+        android:layout_above="@id/fileDetails"
+        card_view:cardElevation="@dimen/cardview_elevation"
+        card_view:cardCornerRadius="@dimen/cardview_corner_radius"
+        card_view:cardUseCompatPadding="true">
+
+        <TextView
+            android:id="@+id/sizeOverCvTv"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/permission_missing"
+            android:padding="6dp"
+            android:textColor="@color/design_default_color_error"
+            android:textAppearance="?android:textAppearanceMedium" />
+    </androidx.cardview.widget.CardView>
+
+    <androidx.cardview.widget.CardView
         android:id="@+id/metaPanel"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"

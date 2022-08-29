@@ -12,6 +12,7 @@ import android.view.ViewGroup;
 import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -153,6 +154,19 @@ public class FilePreviewFragment extends Fragment {
 
         activity.findViewById(R.id.missingPermission).setVisibility(accessGranted ? View.GONE : View.VISIBLE);
         mSendButton.setEnabled(accessGranted);
+        int sizeMb = (int) (fileSize / 1024 / 1024);
+        if (sizeMb > 8) {
+            activity.findViewById(R.id.sizeOverCv).setVisibility(View.VISIBLE);
+            mSendButton.setEnabled(false);
+            mSendButton.setVisibility(View.GONE);
+            String toast = getString(
+                    R.string.attachment_too_large,
+                    UiUtils.bytesToHumanSize(fileSize),
+                    UiUtils.bytesToHumanSize(8 * 1024 * 1024));
+            TextView sizeOverCvTv = activity.findViewById(R.id.sizeOverCvTv);
+            sizeOverCvTv.setText(toast);
+            Toast.makeText(activity, toast, Toast.LENGTH_SHORT).show();
+        }
     }
 
     private void sendFile() {
