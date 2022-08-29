@@ -361,8 +361,8 @@
     <string name="more">更多</string>
     <string name="group_name">群聊名称</string>
     <string name="pls_input_group_name">请输入群聊名称</string>
-    <string name="leave_group">删除并退出</string>
-    <string name="leave_group_content">是否真的要删除并退出？</string>
+    <string name="leave_group">退出并删除</string>
+    <string name="leave_group_content">是否真的要退出并删除？</string>
     <string name="leave_and_delete_group">解散该群聊</string>
     <string name="leave_and_delete_group_content">是否真的要解散该群聊？</string>
     <string name="group_setting">群管理</string>

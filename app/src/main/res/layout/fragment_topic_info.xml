@@ -173,12 +173,12 @@
                 tools:ignore="SmallSp" />
 
             <LinearLayout
-                android:visibility="gone"
                 android:id="@+id/group_setting_ll"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:gravity="center_vertical"
-                android:minHeight="48dp">
+                android:minHeight="48dp"
+                android:visibility="gone">
 
                 <TextView
                     style="@style/textPrimary"
@@ -350,20 +350,30 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_gravity="bottom"
-        android:orientation="vertical">
+        android:orientation="vertical"
+        tools:visibility="visible">
 
         <Button
-            android:visibility="gone"
             android:id="@+id/leaveBtn"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="@string/leave_group" />
+            android:background="@android:color/transparent"
+            android:foreground="@drawable/border_red"
+            android:text="@string/leave_group"
+            android:textColor="@color/design_default_color_error"
+            android:visibility="gone"
+            tools:visibility="visible" />
 
         <Button
-            android:visibility="gone"
+            android:layout_marginTop="8dp"
             android:id="@+id/leaveAndDeleteBtn"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="@string/leave_and_delete_group" />
+            android:background="@android:color/transparent"
+            android:foreground="@drawable/border_red"
+            android:text="@string/leave_and_delete_group"
+            android:textColor="@color/design_default_color_error"
+            android:visibility="gone"
+            tools:visibility="visible" />
     </LinearLayout>
 </LinearLayout>

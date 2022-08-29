@@ -280,7 +280,7 @@ public class TopicInfoFragment extends Fragment implements MessageActivity.DataS
             } else {
                 groupSettingLl.setVisibility(View.VISIBLE);
                 leaveAndDeleteBtn.setVisibility(View.VISIBLE);
-                leaveGroupBtn.setVisibility(View.GONE);
+                leaveGroupBtn.setVisibility(View.VISIBLE);
             }
         } else {
             // P2P topic
@@ -449,6 +449,10 @@ public class TopicInfoFragment extends Fragment implements MessageActivity.DataS
 
         if (mTopic.isGrpType()) {
             mMembersAdapter.resetContent();
+            // 只剩下群主，就只显示解散该群
+            if (mTopic.isOwner() && mMembersAdapter.getItemCount() <= 1) {
+                leaveGroupBtn.setVisibility(View.GONE);
+            }
         }
     }
 
