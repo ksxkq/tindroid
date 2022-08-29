@@ -30,6 +30,7 @@ import java.util.Collection;
 import androidx.activity.result.ActivityResultLauncher;
 import androidx.activity.result.contract.ActivityResultContracts;
 import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
 import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.content.res.AppCompatResources;
 import androidx.appcompat.widget.SwitchCompat;
@@ -158,9 +159,28 @@ public class TopicInfoFragment extends Fragment implements MessageActivity.DataS
             confirmBuilder.setTitle(R.string.leave_group);
             confirmBuilder.setMessage(R.string.leave_group_content);
             confirmBuilder.setPositiveButton(android.R.string.yes, (dialog, which) -> {
-                PromisedReply<ServerMessage> response = mTopic.leave(true);
-                if (response != null) {
-                    response.thenApply(new PromisedReply.SuccessListener<ServerMessage>() {
+                // 如果是群主退出群聊，那就先将群主转移给其他成员后再退出
+                if (mTopic.isOwner()) {
+                    String futureOwnerId = mMembersAdapter.getFutureOwner();
+                    mTopic.updateMode(futureOwnerId, "+O").thenApply(new PromisedReply.SuccessListener<ServerMessage>() {
+                        @Override
+                        public PromisedReply<ServerMessage> onSuccess(ServerMessage result) {
+                            return mTopic.updateMode("-O");
+                        }
+                    }).thenApply(new PromisedReply.SuccessListener<ServerMessage>() {
+                        @Override
+                        public PromisedReply<ServerMessage> onSuccess(ServerMessage result) {
+                            return mTopic.leave(true);
+                        }
+                    }).thenApply(new PromisedReply.SuccessListener<ServerMessage>() {
+                        @Override
+                        public PromisedReply<ServerMessage> onSuccess(ServerMessage result) {
+                            activity.finish();
+                            return null;
+                        }
+                    }).thenCatch(mFailureListener);
+                } else {
+                    mTopic.leave(true).thenApply(new PromisedReply.SuccessListener<ServerMessage>() {
                         @Override
                         public PromisedReply<ServerMessage> onSuccess(ServerMessage result) {
                             activity.finish();
@@ -599,6 +619,22 @@ public class TopicInfoFragment extends Fragment implements MessageActivity.DataS
         @Override
         public int getItemCount() {
             return mItemCount;
+        }
+
+        @Nullable
+        public String getFutureOwner() {
+            if (mItems.length != 0) {
+                for (Subscription<VxCard, PrivateType> sub : mItems) {
+                    if (sub == null) {
+                        continue;
+                    }
+                    final boolean isMe = Cache.getTinode().isMe(sub.user);
+                    if (!isMe) {
+                        return sub.user;
+                    }
+                }
+            }
+            return null;
         }
 
         @Override
