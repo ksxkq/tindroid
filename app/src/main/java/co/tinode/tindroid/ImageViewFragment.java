@@ -315,6 +315,10 @@ public class ImageViewFragment extends Fragment {
     }
 
     private void loadImage(final Uri ref, final String fn, final Bundle args) {
+        if (mScreenRect == null) {
+            // wait mScreenRect init
+            mImageView.postDelayed(() -> loadImage(ref, fn, args), 50);
+        }
         Picasso.get().load(ref)
                 .placeholder(R.drawable.ic_image)
                 .error(R.drawable.ic_broken_image)
