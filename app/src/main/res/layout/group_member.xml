@@ -85,19 +85,19 @@
 
     <TextView
         android:id="@android:id/text1"
-        android:layout_toEndOf="@android:id/icon"
-        android:layout_toStartOf="@id/statusContainer"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:paddingEnd="16sp"
-        android:layout_marginTop="6dp"
-        tools:ignore="RtlSymmetry"
         android:layout_alignParentTop="true"
-        android:maxLines="1"
+        android:layout_marginTop="6dp"
+        android:layout_toStartOf="@id/statusContainer"
+        android:layout_toEndOf="@android:id/icon"
         android:lines="1"
+        android:maxLines="1"
+        android:paddingEnd="16sp"
         android:singleLine="true"
-        tools:text="Test text"
-        android:textAppearance="@style/contactListTextPrimary"/>
+        android:textAppearance="@style/contactListTextPrimary"
+        tools:ignore="RtlSymmetry"
+        tools:text="Test text" />
 
     <TextView
         android:id="@android:id/text2"

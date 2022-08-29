@@ -676,8 +676,8 @@ public class TopicInfoFragment extends Fragment implements MessageActivity.DataS
                     holder.itemView.setOnClickListener(action);
                 }
             }
-            // 是否屏蔽私聊
-            holder.extraInfo.setVisibility((mTopic.getPub().blockP2P && !isOwner) ? View.GONE : View.VISIBLE);
+            // 不显示权限
+            holder.extraInfo.setVisibility(View.GONE);
         }
     }
 }
