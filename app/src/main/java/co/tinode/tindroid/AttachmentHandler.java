@@ -219,7 +219,9 @@ public class AttachmentHandler extends Worker {
                                           String fname, String mimeType) {
         long downloadId = -1;
         // Create file in a downloads directory by default.
-        File path = Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_DOWNLOADS);
+        // best solution: https://stackoverflow.com/questions/59103133/how-to-directly-download-a-file-to-download-directory-on-android-q-android-10
+//        File path = Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_DOWNLOADS);
+        File path = activity.getExternalFilesDir(null);
         File file = new File(path, fname);
         Uri fileUri = Uri.fromFile(file);
 

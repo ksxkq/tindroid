@@ -2,4 +2,5 @@
 <paths>
     <external-path name="tindroid_downloads" path="./Download" />
     <external-files-path name="tindroid_images" path="/Pictures" />
+    <external-files-path name="download" path="." />
 </paths>
