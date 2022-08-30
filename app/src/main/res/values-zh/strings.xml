@@ -27,7 +27,7 @@
     <!-- access mode definitions -->
     <string name="modeReadOnly">只读</string>
     <string name="modeAdmin">管理员</string>
-    <string name="modeOwner">所有者</string>
+    <string name="modeOwner">群主</string>
     <string name="modeBlocked">阻塞</string>
     <!-- mode-like access statuses -->
     <string name="modeInvited">已邀请</string>
@@ -101,7 +101,7 @@
     <string name="edit_topic">编辑编组</string>
     <string name="edit_permissions">编辑权限</string>
 
-    <string name="permission_owner">完全控制 (所有者)</string>
+    <string name="permission_owner">完全控制 (群主)</string>
     <string name="permission_join">加入</string>
     <string name="permission_read">读取</string>
     <string name="permission_write">写入</string>

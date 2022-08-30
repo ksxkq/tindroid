@@ -681,7 +681,13 @@ public class TopicInfoFragment extends Fragment implements MessageActivity.DataS
                     holder.status[i].setText(l.nameId);
                     holder.status[i].setTextColor(l.color);
                     ((GradientDrawable) holder.status[i].getBackground()).setStroke(2, l.color);
-                    holder.status[i++].setVisibility(View.VISIBLE);
+                    // 只展示群主
+                    if (l.nameId == R.string.modeOwner) {
+                        holder.status[i++].setVisibility(View.VISIBLE);
+                    } else {
+                        holder.status[i++].setVisibility(View.GONE);
+                    }
+//                    holder.status[i++].setVisibility(View.VISIBLE);
                 }
             }
             for (; i < holder.status.length; i++) {
