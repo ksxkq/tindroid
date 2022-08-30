@@ -774,7 +774,7 @@ public class MessagesFragment extends Fragment {
             args.remove(ForwardToFragment.FORWARDING_FROM_USER);
         }
 
-        if (!mTopic.isWriter() || mTopic.isBlocked() || mTopic.isDeleted() || (!mTopic.isOwner() && mTopic.getPub().muteGroup)) {
+        if (!mTopic.isWriter() || mTopic.isBlocked() || mTopic.isDeleted() || (!mTopic.isOwner() && mTopic.getPub() != null && mTopic.getPub().muteGroup)) {
             setSendPanelVisible(activity, R.id.sendMessageDisabled);
         } else if (mContentToForward != null) {
             showContentToForward(activity, mForwardSender, mContentToForward);
