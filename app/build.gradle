@@ -34,12 +34,12 @@ android {
         versionName rootProject.ext.version_name
 
         // 如果需要开启推送，请取消注释填入对应的配置
-//        manifestPlaceholders["MI_APP_ID"] = "2882303761520174646"
-//        manifestPlaceholders["MI_APP_KEY"] = "5342017481646"
-//        manifestPlaceholders["OPPO_APP_KEY"] = "e422c195da674257bf57cfc164886a5e"
-//        manifestPlaceholders["OPPO_APP_SECRET"] = "ac607e10d871460aa3290e249c6e66ce"
-//        manifestPlaceholders["VIVO_APP_ID"] = "105579932"
-//        manifestPlaceholders["VIVO_APP_KEY"] = "0c2bbd131e17bf9d69ea41b6cd75e271"
+        manifestPlaceholders["MI_APP_ID"] = "2882303761520174646"
+        manifestPlaceholders["MI_APP_KEY"] = "5342017481646"
+        manifestPlaceholders["OPPO_APP_KEY"] = "e422c195da674257bf57cfc164886a5e"
+        manifestPlaceholders["OPPO_APP_SECRET"] = "ac607e10d871460aa3290e249c6e66ce"
+        manifestPlaceholders["VIVO_APP_ID"] = "105579932"
+        manifestPlaceholders["VIVO_APP_KEY"] = "0c2bbd131e17bf9d69ea41b6cd75e271"
     }
 
     buildTypes {
@@ -112,8 +112,8 @@ dependencies {
     def mixpush_version = '2.3.9'
     // 如果需要开启推送，请根据需要，开启依赖
     implementation "io.github.mixpush:mixpush-core:$mixpush_version" // 核心包
-//    implementation "io.github.mixpush:mixpush-mi:$mixpush_version" // 小米推送
-//    implementation "io.github.mixpush:mixpush-huawei:$mixpush_version"  // 华为推送
-//    implementation "io.github.mixpush:mixpush-oppo:$mixpush_version"  // OPPO推送
-//    implementation "io.github.mixpush:mixpush-vivo:$mixpush_version"  // VIVO推送
+    implementation "io.github.mixpush:mixpush-mi:$mixpush_version" // 小米推送
+    implementation "io.github.mixpush:mixpush-huawei:$mixpush_version"  // 华为推送
+    implementation "io.github.mixpush:mixpush-oppo:$mixpush_version"  // OPPO推送
+    implementation "io.github.mixpush:mixpush-vivo:$mixpush_version"  // VIVO推送
 }
