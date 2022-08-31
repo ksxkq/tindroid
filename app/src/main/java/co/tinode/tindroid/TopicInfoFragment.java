@@ -418,7 +418,7 @@ public class TopicInfoFragment extends Fragment implements MessageActivity.DataS
                     mTopic.updateMode(uid, "+O").thenApply(new PromisedReply.SuccessListener<ServerMessage>() {
                         @Override
                         public PromisedReply<ServerMessage> onSuccess(ServerMessage result) {
-                            return mTopic.updateMode("-O");
+                            return null;
                         }
                     }, mFailureListener);
                 } else if (id == R.id.buttonRemove) {
