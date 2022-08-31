@@ -276,32 +276,7 @@ public class TopicInfoFragment extends Fragment implements MessageActivity.DataS
 
         if (mTopic.isGrpType()) {
             // Group topic
-            groupMembers.setVisibility(View.VISIBLE);
-            groupBottomLl.setVisibility(View.VISIBLE);
-            activity.findViewById(R.id.del).setVisibility(View.GONE);
-
-            Button button = activity.findViewById(R.id.buttonAddMembers);
-            if (!mTopic.isSharer() && !mTopic.isManager()) {
-                // FIXME: allow sharers to add members but not remove.
-                // Disable and gray out "invite members" button because only admins can
-                // invite group members.
-                button.setEnabled(false);
-                button.setVisibility(View.GONE);
-            } else {
-                button.setEnabled(true);
-                button.setVisibility(View.VISIBLE);
-            }
-            if (!mTopic.isOwner()) {
-                if (mTopic.getPub().inviteOnlyOwner) {
-                    button.setVisibility(View.GONE);
-                }
-                leaveAndDeleteBtn.setVisibility(View.GONE);
-                leaveGroupBtn.setVisibility(View.VISIBLE);
-            } else {
-                groupSettingLl.setVisibility(View.VISIBLE);
-                leaveAndDeleteBtn.setVisibility(View.VISIBLE);
-                leaveGroupBtn.setVisibility(View.VISIBLE);
-            }
+            updateGroupButton();
         } else {
             // P2P topic
             activity.findViewById(R.id.del).setVisibility(View.VISIBLE);
@@ -311,6 +286,37 @@ public class TopicInfoFragment extends Fragment implements MessageActivity.DataS
 
         notifyDataSetChanged();
         super.onResume();
+    }
+
+    private void updateGroupButton() {
+        FragmentActivity activity = getActivity();
+        View groupMembers = activity.findViewById(R.id.groupMembersWrapper);
+        groupMembers.setVisibility(View.VISIBLE);
+        groupBottomLl.setVisibility(View.VISIBLE);
+        activity.findViewById(R.id.del).setVisibility(View.GONE);
+
+        Button button = activity.findViewById(R.id.buttonAddMembers);
+        if (!mTopic.isSharer() && !mTopic.isManager()) {
+            // FIXME: allow sharers to add members but not remove.
+            // Disable and gray out "invite members" button because only admins can
+            // invite group members.
+            button.setEnabled(false);
+            button.setVisibility(View.GONE);
+        } else {
+            button.setEnabled(true);
+            button.setVisibility(View.VISIBLE);
+        }
+        if (!mTopic.isOwner()) {
+            if (mTopic.getPub().inviteOnlyOwner) {
+                button.setVisibility(View.GONE);
+            }
+            leaveAndDeleteBtn.setVisibility(View.GONE);
+            leaveGroupBtn.setVisibility(View.VISIBLE);
+        } else {
+            groupSettingLl.setVisibility(View.VISIBLE);
+            leaveAndDeleteBtn.setVisibility(View.VISIBLE);
+            leaveGroupBtn.setVisibility(View.VISIBLE);
+        }
     }
 
     // Confirmation dialog "Do you really want to do X?"
@@ -466,6 +472,7 @@ public class TopicInfoFragment extends Fragment implements MessageActivity.DataS
         }
 
         notifyContentChanged();
+        updateGroupButton();
 
         if (mTopic.isGrpType()) {
             mMembersAdapter.resetContent();
