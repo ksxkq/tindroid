@@ -1017,5 +1017,17 @@ public class MessageActivity extends AppCompatActivity
             UiUtils.attachMeTopic(MessageActivity.this, null);
             topicAttach(false);
         }
+
+        @Override
+        public void onPresMessage(MsgServerPres pres) {
+            switch (MsgServerPres.parseWhat(pres.what)) {
+                case GONE:
+                    if (TextUtils.equals(pres.src, mTopic.getName())) {
+                        Cache.getTinode().delTopic(mTopicName,true);
+                        finish();
+                    }
+                    break;
+            }
+        }
     }
 }
