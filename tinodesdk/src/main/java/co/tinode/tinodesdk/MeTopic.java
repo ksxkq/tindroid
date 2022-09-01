@@ -418,6 +418,11 @@ public class MeTopic<DP> extends Topic<DP,PrivateType,DP,PrivateType> {
                 switch (what) {
                     case ON: // topic came online
                         topic.setOnline(true);
+                        // fix rejoin group cannot enable
+                        if (topic.isGrpType() && topic.isDeleted()) {
+                            topic.setDeleted(false);
+                            mStore.topicUpdate(topic);
+                        }
                         break;
 
                     case OFF: // topic went offline
@@ -464,6 +469,8 @@ public class MeTopic<DP> extends Topic<DP,PrivateType,DP,PrivateType> {
                         } else {
                             topic.expunge(false);
                         }
+                        // fix rejoin group cannot enable
+                        topic.delete(true);
                         break;
                 }
             } else {
