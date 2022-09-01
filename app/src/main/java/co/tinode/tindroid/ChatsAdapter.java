@@ -24,12 +24,16 @@ import androidx.recyclerview.selection.ItemDetailsLookup;
 import androidx.recyclerview.selection.ItemKeyProvider;
 import androidx.recyclerview.selection.SelectionTracker;
 import androidx.recyclerview.widget.RecyclerView;
+
 import co.tinode.tindroid.db.StoredTopic;
 import co.tinode.tindroid.format.PreviewFormatter;
 import co.tinode.tindroid.media.VxCard;
 import co.tinode.tinodesdk.ComTopic;
+import co.tinode.tinodesdk.PromisedReply;
 import co.tinode.tinodesdk.Storage;
 import co.tinode.tinodesdk.model.Drafty;
+import co.tinode.tinodesdk.model.MetaGetDesc;
+import co.tinode.tinodesdk.model.MsgGetMeta;
 
 /**
  * Handling active chats, i.e. 'me' topic.
@@ -70,6 +74,15 @@ public class ChatsAdapter extends RecyclerView.Adapter<ChatsAdapter.ViewHolder> 
         final HashMap<String, Integer> newTopicIndex = new HashMap<>(newTopics.size());
         for (ComTopic t : newTopics) {
             newTopicIndex.put(t.getName(), newTopicIndex.size());
+            t.getMeta(new MsgGetMeta(new MetaGetDesc(), null, null, null, null, false)).thenApply(new PromisedReply.SuccessListener() {
+                @Override
+                public PromisedReply onSuccess(Object result) {
+                    if (!activity.isDestroyed()) {
+                        activity.runOnUiThread(() -> notifyDataSetChanged());
+                    }
+                    return null;
+                }
+            });
         }
 
         mTopics = new ArrayList<>(newTopics);
