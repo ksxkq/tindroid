@@ -368,5 +368,7 @@
     <string name="group_setting">群管理</string>
     <string name="block_join_group">当前无法加入群聊</string>
     <string name="mute_group">全员禁言</string>
+    <string name="download_content">是否保存文件？</string>
+    <string name="downloaind">下载中，请稍后</string>
 
 </resources>

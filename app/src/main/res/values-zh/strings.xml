@@ -159,7 +159,7 @@
     <string name="hint_search_tags">通过标签检索</string>
     <string name="topic_not_found_or_invalid">编组未找到或不存在</string>
     <string name="sending_disabled">无效</string>
-    <string name="download_title">Tinode 下载</string>
+    <string name="download_title">文件下载</string>
     <string name="some_permissions_missing">请接受所有请求权限.</string>
     <string name="unable_to_attach_file">无法获取此文件</string>
     <string name="canceled">已取消</string>

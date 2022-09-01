@@ -57,6 +57,7 @@ import java.util.concurrent.ExecutionException;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
+import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.content.res.AppCompatResources;
 import androidx.appcompat.view.ActionMode;
 import androidx.appcompat.widget.AppCompatImageButton;
@@ -1199,7 +1200,7 @@ public class MessagesAdapter extends RecyclerView.Adapter<MessagesAdapter.ViewHo
                 case "EX":
                     // Attachment
 //                    if (verifyStoragePermissions()) {
-                    String fname = null;
+                    String fname = mActivity.getString(R.string.default_attachment_name);
                     String mimeType = null;
                     try {
                         fname = (String) data.get("name");
@@ -1219,11 +1220,17 @@ public class MessagesAdapter extends RecyclerView.Adapter<MessagesAdapter.ViewHo
                         }
                     }
 
-                    if (TextUtils.isEmpty(fname)) {
-                        fname = mActivity.getString(R.string.default_attachment_name);
-                    }
-
-                    AttachmentHandler.enqueueDownloadAttachment(mActivity, data, fname, mimeType);
+                    final String finalName = fname;
+                    final String finalMineType = mimeType;
+                    new AlertDialog.Builder(mActivity)
+                            .setTitle(R.string.download_title)
+                            .setMessage(R.string.download_content)
+                            .setPositiveButton(R.string.action_download, (dialog, which) -> {
+                                Toast.makeText(mActivity, R.string.downloaind, Toast.LENGTH_SHORT).show();
+                                AttachmentHandler.enqueueDownloadAttachment(mActivity, data, finalName, finalMineType);
+                            })
+                            .setNegativeButton(R.string.action_cancel, null)
+                            .show();
 //                    } else {
 //                        Toast.makeText(mActivity, R.string.failed_to_save_download, Toast.LENGTH_SHORT).show();
 //                    }
