@@ -467,10 +467,9 @@ public class MeTopic<DP> extends Topic<DP,PrivateType,DP,PrivateType> {
                             mTinode.stopTrackingTopic(pres.src);
                             topic.expunge( true);
                         } else {
-                            topic.expunge(false);
+                            // hard delete to fix rejoin group cannot enable
+                            topic.expunge(true);
                         }
-                        // fix rejoin group cannot enable
-                        topic.delete(true);
                         break;
                 }
             } else {
