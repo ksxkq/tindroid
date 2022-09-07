@@ -48,7 +48,7 @@ android {
             resValue "string", "default_host_name", '"demo.imtalk.vip"'
         }
         release {
-            resValue "string", "default_host_name", '"demo.imtalk.vip"'
+            resValue "string", "default_host_name", '"demo.imtalk.vip"' // 务必替换成自己的域名
             minifyEnabled true
             shrinkResources true
             proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'

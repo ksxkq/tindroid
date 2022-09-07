@@ -1,7 +1,8 @@
 # Meiqia IM for Android
 
 ## 安装与运行
-下载源码，然后运行即可
+下载源码，然后将域名配置替换成自己的域名配置后，运行即可
+如何替换：更改 app/src/build.gradle 中的 buildTypes 对应 default_host_name 的内容即可
 
 ## 替换资源
 
