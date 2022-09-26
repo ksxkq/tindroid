@@ -370,5 +370,7 @@
     <string name="mute_group">全员禁言</string>
     <string name="download_content">是否保存文件？</string>
     <string name="downloaind">下载中，请稍后</string>
+    <string name="qr_code_card">二维码名片</string>
+    <string name="save_to_photo">保存到手机</string>
 
 </resources>

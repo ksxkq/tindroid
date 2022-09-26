@@ -16,9 +16,7 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import androidx.annotation.NonNull;
-import androidx.appcompat.app.ActionBar;
 import androidx.appcompat.app.AppCompatActivity;
-import androidx.appcompat.widget.Toolbar;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentActivity;
 
@@ -60,6 +58,7 @@ public class AccountInfoFragment extends Fragment implements ChatsActivity.FormU
                 Toast.makeText(activity, R.string.copied_to_clipboard, Toast.LENGTH_SHORT).show();
             }
         });
+        fragment.findViewById(R.id.qrcode_iv).setOnClickListener(v -> BaseFragmentContainerActivity.startFragment(getActivity(), QRCodeFragment.class, getResources().getString(R.string.qr_code_card), null));
         fragment.findViewById(R.id.notifications).setOnClickListener(v ->
                 AccountInfoSettingActivity.start(getActivity(), AccountInfoSettingActivity.FRAGMENT_ACC_NOTIFICATIONS, R.string.notifications));
         fragment.findViewById(R.id.security).setOnClickListener(v ->

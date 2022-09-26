@@ -67,6 +67,14 @@
             android:src="@drawable/ic_copy"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content" />
+
+        <ImageView
+            android:layout_marginLeft="8dp"
+            android:id="@+id/qrcode_iv"
+            app:tint="@color/colorAccent"
+            android:src="@drawable/ic_baseline_qr_code_24"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content" />
     </LinearLayout>
 
     <TextView
