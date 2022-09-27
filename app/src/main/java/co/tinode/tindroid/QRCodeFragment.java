@@ -1,9 +1,12 @@
 package co.tinode.tindroid;
 
 import android.graphics.Bitmap;
+import android.graphics.drawable.BitmapDrawable;
 import android.os.Bundle;
+import android.provider.MediaStore;
 import android.view.View;
 import android.widget.ImageView;
+import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
@@ -27,11 +30,11 @@ public class QRCodeFragment extends BaseFragment {
         } catch (Exception e) {
 
         }
-        view.findViewById(R.id.save_button).setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                // todo
-            }
+        view.findViewById(R.id.save_button).setOnClickListener(v -> {
+            ImageView codeIv1 = view.findViewById(R.id.codeIv);
+            Bitmap bmp = ((BitmapDrawable) codeIv1.getDrawable()).getBitmap();
+            MediaStore.Images.Media.insertImage(getActivity().getContentResolver(), bmp, "qrcode", null);
+            Toast.makeText(getActivity(), R.string.save_success, Toast.LENGTH_SHORT).show();
         });
     }
 
