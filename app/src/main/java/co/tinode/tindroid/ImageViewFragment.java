@@ -418,6 +418,7 @@ public class ImageViewFragment extends Fragment {
             }
             Bitmap bmp = ((BitmapDrawable) mImageView.getDrawable()).getBitmap();
             MediaStore.Images.Media.insertImage(activity.getContentResolver(), bmp, filename, null);
+            Toast.makeText(activity, R.string.save_success, Toast.LENGTH_SHORT).show();
         } else {
             return super.onOptionsItemSelected(item);
         }
