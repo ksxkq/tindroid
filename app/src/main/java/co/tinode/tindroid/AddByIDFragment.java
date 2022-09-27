@@ -68,6 +68,17 @@ public class AddByIDFragment extends Fragment {
                 }
             }
         });
+
+        // from scan qrcode
+        Bundle args = getArguments();
+        if (args != null) {
+            String userId = args.getString("userId");
+            if (!TextUtils.isEmpty(userId)) {
+                TextView editor = activity.findViewById(R.id.editId);
+                editor.setText(userId);
+                view.findViewById(R.id.confirm).performClick();
+            }
+        }
     }
 
     private void toastError(Activity activity) {

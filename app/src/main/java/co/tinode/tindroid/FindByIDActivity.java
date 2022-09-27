@@ -1,8 +1,8 @@
 package co.tinode.tindroid;
 
 import android.os.Bundle;
+import android.text.TextUtils;
 
-import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 
 public class FindByIDActivity extends BaseFragmentActivity {
@@ -16,6 +16,13 @@ public class FindByIDActivity extends BaseFragmentActivity {
 
     @Override
     Fragment getFragment() {
-        return new AddByIDFragment();
+        AddByIDFragment addByIDFragment = new AddByIDFragment();
+        String userId = getIntent().getStringExtra("userId");
+        if (!TextUtils.isEmpty(userId)) {
+            Bundle bundle = new Bundle();
+            bundle.putString("userId", userId);
+            addByIDFragment.setArguments(bundle);
+        }
+        return addByIDFragment;
     }
 }

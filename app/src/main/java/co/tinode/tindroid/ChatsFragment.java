@@ -6,6 +6,7 @@ import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
 import android.provider.Settings;
+import android.text.TextUtils;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.Menu;
@@ -15,6 +16,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Toast;
 
+import androidx.activity.result.ActivityResultLauncher;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.ActionBar;
@@ -28,6 +30,13 @@ import androidx.recyclerview.selection.SelectionTracker;
 import androidx.recyclerview.selection.StorageStrategy;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
+
+import com.google.zxing.client.android.Intents;
+import com.journeyapps.barcodescanner.ScanContract;
+import com.journeyapps.barcodescanner.ScanOptions;
+
+import org.json.JSONException;
+import org.json.JSONObject;
 
 import co.tinode.tindroid.media.VxCard;
 import co.tinode.tindroid.widgets.CircleProgressView;
@@ -52,6 +61,32 @@ public class ChatsFragment extends Fragment implements ActionMode.Callback, UiUt
     private ChatsAdapter mAdapter = null;
     private SelectionTracker<String> mSelectionTracker = null;
     private ActionMode mActionMode = null;
+
+    private final ActivityResultLauncher<ScanOptions> barcodeLauncher = registerForActivityResult(new ScanContract(),
+            result -> {
+                if (result.getContents() == null) {
+                    Intent originalIntent = result.getOriginalIntent();
+                    if (originalIntent == null) {
+                        Log.d("MainActivity", "Cancelled scan");
+//                        Toast.makeText(MainActivity.this, "Cancelled", Toast.LENGTH_LONG).show();
+                    } else if (originalIntent.hasExtra(Intents.Scan.MISSING_CAMERA_PERMISSION)) {
+                        Toast.makeText(getActivity(), R.string.permission_missing, Toast.LENGTH_SHORT).show();
+                    }
+                } else {
+                    String contents = result.getContents();
+                    try {
+                        JSONObject contentJson = new JSONObject(contents);
+                        String userId = contentJson.optString("im_id");
+                        if (!TextUtils.isEmpty(userId)) {
+                            Intent intent = new Intent(getActivity(), FindByIDActivity.class);
+                            intent.putExtra("userId", userId);
+                            startActivity(intent);
+                        }
+                    } catch (JSONException e) {
+                        e.printStackTrace();
+                    }
+                }
+            });
 
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container,
@@ -244,6 +279,14 @@ public class ChatsFragment extends Fragment implements ActionMode.Callback, UiUt
             Intent intent = new Intent(getActivity(), FindByIDActivity.class);
             intent.putExtra("id", id);
             startActivity(intent);
+            return true;
+        }
+        if (id == R.id.scan_qrcode) {
+            ScanOptions options = new ScanOptions();
+            options.setPrompt("");
+            options.setOrientationLocked(true);
+            options.setBarcodeImageEnabled(true);
+            barcodeLauncher.launch(options);
             return true;
         }
         if (id == R.id.action_create_group) {

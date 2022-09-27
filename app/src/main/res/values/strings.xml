@@ -372,5 +372,6 @@
     <string name="downloaind">下载中，请稍后</string>
     <string name="qr_code_card">二维码名片</string>
     <string name="save_to_photo">保存到手机</string>
+    <string name="scan_qrcode">扫一扫</string>
 
 </resources>

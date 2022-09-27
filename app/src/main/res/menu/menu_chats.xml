@@ -7,6 +7,10 @@
         app:showAsAction="ifRoom">
         <menu>
             <item
+                android:id="@+id/scan_qrcode"
+                android:title="@string/scan_qrcode"
+                app:showAsAction="collapseActionView" />
+            <item
                 android:id="@+id/action_add"
                 android:title="@string/add_friend"
                 app:showAsAction="collapseActionView" />

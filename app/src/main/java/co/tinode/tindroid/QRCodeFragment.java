@@ -24,7 +24,7 @@ public class QRCodeFragment extends BaseFragment {
         try {
             BarcodeEncoder barcodeEncoder = new BarcodeEncoder();
             JSONObject info = new JSONObject();
-            info.put("id", Cache.getTinode().getMyId());
+            info.put("im_id", Cache.getTinode().getMyId());
             Bitmap bitmap = barcodeEncoder.encodeBitmap(info.toString(), BarcodeFormat.QR_CODE, 400, 400);
             codeIv.setImageBitmap(bitmap);
         } catch (Exception e) {
