@@ -472,7 +472,9 @@ public class TopicInfoFragment extends Fragment implements MessageActivity.DataS
         }
 
         notifyContentChanged();
-        updateGroupButton();
+        if (mTopic.isGrpType()) {
+            updateGroupButton();
+        }
 
         if (mTopic.isGrpType()) {
             mMembersAdapter.resetContent();
