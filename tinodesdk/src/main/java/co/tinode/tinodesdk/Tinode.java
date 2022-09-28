@@ -1497,12 +1497,11 @@ public class Tinode {
                 disconnect(false);
                 mMyUid = null;
                 mServerParams = null;
-
-                if (mStore != null) {
-                    mStore.logout();
-                }
             }
         });
+        if (mStore != null) {
+            mStore.logout();
+        }
     }
 
     /**
