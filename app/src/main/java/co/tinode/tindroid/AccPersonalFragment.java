@@ -302,7 +302,8 @@ public class AccPersonalFragment extends Fragment
         if (activity == null || activity.isFinishing() || activity.isDestroyed()) {
             return;
         }
-        ((ChatsActivity) activity).showFragment(ChatsActivity.FRAGMENT_AVATAR_PREVIEW, args);
+        args.putBoolean(AttachmentHandler.ARG_AVATAR, true);
+        BaseFragmentContainerActivity.startFragment(activity, ImageViewFragment.class, "", args);
     }
 
     @Override

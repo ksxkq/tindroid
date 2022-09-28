@@ -3,10 +3,13 @@ package co.tinode.tindroid;
 import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
+import android.text.TextUtils;
 
 import androidx.annotation.Nullable;
 import androidx.annotation.StringRes;
 import androidx.fragment.app.Fragment;
+
+import co.tinode.tindroid.media.VxCard;
 
 public class AccountInfoSettingActivity extends BaseFragmentActivity {
 
@@ -26,7 +29,7 @@ public class AccountInfoSettingActivity extends BaseFragmentActivity {
             case FRAGMENT_ACC_PERSONAL:
                 return new AccPersonalFragment();
             case FRAGMENT_ACC_NOTIFICATIONS:
-               return new AccNotificationsFragment();
+                return new AccNotificationsFragment();
             case FRAGMENT_ACC_SECURITY:
                 return new AccSecurityFragment();
         }
@@ -38,5 +41,15 @@ public class AccountInfoSettingActivity extends BaseFragmentActivity {
         intent.putExtra("type", type);
         intent.putExtra("title", activity.getResources().getString(titleRes));
         activity.startActivity(intent);
+    }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+        String type = getIntent().getStringExtra("type");
+        if (TextUtils.equals(type, FRAGMENT_ACC_PERSONAL) && findViewById(R.id.imageAvatar) != null) {
+            VxCard pub = (VxCard) Cache.getTinode().getMeTopic().getPub();
+            UiUtils.setAvatar(findViewById(R.id.imageAvatar), pub, Cache.getTinode().getMyId(), false);
+        }
     }
 }
