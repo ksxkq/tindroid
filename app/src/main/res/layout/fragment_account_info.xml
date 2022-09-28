@@ -68,11 +68,34 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content" />
 
+    </LinearLayout>
+
+    <LinearLayout
+        android:id="@+id/qrcode_ll"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:gravity="center_vertical"
+        android:minHeight="36dp">
+
+        <TextView
+            style="@style/sectionTitleStyle"
+            android:textSize="16sp"
+            android:layout_weight="1"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginEnd="@dimen/activity_horizontal_margin"
+            android:text="@string/my_qr_code" />
+
         <ImageView
             android:layout_marginLeft="8dp"
-            android:id="@+id/qrcode_iv"
-            app:tint="@color/colorAccent"
             android:src="@drawable/ic_baseline_qr_code_24"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content" />
+
+        <ImageView
+            android:layout_marginLeft="8dp"
+            android:src="@drawable/ic_chevron_up"
+            android:rotation="90"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content" />
     </LinearLayout>

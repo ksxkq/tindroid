@@ -58,7 +58,12 @@ public class AccountInfoFragment extends Fragment implements ChatsActivity.FormU
                 Toast.makeText(activity, R.string.copied_to_clipboard, Toast.LENGTH_SHORT).show();
             }
         });
-        fragment.findViewById(R.id.qrcode_iv).setOnClickListener(v -> BaseFragmentContainerActivity.startFragment(getActivity(), QRCodeFragment.class, getResources().getString(R.string.qr_code_card), null));
+        fragment.findViewById(R.id.qrcode_ll).setOnClickListener(v -> {
+            String topicId = Cache.getTinode().getMyId();
+            Bundle args = new Bundle();
+            args.putString("topicId", topicId);
+            BaseFragmentContainerActivity.startFragment(getActivity(), QRCodeFragment.class, getResources().getString(R.string.my_qr_code), args);
+        });
         fragment.findViewById(R.id.notifications).setOnClickListener(v ->
                 AccountInfoSettingActivity.start(getActivity(), AccountInfoSettingActivity.FRAGMENT_ACC_NOTIFICATIONS, R.string.notifications));
         fragment.findViewById(R.id.security).setOnClickListener(v ->

@@ -94,6 +94,35 @@
                     tools:text="grpAbCd345627" />
             </LinearLayout>
 
+            <LinearLayout
+                android:id="@+id/qrcode_ll"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:gravity="center_vertical"
+                android:visibility="gone"
+                tools:visibility="visible">
+
+                <TextView
+                    style="@style/sectionTitleStyle"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:paddingEnd="8dp"
+                    android:text="@string/group_qr_code"
+                    tools:ignore="RtlSymmetry" />
+
+                <ImageView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:src="@drawable/ic_baseline_qr_code_24" />
+
+                <ImageView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:rotation="90"
+                    android:src="@drawable/ic_chevron_up" />
+            </LinearLayout>
+
             <TextView
                 android:id="@+id/verified"
                 style="?android:textAppearanceMedium"
@@ -365,10 +394,10 @@
             tools:visibility="visible" />
 
         <Button
-            android:layout_marginTop="8dp"
             android:id="@+id/leaveAndDeleteBtn"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:layout_marginTop="8dp"
             android:background="@android:color/transparent"
             android:foreground="@drawable/border_red"
             android:text="@string/leave_and_delete_group"

@@ -370,7 +370,10 @@
     <string name="mute_group">全员禁言</string>
     <string name="download_content">是否保存文件？</string>
     <string name="downloaind">下载中，请稍后</string>
-    <string name="qr_code_card">二维码名片</string>
+    <string name="group_qr_code">群组二维码</string>
+    <string name="my_qr_code">我的二维码</string>
+    <string name="qr_code_tip">扫描上面的二维码，添加我为好友</string>
+    <string name="qr_code_group_tip">扫描上面的二维码，加入群组</string>
     <string name="save_to_photo">保存到手机</string>
     <string name="scan_qrcode">扫一扫</string>
 

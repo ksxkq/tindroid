@@ -1,11 +1,14 @@
 <?xml version="1.0" encoding="utf-8"?>
-<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:padding="16dp"
+    android:orientation="vertical"
+    android:gravity="center"
     android:layout_height="match_parent">
 
     <androidx.cardview.widget.CardView
+        android:id="@+id/codeCv"
         android:layout_margin="16dp"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
@@ -22,14 +25,21 @@
             android:scaleType="fitXY" />
     </androidx.cardview.widget.CardView>
 
+    <TextView
+        android:id="@+id/qrcode_tip_tv"
+        android:layout_marginTop="8dp"
+        android:text="@string/qr_code_tip"
+        android:layout_below="@+id/codeCv"
+        android:gravity="center"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content" />
+
     <Button
         android:id="@+id/save_button"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_alignParentBottom="true"
+        android:layout_height="56dp"
         android:layout_gravity="end"
-        android:layout_marginTop="4dp"
-        android:layout_marginRight="8dp"
+        android:layout_marginTop="8dp"
         android:text="@string/save_to_photo" />
 
-</RelativeLayout>
+</LinearLayout>

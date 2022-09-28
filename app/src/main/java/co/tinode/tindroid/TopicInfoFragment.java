@@ -290,6 +290,15 @@ public class TopicInfoFragment extends Fragment implements MessageActivity.DataS
 
     private void updateGroupButton() {
         FragmentActivity activity = getActivity();
+        if (mTopic.isGrpType()) {
+            activity.findViewById(R.id.qrcode_ll).setVisibility(View.VISIBLE);
+            activity.findViewById(R.id.qrcode_ll).setOnClickListener(v -> {
+                String topicId = mTopic.getName();
+                Bundle args = new Bundle();
+                args.putString("topicId", topicId);
+                BaseFragmentContainerActivity.startFragment(getActivity(), QRCodeFragment.class, getResources().getString(R.string.group_qr_code), args);
+            });
+        }
         View groupMembers = activity.findViewById(R.id.groupMembersWrapper);
         groupMembers.setVisibility(View.VISIBLE);
         groupBottomLl.setVisibility(View.VISIBLE);
