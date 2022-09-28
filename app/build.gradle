@@ -107,6 +107,7 @@ dependencies {
     implementation(name: 'google-webrtc-1.0.32006', ext: 'aar')
     // bottom bar
     implementation 'io.github.h07000223:flycoTabLayout:3.0.0'
+    implementation 'com.github.delight-im:Android-AdvancedWebView:v3.2.1'
 
     annotationProcessor 'androidx.lifecycle:lifecycle-common-java8:2.4.1'
 
