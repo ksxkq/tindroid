@@ -229,7 +229,7 @@ public class TopicInfoFragment extends Fragment implements MessageActivity.DataS
         if (title_id != 0) {
             confirmBuilder.setTitle(title_id);
         }
-        String message = activity.getString(message_id, null);
+        String message = activity.getString(message_id);
         confirmBuilder.setMessage(message);
 
         confirmBuilder.setPositiveButton(android.R.string.yes, (dialog, which) -> {
