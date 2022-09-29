@@ -1,6 +1,7 @@
 package co.tinode.tindroid;
 
 import android.os.Bundle;
+import android.view.KeyEvent;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -13,6 +14,9 @@ import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 
 public class WebViewFragment extends Fragment {
+
+    private WebView webView;
+
     public static WebViewFragment newInstance(String url) {
         Bundle args = new Bundle();
         args.putString("url", url);
@@ -35,7 +39,7 @@ public class WebViewFragment extends Fragment {
             url = args.getString("url");
         }
 
-        WebView webView = view.findViewById(R.id.webView);
+        webView = view.findViewById(R.id.webView);
         webView.getSettings().setAllowUniversalAccessFromFileURLs(false);
         webView.getSettings().setAllowFileAccessFromFileURLs(false);
         webView.getSettings().setJavaScriptEnabled(true);
@@ -47,5 +51,13 @@ public class WebViewFragment extends Fragment {
                 return super.shouldOverrideUrlLoading(view, url);
             }
         });
+    }
+
+    boolean onKeyDown(int keyCode, KeyEvent event) {
+        if (keyCode == KeyEvent.KEYCODE_BACK && webView.canGoBack()) {
+            webView.goBack(); //返回上个页面
+            return true;
+        }
+        return false;
     }
 }

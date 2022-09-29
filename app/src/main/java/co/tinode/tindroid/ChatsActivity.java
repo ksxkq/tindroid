@@ -7,6 +7,7 @@ import android.content.Intent;
 import android.graphics.Bitmap;
 import android.os.Bundle;
 import android.text.TextUtils;
+import android.view.KeyEvent;
 import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.View;
@@ -157,6 +158,23 @@ public class ChatsActivity extends AppCompatActivity
 
         mMeTopic = Cache.getTinode().getOrCreateMeTopic();
         mMeTopicListener = new MeListener();
+    }
+
+    @Override
+    public boolean onKeyDown(int keyCode, KeyEvent event) {
+        // webview tab
+        try {
+            if (mViewPage.getCurrentItem() == 2) {
+                WebViewFragment fragment = (WebViewFragment) mFragments.get(2);
+                boolean canGoBack = fragment.onKeyDown(keyCode, event);
+                if (canGoBack) {
+                    return true;
+                }
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return super.onKeyDown(keyCode, event);
     }
 
     /**
