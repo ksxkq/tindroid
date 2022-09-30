@@ -14,6 +14,10 @@
 
 更改 app/src/main/res/ 文件下，所有 mipmap 中对应的图标即可
 
+### 替换 Splash 页面 logo
+
+更改 app/src/main/res/drawable-xxxhdpi 文件下 ic_launcher_round.png
+
 ### 替换导航中发现页的 url
 
 更改 app/src/build.gradle 中的 buildConfigField 对应 NAV_TAB_URL 的内容即可
