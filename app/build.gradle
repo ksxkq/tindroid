@@ -8,13 +8,6 @@ android {
         Properties properties = new Properties()
         InputStream inputStream = project.rootProject.file('local.properties').newDataInputStream();
         properties.load(inputStream)
-
-        chatsign {
-            storeFile file(properties.getProperty("KEYSTORE_PATH_MEIQIA"))
-            storePassword properties.getProperty("KEYSTORE_PASSWORD_MEIQIA")
-            keyAlias properties.getProperty("KEYSTORE_ALIAS_MEIQIA")
-            keyPassword properties.getProperty("KEYSTORE_ALIAS_PASSWORD_MEIQIA")
-        }
     }
 
     defaultConfig {
@@ -44,7 +37,6 @@ android {
 
     buildTypes {
         debug {
-            signingConfig signingConfigs.chatsign
             resValue "string", "default_host_name", '"demo.imtalk.vip"'
         }
         release {
@@ -52,7 +44,6 @@ android {
             minifyEnabled true
             shrinkResources true
             proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
-//            signingConfig signingConfigs.release
         }
     }
 
