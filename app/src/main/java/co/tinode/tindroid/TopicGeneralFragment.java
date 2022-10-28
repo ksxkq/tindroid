@@ -198,10 +198,10 @@ public class TopicGeneralFragment extends Fragment implements UiUtils.AvatarPrev
         VxCard pub = mTopic.getPub();
         if (pub != null) {
             title.setText(pub.fn);
-            if (!editable && TextUtils.isEmpty(pub.note)) {
+            description.setText(pub.note);
+            if (!editable && TextUtils.isEmpty(pub.note) || (mTopic.isP2PType() && !mTopic.isMeType())) {
                 descriptionWrapper.setVisibility(View.GONE);
             } else {
-                description.setText(pub.note);
                 descriptionWrapper.setVisibility(View.VISIBLE);
             }
         }
