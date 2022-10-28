@@ -561,7 +561,7 @@ public class TopicInfoFragment extends Fragment implements MessageActivity.DataS
     @Override
     public void onPrepareOptionsMenu(@NonNull Menu menu) {
         if (mTopic != null) {
-            menu.findItem(R.id.action_edit).setVisible(mTopic.isOwner());
+            menu.findItem(R.id.action_edit).setVisible(mTopic.isOwner() || mTopic.isP2PType());
         }
         super.onPrepareOptionsMenu(menu);
     }
