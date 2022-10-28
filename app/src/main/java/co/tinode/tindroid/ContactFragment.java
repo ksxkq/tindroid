@@ -132,12 +132,6 @@ public class ContactFragment extends Fragment {
         if (activity == null || activity.isFinishing() || activity.isDestroyed()) {
             return true;
         }
-
-        int id = item.getItemId();
-        if (id == R.id.action_add) {
-            startActivity(new Intent(getActivity(), FindByIDActivity.class));
-            return true;
-        }
-        return super.onOptionsItemSelected(item);
+        return ((ChatsActivity) activity).getFragment(0).onOptionsItemSelected(item);
     }
 }

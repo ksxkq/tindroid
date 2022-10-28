@@ -160,6 +160,10 @@ public class ChatsActivity extends AppCompatActivity
         mMeTopicListener = new MeListener();
     }
 
+    public Fragment getFragment(int index){
+        return  mFragments.get(index);
+    }
+
     @Override
     public boolean onKeyDown(int keyCode, KeyEvent event) {
         // webview tab
